@@ -40,6 +40,7 @@
     'comma-dangle': ['error', 'never'],
     'new-cap': ['error', { properties: false }],
     'no-plusplus': 0,
+    'no-unused-expressions': 0,
     'no-use-before-define': 0,
 
     // removed since mocha tests don't work with arrows

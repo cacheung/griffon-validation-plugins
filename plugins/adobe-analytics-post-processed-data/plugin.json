@@ -1,0 +1,9 @@
+{
+  "category": "Adobe Analytics",
+  "displayName": "Adobe Analytics Post-Processed Data",
+  "description": "Validates each analytics event has post-processed data.",
+  "namespace": "adobe-analytics-post-processed",
+  "src": "index.js",
+  "type": "validation",
+  "version": "0.0.1"
+}

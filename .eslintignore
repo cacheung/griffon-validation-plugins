@@ -2,4 +2,4 @@ dist
 lib
 node_modules
 coverage
-test/module/fixtures
+webpack.config.js

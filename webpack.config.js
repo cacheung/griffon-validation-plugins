@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Adobe. All rights reserved.
+Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,27 +10,46 @@ governing permissions and limitations under the License.
 */
 
 const fs = require('fs');
+const path = require('path');
 const webpack = require('webpack');
+const WebpackShellPlugin = require('webpack-shell-plugin');
+
+const processPlugins = require('./tasks/process.plugins');
+
+const cwd = process.cwd();
 
 const banner = fs.readFileSync('./copyrightBanner.txt', 'utf8');
 
-module.exports = () => ({
-  mode: 'production',
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
+module.exports = () => {
+  const entries = {};
+  processPlugins.forEach(pluginName => entries[`${pluginName}/index`] = `./plugins/${pluginName}/index.js`);
+
+  return ({
+    entry: entries,
+    mode: 'production',
+    output: {
+      path: path.resolve(cwd, 'dist'),
+      filename: '[name].js'
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env']
+            }
           }
         }
-      }
+      ]
+    },
+    plugins: [
+      new webpack.BannerPlugin(banner),
+      new WebpackShellPlugin({
+        onBuildEnd: ['node ./tasks/copy.plugin.json.js']
+      })
     ]
-  },
-  plugins: [
-    new webpack.BannerPlugin(banner)
-  ]
-});
+  });
+};

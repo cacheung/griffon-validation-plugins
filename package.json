@@ -1,0 +1,40 @@
+{
+  "name": "@adobe/griffon-validation-plugins",
+  "version": "0.0.1",
+  "description": "Monorepo for Project Griffon Validation Plugins",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf dist && mkdir dist && rm -rf lib",
+    "build": "webpack-cli",
+    "lint": "eslint \"**/*.js\"",
+    "package": "npm run build && node ./tasks/package.plugins",
+    "upload": "node ./tasks/upload.plugins"
+  },
+  "author": "Adobe Systems",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-syntax-object-rest-spread": "^7.2.0",
+    "@babel/preset-env": "^7.5.5",
+    "archiver": "^4.0.1",
+    "babel-eslint": "^10.0.2",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-istanbul": "^5.2.0",
+    "babel-preset-minify": "^0.5.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "form-data": "^3.0.0",
+    "node-fetch": "^2.6.0",
+    "ramda": "^0.27.0",
+    "semver": "^7.3.2",
+    "serve-static": "^1.14.1",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-shell-plugin": "^0.5.0",
+    "yauzl": "^2.10.0"
+  }
+}
