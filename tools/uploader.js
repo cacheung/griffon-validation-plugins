@@ -78,7 +78,7 @@ const UPDATE_QUERY = `
   const graphqlParams = new URLSearchParams();
   graphqlParams.append('query', PLUGINS_QUERY);
 
-  const queryPluginsResponse = await fetch('https://graffias-preprod.adobe.io/graffias/graphql', {
+  const queryPluginsResponse = await fetch(GRAFFIAS_SERVER, {
     method: 'POST',
     headers: {
       'x-gw-ims-org-id': IMS_ORG,
@@ -105,7 +105,7 @@ const UPDATE_QUERY = `
 
   const plugins = await queryPluginsResponse.json();
   const foundPlugin = R.pipe(
-    R.path(['data', 'plugins']),
+    R.pathOr([], ['data', 'plugins']),
     R.find(R.propEq('namespace', namespace))
   )(plugins);
 
@@ -142,6 +142,6 @@ const UPDATE_QUERY = `
   if (uuid) {
     console.log(`Uploaded plugin uuid: ${uuid}`);
   } else {
-    console.log(`There was a problem uploading the plugin: ${uploadedPlugin}`);
+    console.log(`There was a problem uploading the plugin: ${JSON.stringify(uploadedPlugin)}`);
   }
 })();

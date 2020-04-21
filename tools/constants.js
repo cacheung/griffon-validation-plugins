@@ -11,6 +11,6 @@ governing permissions and limitations under the License.
 
 module.exports = {
   DESCRIPTOR_NAME: 'plugin.json',
-  GRAFFIAS_SERVER: 'https://graffias-preprod.adobe.io/graffias/graphql',
+  GRAFFIAS_SERVER: 'https://graffias.adobe.io/graffias/graphql',
   IMS_HOST: 'https://ims-na1.adobelogin.com'
 };
