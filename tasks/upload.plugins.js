@@ -23,5 +23,5 @@ plugins.forEach((plugin) => {
     stdio: [0, 1, 2]
   };
 
-  execSync('node ../../tools/uploader.js', cwdOptions);
+  execSync('npx @adobe/griffon-uploader', cwdOptions);
 });

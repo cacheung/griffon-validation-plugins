@@ -23,5 +23,5 @@ plugins.forEach((plugin) => {
     stdio: [0, 1, 2]
   };
 
-  execSync('node ../../tools/packager.js', cwdOptions);
+  execSync('npx @adobe/griffon-packager', cwdOptions);
 });
