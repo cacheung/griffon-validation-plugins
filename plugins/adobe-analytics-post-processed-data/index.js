@@ -28,6 +28,6 @@
       }
     }
   }
-  const message = valid ? 'Valid! All Analytics events have post-processed data!' : 'Invalid! These events are missing post-processed data.';
+  const message = valid ? 'Valid! All Analytics events have post-processed data!' : 'Invalid! These events are missing post-processed data:';
   return { message, errors: invalidEvents };
 });

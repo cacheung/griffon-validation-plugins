@@ -24,6 +24,6 @@
       invalidEvents.push(analyticsTrackEvent.uuid);
     }
   }
-  const message = valid ? 'Valid! All Analytics events have a corresponding AnalyticsResponse event' : 'Invalid! There are events missing an AnalyticsResponse event!';
+  const message = valid ? 'Valid! All Analytics events have a corresponding AnalyticsResponse event' : 'Invalid! There are events missing an AnalyticsResponse event:';
   return { message, errors: invalidEvents };
 });

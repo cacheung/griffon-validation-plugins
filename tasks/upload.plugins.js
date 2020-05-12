@@ -16,7 +16,7 @@ const { resolve } = require('path');
 const plugins = require('./process.plugins');
 
 plugins.forEach((plugin) => {
-  const packageDir = resolve(__dirname, `../dist/${plugin}`);
+  const packageDir = resolve(__dirname, `../plugins/${plugin}`);
 
   const cwdOptions = {
     cwd: packageDir,

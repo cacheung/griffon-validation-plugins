@@ -7,15 +7,14 @@
   ],
   "scripts": {
     "prebuild": "rm -rf dist",
-    "build": "babel plugins -d dist && node tasks/copy.plugin.json",
+    "build": "node ./tasks/package.plugins",
     "lint": "eslint \"**/*.js\"",
-    "package": "npm run build && node ./tasks/package.plugins",
     "upload": "node ./tasks/upload.plugins"
   },
   "author": "Adobe Systems",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@adobe/griffon-plugin-tools": "^0.0.3",
+    "@adobe/griffon-plugin-tools": "^0.0.4",
     "@babel/cli": "^7.5.0",
     "@babel/core": "^7.5.5",
     "@babel/plugin-syntax-object-rest-spread": "^7.2.0",

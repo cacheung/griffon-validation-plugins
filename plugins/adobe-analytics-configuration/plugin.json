@@ -3,7 +3,7 @@
   "displayName": "Adobe Analytics AEP SDK Extension Configuration",
   "description": "Verifies the Adobe Analytics AEP SDK Extension has been configured.",
   "namespace": "adobe-analytics-configuration",
-  "src": "index.js",
+  "src": "dist/index.js",
   "type": "validation",
   "version": "0.0.2"
 }

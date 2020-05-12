@@ -3,7 +3,7 @@
   "displayName": "Adobe Analytics Response Events",
   "description": "Validates each analytics track event has a corresponding analytics response event.",
   "namespace": "adobe-analytics-response-events",
-  "src": "index.js",
+  "src": "dist/index.js",
   "type": "validation",
-  "version": "0.0.1"
+  "version": "0.0.2"
 }
