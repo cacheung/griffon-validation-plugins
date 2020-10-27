@@ -12,16 +12,28 @@ governing permissions and limitations under the License.
 /* eslint no-console: 0 */
 
 const { execSync } = require('child_process');
+const { readdirSync } = require('fs');
 const { resolve } = require('path');
 const plugins = require('./process.plugins');
 
+const ZIP_NAME_REGEX = /\.zip$/;
+
 plugins.forEach((plugin) => {
   const packageDir = resolve(__dirname, `../plugins/${plugin}`);
+
+  const packageZips = readdirSync(packageDir)
+    .filter(file => ZIP_NAME_REGEX.test(file));
 
   const cwdOptions = {
     cwd: packageDir,
     stdio: [0, 1, 2]
   };
 
-  execSync('npx @adobe/griffon-uploader', cwdOptions);
+  if (packageZips.length === 1) {
+    execSync(`npx @adobe/griffon-uploader ${packageZips[0]}`, cwdOptions);
+  } else {
+    const message = packageZips.length === 0 ? `No package zip found for plugin ${plugin}`
+      : `Could not determine which package zip to upload for plugin ${plugin}`;
+    console.log(message);
+  }
 });
