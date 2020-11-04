@@ -30,7 +30,7 @@
   hits.forEach((hit) => {
     const requestId = toolkit.edge.analyticsHit.get(toolkit.edge.analyticsHit.path.requestId, hit);
     const validation = findValidationEvent(requestId);
-    if (validation.length) {
+    if (!validation.length) {
       const hitReceived = toolkit.match(getHitReceivedMatcher(requestId), events);
       const errorEventUuid = hitReceived.length ? hitReceived[0].uuid : hit.uuid;
       message = 'One or more analytics.hit events are missing a successful streaming validation event.';
