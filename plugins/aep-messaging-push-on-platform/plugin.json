@@ -1,6 +1,6 @@
 {
   "category": "AEP Messaging",
-  "displayName": "Push token retrieved from the device",
+  "displayName": "Push token saved in Platform",
   "description": "Verifies that the push token was found and registered within the app.",
   "namespace": "aep-messaging-configured",
   "src": "dist/index.js",
