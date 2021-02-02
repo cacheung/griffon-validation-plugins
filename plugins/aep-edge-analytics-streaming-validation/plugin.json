@@ -1,0 +1,17 @@
+{
+  "category": "Edge Analytics",
+  "displayName": "Edge Analytics Streaming Validation",
+  "description": "Validates each analytics.hit event has a successful streaming validation event.",
+  "namespace": "edge-analytics-streaming-validation",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.3",
+  "visibility": [
+    "972C898555E9F7BC7F000101@AdobeOrg",
+    "056F3DD059CB22060A494021@AdobeOrg",
+    "692D3C645C5CDA980A495CB3@AdobeOrg",
+    "FAF554945B90342F0A495E2C@AdobeOrg",
+    "906E3A095DC834230A495FD6@AdobeOrg",
+    "53A16ACB5CC1D3760A495C99@AdobeOrg"
+  ]
+}
