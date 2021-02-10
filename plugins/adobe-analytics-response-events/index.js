@@ -25,5 +25,9 @@
     }
   }
   const message = valid ? 'Valid! All Analytics events have a corresponding AnalyticsResponse event' : 'Invalid! There are events missing an AnalyticsResponse event:';
-  return { message, errors: invalidEvents };
+  return {
+    events: invalidEvents,
+    message,
+    result: valid ? 'matched' : 'not matched'
+  };
 });

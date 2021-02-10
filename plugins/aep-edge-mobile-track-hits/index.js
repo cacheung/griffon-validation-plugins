@@ -40,7 +40,8 @@
   const message = errors.length ? 'One or more AEP Mobile Track events are missing an AEP Edge Hit event.' : 'PASSED!';
 
   return {
+    events: errors,
     message,
-    errors
+    result: !errors.length ? 'matched' : 'not matched'
   };
 });

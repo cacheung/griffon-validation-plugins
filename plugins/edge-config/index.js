@@ -19,16 +19,19 @@
   );
 
   return !configEvents.length ? {
-    errors: [],
+    events: [],
     message: 'No configuration info could be found. Either Griffon isn\'t registered or it did not pass in cached events upon activating.',
+    result: 'unknown',
     status: 'help'
   } : configEvents.some(hasAllConfig) ? {
-    errors: [],
+    events: [],
     message: 'Edge extension was configured correctly',
+    result: 'matched',
     status: 'valid'
   } : {
     message: 'Did not detect the required configuration values. You may need to install the extension in launch and publish those settings.',
-    errors: configEvents.map(event => event.uuid),
+    events: configEvents.map(event => event.uuid),
+    result: 'not matched',
     status: 'invalid'
   };
 });

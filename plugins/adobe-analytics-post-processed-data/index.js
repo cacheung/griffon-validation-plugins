@@ -29,5 +29,9 @@
     }
   }
   const message = valid ? 'Valid! All Analytics events have post-processed data!' : 'Invalid! These events are missing post-processed data:';
-  return { message, errors: invalidEvents };
+  return {
+    events: invalidEvents,
+    message,
+    result: valid ? 'matched' : 'not matched'
+  };
 });
