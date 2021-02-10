@@ -15,16 +15,19 @@
   const versionEvents = kit.match(versions.matcher, events);
 
   return !versionEvents.length ? {
-    errors: [],
+    events: [],
     message: 'No version info could be found. Either Griffon isn\'t registered or it did not pass in cached events upon activating.',
+    result: 'unknown',
     status: 'help'
   } : versionEvents.some(versions.getExtensionsKey('"com.adobe.edge"')) ? {
-    errors: [],
+    events: [],
     message: 'Edge Extension was registered',
+    result: 'matched',
     status: 'valid'
   } : {
     message: 'Did not detect initialization of the Edge Extension',
-    errors: versionEvents.map(event => event.uuid),
+    events: versionEvents.map(event => event.uuid),
+    result: 'not matched',
     status: 'invalid'
   };
 });

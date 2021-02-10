@@ -15,6 +15,7 @@
 
   const errors = [];
   let message = 'All analytics.hit events have a successful streaming validation event.';
+  let result = 'matched';
 
   const getHitReceivedMatcher = requestId => toolkit.combineAll([
     toolkit.edge.edgeHitReceived.matcher,
@@ -34,12 +35,14 @@
       const hitReceived = toolkit.match(getHitReceivedMatcher(requestId), events);
       const errorEventUuid = hitReceived.length ? hitReceived[0].uuid : hit.uuid;
       message = 'One or more analytics.hit events are missing a successful streaming validation event.';
+      result = 'not matched';
       errors.push(errorEventUuid);
     }
   });
 
   return {
+    events: errors,
     message,
-    errors
+    result
   };
 });

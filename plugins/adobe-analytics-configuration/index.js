@@ -20,5 +20,9 @@
   const message = valid ? 'Valid! Adobe Analytics Extension has been configured!'
     : 'Missing required configuration for Adobe Analytics';
   const errors = valid ? [] : configurationEvents.map(event => event.uuid);
-  return { message, errors };
+  return {
+    events: errors,
+    message,
+    result: valid ? 'matched' : 'not matched'
+  };
 });
