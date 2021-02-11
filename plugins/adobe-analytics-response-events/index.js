@@ -10,8 +10,12 @@
  *
  */
 (function (events) {
-  const analyticsTrackEvents = events.filter(event => event.type === 'AnalyticsTrack' || event.type === 'LifecycleStart');
-  const analyticsResponseEvents = events.filter(event => event.type === 'AnalyticsResponse');
+  const { toolkit: { 'aep-mobile': aepMobile, combineAny, match } } = window.griffon;
+  const analyticsTrackEvents = match(combineAny([
+    aepMobile.genericTrack.matcher,
+    aepMobile.lifecycleStart.matcher
+  ]), events);
+  const analyticsResponseEvents = match(aepMobile.analyticsResponse.matcher, events);
   let valid = true;
   const invalidEvents = [];
   for (let i = 0; i < analyticsTrackEvents.length; i++) {
