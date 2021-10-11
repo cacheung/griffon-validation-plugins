@@ -1,0 +1,10 @@
+{
+    "category": "AEP Target Configuration",
+    "displayName": "Adobe Target AEP SDK Extension Configuration",
+    "description": "Verifies the Adobe Target AEP SDK Extension has been configured.",
+    "namespace": "adobe-target-configuration",
+    "src": "dist/index.js",
+    "type": "validation",
+    "version": "0.0.1",
+    "visibility": ["PUBLIC"]
+}
