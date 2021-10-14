@@ -1,0 +1,10 @@
+{
+    "category": "AEP Campaign Configuration",
+    "displayName": "Adobe Campaign AEP SDK Extension Configuration",
+    "description": "Verifies the Adobe Campaign AEP SDK Extension has been configured.",
+    "namespace": "adobe-campaign-configuration",
+    "src": "dist/index.js",
+    "type": "validation",
+    "version": "0.0.1",
+    "visibility": ["PUBLIC"]
+}
