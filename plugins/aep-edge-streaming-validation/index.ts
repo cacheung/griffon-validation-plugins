@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /*
   Copyright 2021 Adobe. All rights reserved.
   This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -19,21 +20,21 @@
 
   vals.forEach((val) => {
     const messages = toolkit.edge.streamingValidation.getMessages(val);
-    const message = JSON.parse(messages[1]);
+    const streamingValidationMessage = JSON.parse(messages[1]);
 
-    if (message._errors) {
+    if (streamingValidationMessage._errors) {
       errors.push(val.uuid);
 
-      const errorMessage = message?._errors?._streamingValidation?.[0].message;
+      const errorMessage = streamingValidationMessage?._errors?._streamingValidation?.[0].message;
 
       if (errorMessages.indexOf(errorMessage) === -1) {
         errorMessages.push(errorMessage);
       }
     }
-  })
+  });
 
   if (errors.length) {
-    message = 'Some streaming errors were detected: ' + errorMessages.join(' -- ');
+    message = `Some streaming errors were detected: ${errorMessages.join(' -- ')}`;
   }
 
   return {

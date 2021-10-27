@@ -24,6 +24,6 @@ plugins.forEach((plugin) => {
   };
 
   execSync(`rm -rf ${packageDir}/dist`);
-  execSync('npx babel . -d dist', cwdOptions);
+  execSync('npx babel . -d dist --extensions ".ts"', cwdOptions);
   execSync('npx @adobe/griffon-packager', cwdOptions);
 });
