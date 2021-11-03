@@ -13,7 +13,7 @@
   const { toolkit } = window.griffon;
   const { clientInfoIOS, sharedStateVersions: versions } = toolkit['aep-mobile'];
   const clientEvents = toolkit.match(toolkit.combineAll([
-    'payload.type==`connect`||payload.type==`disconnect`',
+    'payload.type==`connect`',
     'type==`client`',
     'timestamp'
   ]), events);
@@ -22,7 +22,7 @@
   const uniqueClients = {};
   for (let i = 0; i < clientEvents.length; i++) {
     const clientEvent = clientEvents[i];
-    if (!uniqueClients[clientEvent.clientId] && clientEvent.payload.type === 'connect') {
+    if (!uniqueClients[clientEvent.clientId]) {
       uniqueClients[clientEvent.clientId] = clientEvent;
     }
   }
