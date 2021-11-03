@@ -21,14 +21,16 @@
       return requestEventIdentifier ? { [requestEventIdentifier]: event, ...map } : map;
     }, {});
 
-  const matchedMessage = 'All Analytics events have a corresponding AnalyticsResponse event with the debug flag!';
+  const matchedMessage = 'All Adobe Analytics events sent the debug flag!';
   const notMatchedEvents = [];
-  const notMatchedMessage = 'Some events are missing an AnalyticsResponse event!';
+  const notMatchedMessage = 'Some Adobe Analytics events did not send the debug flag!';
   for (let i = 0; i < analyticsTrackEvents.length; i++) {
     const analyticsTrackEvent = analyticsTrackEvents[i];
     const requestEventIdentifier = analyticsTrackEvent.payload.ACPExtensionEventUniqueIdentifier;
     const found = analyticsResponseEvents[requestEventIdentifier];
-    if (!found) {
+    const { hitUrl } = found?.payload?.ACPExtensionEventData;
+    const hasDebug = hitUrl.indexOf('p.&debug=true&.p') > -1;
+    if (found && !hasDebug) {
       notMatchedEvents.push(analyticsTrackEvent.uuid);
     }
   }
