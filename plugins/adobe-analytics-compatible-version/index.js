@@ -60,6 +60,6 @@
   } : {
     message: 'Detected incompatible Assurance SDK and Adobe Analytics Extension versions!',
     events: versionEvents.map(event => event.uuid),
-    result: 'unknown'
+    result: 'not matched'
   };
 });
