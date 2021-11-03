@@ -15,6 +15,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@adobe/griffon-plugin-tools": "^0.1.1",
+    "@adobe/griffon-toolkit-common": "^0.3.1",
     "@babel/cli": "^7.15.7",
     "@babel/core": "^7.15.8",
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
