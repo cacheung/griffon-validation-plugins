@@ -28,10 +28,12 @@
     const analyticsTrackEvent = analyticsTrackEvents[i];
     const requestEventIdentifier = analyticsTrackEvent.payload.ACPExtensionEventUniqueIdentifier;
     const found = analyticsResponseEvents[requestEventIdentifier];
-    const { hitUrl } = found?.payload?.ACPExtensionEventData;
-    const hasDebug = hitUrl.indexOf('p.&debug=true&.p') > -1;
-    if (found && !hasDebug) {
-      notMatchedEvents.push(analyticsTrackEvent.uuid);
+    if (found) {
+      const { hitUrl } = found?.payload?.ACPExtensionEventData;
+      const hasDebug = hitUrl.indexOf('p.&debug=true&.p') > -1;
+      if (!hasDebug) {
+        notMatchedEvents.push(analyticsTrackEvent.uuid);
+      }
     }
   }
   const message = !notMatchedEvents.length ? matchedMessage : notMatchedMessage;

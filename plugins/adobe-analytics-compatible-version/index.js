@@ -38,12 +38,14 @@
     parseInt(assuranceVersionMatches[1], 10) >= 1 && parseInt(analyticsVersionMatches[1], 10) >= 2
       && parseInt(analyticsVersionMatches[2], 10) >= 4;
 
+  let analyticsVersion;
+  let assuranceVersion;
   const compatible = versionEvents.every((event) => {
     const clientEvent = uniqueClients[event.clientId];
     const isCompatible = clientInfoIOS.isMatch(clientEvent) ? isIOSCompatible : isAndroidCompatible;
     const extensions = versions.getExtensions(event);
-    const assuranceVersion = extensions['com.adobe.assurance']?.version || '';
-    const analyticsVersion = extensions.Analytics?.version || '';
+    assuranceVersion = extensions['com.adobe.assurance']?.version || '';
+    analyticsVersion = extensions.Analytics?.version || '';
     const assuranceVersionMatches = assuranceVersion.match(versionRegex) || [];
     const analyticsVersionMatches = analyticsVersion.match(versionRegex) || [];
     return isCompatible(assuranceVersionMatches, analyticsVersionMatches);
@@ -58,8 +60,8 @@
     message: 'The installed Assurance SDK and Adobe Analytics Extensions are compatible.',
     result: 'matched'
   } : {
-    message: 'Detected incompatible Assurance SDK and Adobe Analytics Extension versions!',
-    events: versionEvents.map(event => event.uuid),
+    message: `Assurance SDK version ${assuranceVersion} and Adobe Analytics Extension version ${analyticsVersion} are not compatible!`,
+    events: versionEvents.map((event) => event.uuid),
     result: 'not matched'
   };
 });
