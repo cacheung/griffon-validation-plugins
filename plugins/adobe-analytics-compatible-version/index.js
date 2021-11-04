@@ -60,7 +60,7 @@
     message: 'The installed Assurance SDK and Adobe Analytics Extensions are compatible.',
     result: 'matched'
   } : {
-    message: `Assurance SDK version ${assuranceVersion} and Adobe Analytics Extension version ${analyticsVersion} are not compatible!`,
+    message: `Assurance SDK Version ${assuranceVersion} and Adobe Analytics Extension version ${analyticsVersion} are not compatible!`,
     events: versionEvents.map((event) => event.uuid),
     result: 'not matched'
   };
