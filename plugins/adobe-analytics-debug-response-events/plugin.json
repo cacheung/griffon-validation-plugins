@@ -1,0 +1,10 @@
+{
+  "category": "Adobe Analytics",
+  "displayName": "Adobe Analytics Debug Flag Response Events",
+  "description": "Validates each Adobe Analytics event sent the debug flag.",
+  "namespace": "adobe-analytics-debug-response-events",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}

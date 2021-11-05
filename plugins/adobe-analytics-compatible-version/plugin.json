@@ -1,0 +1,10 @@
+{
+  "category": "Adobe Analytics",
+  "displayName": "Adobe Analytics Compatible Version",
+  "description": "Verifies the Adobe Analytics Extension is compatible with the installed Assurance SDK.",
+  "namespace": "adobe-analytics-compatible-version",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}
