@@ -16,10 +16,15 @@
     aepMobile.lifecycleStart.matcher
   ]), events);
   const analyticsResponseEvents = match(aepMobile.analyticsResponse.matcher, events)
+    /* eslint-disable no-param-reassign */
     .reduce((map, event) => {
       const { requestEventIdentifier } = event.payload.ACPExtensionEventData;
-      return requestEventIdentifier ? { [requestEventIdentifier]: event, ...map } : map;
+      if (requestEventIdentifier) {
+        map[requestEventIdentifier] = event;
+      }
+      return map;
     }, {});
+    /* eslint-enable no-param-reassign */
 
   const matchedMessage = 'All Adobe Analytics events sent the debug flag!';
   const notMatchedEvents = [];
