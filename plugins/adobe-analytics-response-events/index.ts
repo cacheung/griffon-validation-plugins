@@ -31,29 +31,31 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   const analyticsResponseEvents: AnalyticsResponse[] = match(
     aepMobile.analyticsResponse.matcher,
     events
-  );
-  let valid = true;
-  const invalidEvents: string[] = [];
+  ).reduce((map, event) => {
+    const { requestEventIdentifier } = event.payload.ACPExtensionEventData;
+    return requestEventIdentifier
+      ? { [requestEventIdentifier]: event, ...map }
+      : map;
+  }, {});
+
+  const matchedMessage =
+    'All Analytics events have a corresponding AnalyticsResponse event with the debug flag!';
+  const notMatchedEvents = [];
+  const notMatchedMessage =
+    'Some events are missing an AnalyticsResponse event!';
   for (let i = 0; i < analyticsTrackEvents.length; i++) {
     const analyticsTrackEvent = analyticsTrackEvents[i];
-    const requestEventIdentifier =
-      analyticsTrackEvent.payload.ACPExtensionEventUniqueIdentifier;
-    const found = analyticsResponseEvents.find(
-      (event) =>
-        event.payload.ACPExtensionEventData.requestEventIdentifier ===
-        requestEventIdentifier
-    );
+    const requestEventIdentifier = analyticsTrackEvent.payload
+      .ACPExtensionEventUniqueIdentifier as string;
+    const found = analyticsResponseEvents[requestEventIdentifier];
     if (!found) {
-      valid = false;
-      invalidEvents.push(analyticsTrackEvent.uuid);
+      notMatchedEvents.push(analyticsTrackEvent.uuid);
     }
   }
-  const message = valid
-    ? 'Valid! All Analytics events have a corresponding AnalyticsResponse event'
-    : 'Invalid! There are events missing an AnalyticsResponse event:';
+  const message = !notMatchedEvents.length ? matchedMessage : notMatchedMessage;
   return {
-    events: invalidEvents,
+    events: notMatchedEvents,
     message,
-    result: valid ? 'matched' : 'not matched'
+    result: !notMatchedEvents.length ? 'matched' : 'not matched'
   };
 });
