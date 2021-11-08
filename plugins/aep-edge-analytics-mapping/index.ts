@@ -9,29 +9,53 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
 */
-(function (events) {
-  const { toolkit } = window.griffon;
-  const hits = toolkit.match(toolkit.edge.analyticsHit.matcher, events);
-  const mappingHitIds = toolkit.match(toolkit.edge.analyticsMapping.matcher, events)
-    .map((event) => toolkit.edge.analyticsMapping.getAttributesKey('primaryHitId', event));
 
-  const errors = [];
-  let message = 'All analytics.hit events have an associated analytics.mapping event.';
+import { Event } from '@adobe/griffon-toolkit-common';
+import { AnalyticsHit, AnalyticsMapping } from '@adobe/griffon-toolkit-edge';
+import { ValidationPluginResult } from '../../types/validationPlugin';
+
+(function (events: Event): ValidationPluginResult {
+  const { toolkit } = window.griffon;
+  const hits: AnalyticsHit[] = toolkit.match(
+    toolkit.edge.analyticsHit.matcher,
+    events
+  );
+  const mappingHitIds = toolkit
+    .match(toolkit.edge.analyticsMapping.matcher, events)
+    .map((event: AnalyticsMapping) =>
+      toolkit.edge.analyticsMapping.getAttributesKey('primaryHitId', event)
+    );
+
+  const errors: string[] = [];
+  let message =
+    'All analytics.hit events have an associated analytics.mapping event.';
   let result = 'matched';
 
-  const getHitReceivedMatcher = (requestId) => toolkit.combineAll([
-    toolkit.edge.edgeHitReceived.matcher,
-    `payload.attributes.requestId=='${requestId}'`
-  ]);
+  const getHitReceivedMatcher = (requestId: string) =>
+    toolkit.combineAll([
+      toolkit.edge.edgeHitReceived.matcher,
+      `payload.attributes.requestId=='${requestId}'`
+    ]);
 
   hits.forEach((hit) => {
-    const hitId = toolkit.edge.analyticsHit.get(toolkit.edge.analyticsHit.path.hitId, hit);
+    const hitId = toolkit.edge.analyticsHit.get(
+      toolkit.edge.analyticsHit.path.hitId,
+      hit
+    );
     if (mappingHitIds.indexOf(hitId) === -1) {
-      const requestId = toolkit.edge.analyticsHit
-        .get(toolkit.edge.analyticsHit.path.requestId, hit);
-      const hitReceived = toolkit.match(getHitReceivedMatcher(requestId), events);
-      const errorEventUuid = hitReceived.length ? hitReceived[0].uuid : hit.uuid;
-      message = 'One or more analytics.hit events are missing an analytics.mapping event.';
+      const requestId = toolkit.edge.analyticsHit.get(
+        toolkit.edge.analyticsHit.path.requestId,
+        hit
+      );
+      const hitReceived = toolkit.match(
+        getHitReceivedMatcher(requestId),
+        events
+      );
+      const errorEventUuid: string = hitReceived.length
+        ? hitReceived[0].uuid
+        : hit.uuid;
+      message =
+        'One or more analytics.hit events are missing an analytics.mapping event.';
       result = 'not matched';
       errors.push(errorEventUuid);
     }

@@ -9,8 +9,17 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
 */
-(function (events) {
-  const configurationEvents = events.filter((event) => event.payload.ACPExtensionEventType === 'com.adobe.eventtype.configuration');
+
+import { Configuration } from '@adobe/griffon-toolkit-aep-mobile';
+import { Event } from '@adobe/griffon-toolkit-common';
+import { ValidationPluginResult } from '../../types/validationPlugin';
+
+(function (events: Event[]): ValidationPluginResult {
+  const configurationEvents = events.filter(
+    (event) =>
+      event.payload.ACPExtensionEventType ===
+      'com.adobe.eventtype.configuration'
+  ) as Configuration[];
   const valid = configurationEvents.some((event) => {
     const server = event.payload.ACPExtensionEventData['campaign.server'];
     const pkey = event.payload.ACPExtensionEventData['campaign.pkey'];

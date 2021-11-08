@@ -5,14 +5,14 @@
       {
         "modules": false
       },
-      "@babel/preset-typescript"
     ],
     [
       "minify",
       {
         "deadcode": false
       }
-    ]
+    ],
+    "@babel/preset-typescript"
   ],
   "comments": false,
   "env": {

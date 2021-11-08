@@ -10,12 +10,20 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
 */
-(function (events) {
-  const { toolkit } = window.griffon;
-  const vals = toolkit.match(toolkit.edge.streamingValidation.matcher, events);
 
-  const errors = [];
-  const errorMessages = [];
+import { Event } from '@adobe/griffon-toolkit-common';
+import { StreamingValidation } from '@adobe/griffon-toolkit-edge';
+import { ValidationPluginResult } from '../../types/validationPlugin';
+
+(function (events: Event[]): ValidationPluginResult {
+  const { toolkit } = window.griffon;
+  const vals = toolkit.match(
+    toolkit.edge.streamingValidation.matcher,
+    events
+  ) as StreamingValidation[];
+
+  const errors: string[] = [];
+  const errorMessages: string[] = [];
   let message = 'All streaming validation events are successful.';
 
   vals.forEach((val) => {
@@ -25,7 +33,8 @@
     if (streamingValidationMessage._errors) {
       errors.push(val.uuid);
 
-      const errorMessage = streamingValidationMessage?._errors?._streamingValidation?.[0].message;
+      const errorMessage =
+        streamingValidationMessage?._errors?._streamingValidation?.[0].message;
 
       if (errorMessages.indexOf(errorMessage) === -1) {
         errorMessages.push(errorMessage);
@@ -34,7 +43,9 @@
   });
 
   if (errors.length) {
-    message = `Some streaming errors were detected: ${errorMessages.join(' -- ')}`;
+    message = `Some streaming errors were detected: ${errorMessages.join(
+      ' -- '
+    )}`;
   }
 
   return {

@@ -8,24 +8,35 @@
   "scripts": {
     "prebuild": "rm -rf dist",
     "build": "node ./tasks/package.plugins",
-    "lint": "eslint \"**/*.js\"",
+    "lint": "eslint \"*/**/*.{js,ts}\" --fix",
     "upload": "node ./tasks/upload.plugins"
   },
   "author": "Adobe Systems",
   "license": "Apache-2.0",
   "devDependencies": {
     "@adobe/griffon-plugin-tools": "^0.1.1",
+    "@adobe/griffon-toolkit": "^1.3.0",
+    "@adobe/griffon-toolkit-aep-mobile": "^0.8.0",
+    "@adobe/griffon-toolkit-common": "^0.3.0",
+    "@adobe/griffon-toolkit-edge": "^0.1.0",
     "@babel/cli": "^7.15.7",
     "@babel/core": "^7.15.8",
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-typescript": "^7.15.0",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
     "babel-eslint": "^10.1.0",
     "babel-preset-minify": "^0.5.1",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-typescript": "^14.0.1",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.1",
     "ramda": "^0.27.1",
-    "serve-static": "^1.14.1"
+    "serve-static": "^1.14.1",
+    "typescript": "^4.4.4"
   }
 }

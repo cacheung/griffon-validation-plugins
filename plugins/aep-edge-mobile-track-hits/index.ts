@@ -9,17 +9,29 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
 */
-(function (events) {
+
+import { Event } from '@adobe/griffon-toolkit-common';
+import { EdgeRequest } from '@adobe/griffon-toolkit-aep-mobile';
+import { EdgeHitReceived } from '@adobe/griffon-toolkit-edge';
+import { ValidationPluginResult } from '../../types/validationPlugin';
+
+(function (events: Event[]): ValidationPluginResult {
   const { toolkit } = window.griffon;
   const aepMobile = toolkit['aep-mobile'];
-  const trackEvents = toolkit.match(aepMobile.edgeRequest.matcher, events);
-  const edgeHits = toolkit.match(toolkit.edge.edgeHitReceived.matcher, events);
-  const errors = [];
+  const trackEvents = toolkit.match(
+    aepMobile.edgeRequest.matcher,
+    events
+  ) as EdgeRequest[];
+  const edgeHits = toolkit.match(
+    toolkit.edge.edgeHitReceived.matcher,
+    events
+  ) as EdgeHitReceived[];
+  const errors: string[] = [];
 
   for (let i = 0; i < trackEvents.length; i++) {
     let linked = false;
     const trackEvent = trackEvents[i];
-    const identifier = aepMobile.mobileEvent.getEventId(trackEvent);
+    const identifier: string = aepMobile.mobileEvent.getEventId(trackEvent);
 
     for (let j = 0; j < edgeHits.length; j++) {
       const edgeHit = edgeHits[j];
@@ -37,7 +49,9 @@
     }
   }
 
-  const message = errors.length ? 'One or more AEP Mobile Track events are missing an AEP Edge Hit event.' : 'PASSED!';
+  const message = errors.length
+    ? 'One or more AEP Mobile Track events are missing an AEP Edge Hit event.'
+    : 'PASSED!';
 
   return {
     events: errors,

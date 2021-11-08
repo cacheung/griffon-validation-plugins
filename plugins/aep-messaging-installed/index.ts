@@ -9,22 +9,35 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
 */
-(function (events) {
+
+import { SharedStateVersions } from '@adobe/griffon-toolkit-aep-mobile';
+import { Event } from '@adobe/griffon-toolkit-common';
+import { ValidationPluginResult } from '../../types/validationPlugin';
+
+(function (events: Event[]): ValidationPluginResult {
   const { toolkit: kit } = window.griffon;
   const { sharedStateVersions: versions } = kit['aep-mobile'];
-  const versionEvents = kit.match(versions.matcher, events);
+  const versionEvents = kit.match(
+    versions.matcher,
+    events
+  ) as SharedStateVersions[];
 
-  return !versionEvents.length ? {
-    message: 'No version info could be found. Either Griffon isn\'t registered or it did not pass in cached events upon activating.',
-    errors: [],
-    status: 'help'
-  } : versionEvents.some(versions.getExtensionsKey('"com.adobe.messaging"')) ? {
-    message: 'Messaging Extension was registered',
-    errors: [],
-    status: 'valid'
-  } : {
-    message: 'Did not detect initialization of the Messaging Extension',
-    errors: versionEvents.map((event) => event.uuid),
-    status: 'invalid'
-  };
+  return !versionEvents.length
+    ? {
+        message:
+          "No version info could be found. Either Griffon isn't registered or it did not pass in cached events upon activating.",
+        errors: [],
+        status: 'help'
+      }
+    : versionEvents.some(versions.getExtensionsKey('"com.adobe.messaging"'))
+    ? {
+        message: 'Messaging Extension was registered',
+        errors: [],
+        status: 'valid'
+      }
+    : {
+        message: 'Did not detect initialization of the Messaging Extension',
+        errors: versionEvents.map((event) => event.uuid),
+        status: 'invalid'
+      };
 });

@@ -9,15 +9,25 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
 */
-(function (events) {
-  const configurationEvents = events.filter((event) => event.payload.ACPExtensionEventType === 'com.adobe.eventtype.configuration');
+
+import { Event } from '@adobe/griffon-toolkit-common';
+import { Configuration } from '@adobe/griffon-toolkit-aep-mobile';
+import { ValidationPluginResult } from '../../types/validationPlugin';
+
+(function (events: Event[]): ValidationPluginResult {
+  const configurationEvents = events.filter(
+    (event) =>
+      event.payload.ACPExtensionEventType ===
+      'com.adobe.eventtype.configuration'
+  ) as Configuration[];
   const valid = configurationEvents.some((event) => {
     const rsids = event.payload.ACPExtensionEventData['analytics.rsids'];
     const server = event.payload.ACPExtensionEventData['analytics.server'];
     return rsids && server;
   });
 
-  const message = valid ? 'Valid! Adobe Analytics Extension has been configured!'
+  const message = valid
+    ? 'Valid! Adobe Analytics Extension has been configured!'
     : 'Missing required configuration for Adobe Analytics';
   const errors = valid ? [] : configurationEvents.map((event) => event.uuid);
   return {

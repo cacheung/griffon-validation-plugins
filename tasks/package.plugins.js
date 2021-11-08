@@ -10,6 +10,7 @@ governing permissions and limitations under the License.
 */
 
 /* eslint no-console: 0 */
+/* eslint-disable @typescript-eslint/no-var-requires */
 
 const { execSync } = require('child_process');
 const { resolve } = require('path');

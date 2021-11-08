@@ -9,28 +9,41 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
 */
-(function (events) {
+
+import { Configuration } from '@adobe/griffon-toolkit-aep-mobile';
+import { Event } from '@adobe/griffon-toolkit-common';
+import { ValidationPluginResult } from '../../types/validationPlugin';
+
+(function (events: Event[]): ValidationPluginResult {
   const { toolkit: kit } = window.griffon;
   const { configuration } = kit['aep-mobile'];
-  const configEvents = kit.match(configuration.matcher, events);
+  const configEvents = kit.match(
+    configuration.matcher,
+    events
+  ) as Configuration[];
 
-  const hasAllConfig = (event) => (
-    configuration.getEventDataKey('"messaging.dccs"', event)
-    && configuration.getEventDataKey('"messaging.profileDataset"', event)
-    && configuration.getEventDataKey('"messaging.eventDataset"', event)
-  );
+  const hasAllConfig = (event: Configuration) =>
+    configuration.getEventDataKey('"messaging.dccs"', event) &&
+    configuration.getEventDataKey('"messaging.profileDataset"', event) &&
+    configuration.getEventDataKey('"messaging.eventDataset"', event);
 
-  return !configEvents.length ? {
-    message: 'No configuration info could be found. Either Griffon isn\'t registered or it did not pass in cached events upon activating.',
-    errors: [],
-    status: 'help'
-  } : configEvents.some(hasAllConfig) ? {
-    message: 'Messaging was configured correctly',
-    errors: [],
-    status: 'valid'
-  } : {
-    message: 'Did not detect the required configuration values. You may need to install the extension in launch and publish those settings.',
-    errors: configEvents.map((event) => event.uuid),
-    status: 'invalid'
-  };
+  return !configEvents.length
+    ? {
+        message:
+          "No configuration info could be found. Either Griffon isn't registered or it did not pass in cached events upon activating.",
+        errors: [],
+        status: 'help'
+      }
+    : configEvents.some(hasAllConfig)
+    ? {
+        message: 'Messaging was configured correctly',
+        errors: [],
+        status: 'valid'
+      }
+    : {
+        message:
+          'Did not detect the required configuration values. You may need to install the extension in launch and publish those settings.',
+        errors: configEvents.map((event) => event.uuid),
+        status: 'invalid'
+      };
 });

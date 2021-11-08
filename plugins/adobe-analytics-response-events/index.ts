@@ -9,26 +9,48 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
 */
-(function (events) {
-  const { toolkit: { 'aep-mobile': aepMobile, combineAny, match } } = window.griffon;
-  const analyticsTrackEvents = match(combineAny([
-    aepMobile.genericTrack.matcher,
-    aepMobile.lifecycleStart.matcher
-  ]), events);
-  const analyticsResponseEvents = match(aepMobile.analyticsResponse.matcher, events);
+
+import {
+  AnalyticsResponse,
+  LifecycleStart
+} from '@adobe/griffon-toolkit-aep-mobile';
+import { Event } from '@adobe/griffon-toolkit-common';
+import { ValidationPluginResult } from '../../types/validationPlugin';
+
+(function (events: Event[]): ValidationPluginResult {
+  const {
+    toolkit: { 'aep-mobile': aepMobile, combineAny, match }
+  } = window.griffon;
+  const analyticsTrackEvents: TrackEvent[] & LifecycleStart[] = match(
+    combineAny([
+      aepMobile.genericTrack.matcher,
+      aepMobile.lifecycleStart.matcher
+    ]),
+    events
+  );
+  const analyticsResponseEvents: AnalyticsResponse[] = match(
+    aepMobile.analyticsResponse.matcher,
+    events
+  );
   let valid = true;
-  const invalidEvents = [];
+  const invalidEvents: string[] = [];
   for (let i = 0; i < analyticsTrackEvents.length; i++) {
     const analyticsTrackEvent = analyticsTrackEvents[i];
-    const requestEventIdentifier = analyticsTrackEvent.payload.ACPExtensionEventUniqueIdentifier;
-    const found = analyticsResponseEvents.find((event) =>
-      event.payload.ACPExtensionEventData.requestEventIdentifier === requestEventIdentifier);
+    const requestEventIdentifier =
+      analyticsTrackEvent.payload.ACPExtensionEventUniqueIdentifier;
+    const found = analyticsResponseEvents.find(
+      (event) =>
+        event.payload.ACPExtensionEventData.requestEventIdentifier ===
+        requestEventIdentifier
+    );
     if (!found) {
       valid = false;
       invalidEvents.push(analyticsTrackEvent.uuid);
     }
   }
-  const message = valid ? 'Valid! All Analytics events have a corresponding AnalyticsResponse event' : 'Invalid! There are events missing an AnalyticsResponse event:';
+  const message = valid
+    ? 'Valid! All Analytics events have a corresponding AnalyticsResponse event'
+    : 'Invalid! There are events missing an AnalyticsResponse event:';
   return {
     events: invalidEvents,
     message,

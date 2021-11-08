@@ -9,22 +9,23 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
 */
-(function (events) {
-  const { toolkit: kit } = window.griffon;
 
-  const getProfileAnnotation = (pushEvent) => (pushEvent.annotations || []).find(
-    (a) => a.type === 'dev'
-  );
+import { SetPushIdentifier } from '@adobe/griffon-toolkit-aep-mobile';
+import { Event } from '@adobe/griffon-toolkit-common';
+import { ValidationPluginResult } from '../../types/validationPlugin';
 
-  // replace with setPushIdentifier event once it's released in griffon-toolkit
-  const pushIDMatcher = kit.combineAll([
-    'payload.ACPExtensionEventData.pushidentifier',
-    'payload.ACPExtensionEventSource==\'com.adobe.eventsource.requestcontent\'',
-    'payload.ACPExtensionEventType==\'com.adobe.eventtype.generic.identity\'',
-    'timestamp'
-  ]);
+(function (events: Event[]): ValidationPluginResult {
+  const {
+    toolkit: { match, 'aep-mobile': aepMobile }
+  } = window.griffon;
 
-  const pushIdEvents = kit.match(pushIDMatcher, events);
+  const getProfileAnnotation = (pushEvent: SetPushIdentifier) =>
+    (pushEvent.annotations || []).find((a) => a.type === 'dev');
+
+  const pushIdEvents = match(
+    aepMobile.setPushIdentifier.matcher,
+    events
+  ) as SetPushIdentifier[];
   const TIMEOUT = 15 * 60 * 1000; // 15 minutes
 
   if (!pushIdEvents.length) {
@@ -49,17 +50,22 @@
     }
   });
 
-  return hasAnnotation ? {
-    message: 'Push token was saved in the Platform!',
-    errors: [],
-    status: 'valid'
-  } : lastTS < Date.now() - TIMEOUT ? {
-    message: 'Operation timed out. Could not find push token on platform',
-    errors: [],
-    status: 'invalid'
-  } : {
-    message: 'Attempting to locate push token in the platform. This can take up to 15 minutes.',
-    errors: [],
-    status: 'wait'
-  };
+  return hasAnnotation
+    ? {
+        message: 'Push token was saved in the Platform!',
+        errors: [],
+        status: 'valid'
+      }
+    : lastTS < Date.now() - TIMEOUT
+    ? {
+        message: 'Operation timed out. Could not find push token on platform',
+        errors: [],
+        status: 'invalid'
+      }
+    : {
+        message:
+          'Attempting to locate push token in the platform. This can take up to 15 minutes.',
+        errors: [],
+        status: 'wait'
+      };
 });
