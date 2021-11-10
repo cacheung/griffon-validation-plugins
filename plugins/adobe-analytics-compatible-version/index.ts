@@ -20,7 +20,7 @@ import { ValidationPluginResult } from 'types/validationPlugin';
 
 (function (events: Event[]): ValidationPluginResult {
   const { toolkit } = window.griffon;
-  const { clientInfoIOS, sharedStateVersions: versions } =
+  const { clientInfoIos, sharedStateVersions: versions } =
     toolkit['aep-mobile'];
   const clientEvents = toolkit.match(
     toolkit.combineAll([
@@ -66,7 +66,7 @@ import { ValidationPluginResult } from 'types/validationPlugin';
   let assuranceVersion;
   const compatible = versionEvents.every((event) => {
     const clientEvent = uniqueClients[event.clientId];
-    const isCompatible = clientInfoIOS.isMatch(clientEvent)
+    const isCompatible = clientInfoIos.isMatch(clientEvent)
       ? isIOSCompatible
       : isAndroidCompatible;
     const extensions = versions.getExtensions(event);
