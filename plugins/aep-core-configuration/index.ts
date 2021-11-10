@@ -9,12 +9,24 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
 */
-(function (events) {
-  const configurationEvents = events.filter((event) => event.payload.ACPExtensionEventType === 'com.adobe.eventtype.configuration');
+
+import { Configuration } from '@adobe/griffon-toolkit-aep-mobile';
+import { Event } from '@adobe/griffon-toolkit-common';
+import { ValidationPluginResult } from 'types/validationPlugin';
+
+(function (events: Event[]): ValidationPluginResult {
+  const configurationEvents = events.filter(
+    (event) =>
+      event.payload.ACPExtensionEventType ===
+      'com.adobe.eventtype.configuration'
+  ) as Configuration[];
   const valid = configurationEvents.some((event) => {
-    const experienceCloud = event.payload.ACPExtensionEventData['experienceCloud.org'];
-    const server = event.payload.ACPExtensionEventData['experienceCloud.server'];
-    const sessionTimeout = event.payload.ACPExtensionEventData['lifecycle.sessionTimeout'];
+    const experienceCloud =
+      event.payload.ACPExtensionEventData['experienceCloud.org'];
+    const server =
+      event.payload.ACPExtensionEventData['experienceCloud.server'];
+    const sessionTimeout =
+      event.payload.ACPExtensionEventData['lifecycle.sessionTimeout'];
     return experienceCloud && server && sessionTimeout;
   });
 
