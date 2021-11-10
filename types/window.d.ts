@@ -1,7 +1,9 @@
 declare module 'griffon-window' {
   global {
     interface Window {
-      griffon: any;
+      griffon: {
+        toolkit: import('./toolkit').GriffonToolkit;
+      };
     }
   }
 }
