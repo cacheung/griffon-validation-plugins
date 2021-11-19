@@ -12,11 +12,16 @@ governing permissions and limitations under the License.
 /* eslint no-console: 0 */
 
 const { execSync } = require('child_process');
+const minimist = require('minimist');
 const { resolve } = require('path');
 const plugins = require('./process.plugins');
 
-plugins.forEach((plugin) => {
-  const packageDir = resolve(__dirname, `../plugins/${plugin}`);
+const { plugin } = minimist(process.argv.slice(2));
+
+const targetPlugins = plugin ? [plugin] : plugins;
+
+targetPlugins.forEach((targetPlugin) => {
+  const packageDir = resolve(__dirname, `../plugins/${targetPlugin}`);
 
   const cwdOptions = {
     cwd: packageDir,
