@@ -14,13 +14,18 @@ governing permissions and limitations under the License.
 
 const { execSync } = require('child_process');
 const { readdirSync } = require('fs');
+const minimist = require('minimist');
 const { resolve } = require('path');
 const plugins = require('./process.plugins');
 
+const { plugin } = minimist(process.argv.slice(2));
+
+const targetPlugins = plugin ? [plugin] : plugins;
+
 const ZIP_NAME_REGEX = /\.zip$/;
 
-plugins.forEach((plugin) => {
-  const packageDir = resolve(__dirname, `../plugins/${plugin}`);
+targetPlugins.forEach((targetPlugin) => {
+  const packageDir = resolve(__dirname, `../plugins/${targetPlugin}`);
 
   const packageZips = readdirSync(packageDir).filter((file) =>
     ZIP_NAME_REGEX.test(file)
@@ -36,8 +41,8 @@ plugins.forEach((plugin) => {
   } else {
     const message =
       packageZips.length === 0
-        ? `No package zip found for plugin ${plugin}`
-        : `Could not determine which package zip to upload for plugin ${plugin}`;
+        ? `No package zip found for plugin ${targetPlugin}`
+        : `Could not determine which package zip to upload for plugin ${targetPlugin}`;
     console.log(message);
   }
 });

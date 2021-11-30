@@ -35,9 +35,11 @@ import { ValidationPluginResult } from 'types/validationPlugin';
   ).reduce(
     (map: Record<string, AnalyticsResponse>, event: AnalyticsResponse) => {
       const { requestEventIdentifier } = event.payload.ACPExtensionEventData;
-      return requestEventIdentifier
-        ? { [requestEventIdentifier]: event, ...map }
-        : map;
+      if (requestEventIdentifier) {
+        // eslint-disable-next-line no-param-reassign
+        map[requestEventIdentifier] = event;
+      }
+      return map;
     },
     {}
   );
