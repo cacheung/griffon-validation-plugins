@@ -1,0 +1,10 @@
+{
+  "category": "AEP Optimize",
+  "displayName": "Adobe Optimize Mbox Request Validation",
+  "description": "Verifies the Adobe Optimize requested mbox scopes have a matching response",
+  "namespace": "adobe-optimize-mbox-validation",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}

@@ -25,27 +25,27 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   const isOptimizeInstalled = versionEvents.some(
     versions.getExtensionsKey('"com.adobe.optimize"')
   );
-  const isEdgeInstalled = versionEvents.some(
-    versions.getExtensionsKey('"com.adobe.edge"')
+  const isTargetInstalled = versionEvents.some(
+    versions.getExtensionsKey('"com.adobe.target"')
   );
-  const isEdgeIdentityInstalled = versionEvents.some(
-    versions.getExtensionsKey('"com.adobe.edge.identity"')
+  const isOffersInstalled = versionEvents.some(
+    versions.getExtensionsKey('"com.adobe.offers"')
   );
 
   const isValid =
-    isOptimizeInstalled && isEdgeInstalled && isEdgeIdentityInstalled;
+    isOptimizeInstalled && (isTargetInstalled || isOffersInstalled);
 
   return isValid
     ? {
         events: [],
-        message: 'All Optimize Prerequisites are installed',
+        message: 'Optimize Prerequisites are installed',
         result: 'matched',
         status: 'valid'
       }
     : {
         events: [],
         message:
-          'Missing required extensions for optimize. Please ensure Optimize, Edge, and Edge Identity extensions are enabled',
+          'Missing required extensions for optimize. Please ensure either target or offers extensions are installed',
         result: 'not matched',
         status: 'invalid'
       };
