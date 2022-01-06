@@ -9,29 +9,49 @@
  * governing permissions and limitations under the License.
  *
  */
-(function (events) {
-  const { toolkit: { 'aep-mobile': aepMobile, combineAny, match } } = window.griffon;
-  const analyticsTrackEvents = match(combineAny([
-    aepMobile.genericTrack.matcher,
-    aepMobile.lifecycleStart.matcher
-  ]), events);
-  const analyticsResponseEvents = match(aepMobile.analyticsResponse.matcher, events)
-    /* eslint-disable no-param-reassign */
-    .reduce((map, event) => {
+
+import {
+  AnalyticsResponse,
+  GenericTrack,
+  LifecycleStart
+} from '@adobe/griffon-toolkit-aep-mobile';
+import { Event } from '@adobe/griffon-toolkit-common';
+import { ValidationPluginResult } from 'types/validationPlugin';
+
+(function (events: Event[]): ValidationPluginResult {
+  const {
+    toolkit: { 'aep-mobile': aepMobile, combineAny, match }
+  } = window.griffon;
+  const analyticsTrackEvents = match(
+    combineAny([
+      aepMobile.genericTrack.matcher,
+      aepMobile.lifecycleStart.matcher
+    ]),
+    events
+  ) as (GenericTrack & LifecycleStart)[];
+  const analyticsResponseEvents: Record<string, AnalyticsResponse> = match(
+    aepMobile.analyticsResponse.matcher,
+    events
+  ).reduce(
+    (map: Record<string, AnalyticsResponse>, event: AnalyticsResponse) => {
       const { requestEventIdentifier } = event.payload.ACPExtensionEventData;
       if (requestEventIdentifier) {
+        // eslint-disable-next-line no-param-reassign
         map[requestEventIdentifier] = event;
       }
       return map;
-    }, {});
-    /* eslint-enable no-param-reassign */
+    },
+    {}
+  );
 
   const matchedMessage = 'All Adobe Analytics events sent the debug flag!';
   const notMatchedEvents = [];
-  const notMatchedMessage = 'Some Adobe Analytics events did not send the debug flag!';
+  const notMatchedMessage =
+    'Some Adobe Analytics events did not send the debug flag!';
   for (let i = 0; i < analyticsTrackEvents.length; i++) {
     const analyticsTrackEvent = analyticsTrackEvents[i];
-    const requestEventIdentifier = analyticsTrackEvent.payload.ACPExtensionEventUniqueIdentifier;
+    const requestEventIdentifier = analyticsTrackEvent.payload
+      .ACPExtensionEventUniqueIdentifier as string;
     const found = analyticsResponseEvents[requestEventIdentifier];
     if (found) {
       const { hitUrl } = found?.payload?.ACPExtensionEventData;

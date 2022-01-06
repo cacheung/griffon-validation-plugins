@@ -10,6 +10,7 @@ governing permissions and limitations under the License.
 */
 
 /* eslint no-console: 0 */
+/* eslint-disable @typescript-eslint/no-var-requires */
 
 const { execSync } = require('child_process');
 const minimist = require('minimist');
@@ -29,6 +30,6 @@ targetPlugins.forEach((targetPlugin) => {
   };
 
   execSync(`rm -rf ${packageDir}/dist`);
-  execSync('npx babel . -d dist', cwdOptions);
+  execSync('npx babel . -d dist --extensions ".ts"', cwdOptions);
   execSync('npx @adobe/griffon-packager', cwdOptions);
 });
