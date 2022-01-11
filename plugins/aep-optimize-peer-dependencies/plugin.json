@@ -1,0 +1,10 @@
+{
+  "category": "AEP Optimize",
+  "displayName": "Optimize Peer Dependencies",
+  "description": "Verifies Target or Offers is installed for use with Optimize.",
+  "namespace": "aep-optimize-peer-dependencies",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}

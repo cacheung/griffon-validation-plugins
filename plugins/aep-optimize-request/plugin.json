@@ -1,0 +1,10 @@
+{
+    "category": "AEP Optimize",
+    "displayName": "Adobe Optimize Request Validation",
+    "description": "Verifies the Adobe Optimize Requests all have a corresponding Response.",
+    "namespace": "adobe-optimize-request",
+    "src": "dist/index.js",
+    "type": "validation",
+    "version": "0.0.1",
+    "visibility": ["PUBLIC"]
+}
