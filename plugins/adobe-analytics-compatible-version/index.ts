@@ -59,8 +59,8 @@ import { ValidationPluginResult } from 'types/validationPlugin';
     analyticsVersionMatches: string[]
   ) =>
     parseInt(assuranceVersionMatches[1], 10) >= 1 &&
-    parseInt(analyticsVersionMatches[1], 10) >= 2 &&
-    parseInt(analyticsVersionMatches[2], 10) >= 4;
+    parseInt(analyticsVersionMatches[1], 10) > 2 ||
+    (parseInt(analyticsVersionMatches[1], 10) === 2 && parseInt(analyticsVersionMatches[2], 10) >= 4);
 
   let analyticsVersion;
   let assuranceVersion;
@@ -71,7 +71,7 @@ import { ValidationPluginResult } from 'types/validationPlugin';
       : isAndroidCompatible;
     const extensions = versions.getExtensions(event);
     assuranceVersion = extensions['com.adobe.assurance']?.version || '';
-    analyticsVersion = extensions.Analytics?.version || '';
+    analyticsVersion = extensions.Analytics?.version || extensions['com.adobe.module.analytics']?.version || '';
     const assuranceVersionMatches = assuranceVersion.match(versionRegex) || [];
     const analyticsVersionMatches = analyticsVersion.match(versionRegex) || [];
     return isCompatible(assuranceVersionMatches, analyticsVersionMatches);
