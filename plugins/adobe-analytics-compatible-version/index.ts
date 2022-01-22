@@ -43,24 +43,27 @@ import { ValidationPluginResult } from 'types/validationPlugin';
     }
   }
 
-  const versionRegex = /^(\d)\.(\d)/;
+  const versionRegex = /^(\d)\.(\d)\.(\d)/;
 
   const isAndroidCompatible = (
     assuranceVersionMatches: string[],
     analyticsVersionMatches: string[]
   ) =>
-    parseInt(assuranceVersionMatches[1], 10) >= 1 &&
-    parseInt(analyticsVersionMatches[1], 10) >= 1 &&
-    parseInt(analyticsVersionMatches[2], 10) >= 2 &&
-    parseInt(analyticsVersionMatches[3], 10) >= 6;
+    (parseInt(assuranceVersionMatches[1], 10) >= 1 &&
+      parseInt(analyticsVersionMatches[1], 10) > 1) ||
+    (parseInt(analyticsVersionMatches[1], 10) === 1 &&
+      (parseInt(analyticsVersionMatches[2], 10) > 2 ||
+        (parseInt(analyticsVersionMatches[2], 10) === 2 &&
+          parseInt(analyticsVersionMatches[3], 10) >= 6)));
 
   const isIOSCompatible = (
     assuranceVersionMatches: string[],
     analyticsVersionMatches: string[]
   ) =>
-    parseInt(assuranceVersionMatches[1], 10) >= 1 &&
-    parseInt(analyticsVersionMatches[1], 10) > 2 ||
-    (parseInt(analyticsVersionMatches[1], 10) === 2 && parseInt(analyticsVersionMatches[2], 10) >= 4);
+    (parseInt(assuranceVersionMatches[1], 10) >= 1 &&
+      parseInt(analyticsVersionMatches[1], 10) > 2) ||
+    (parseInt(analyticsVersionMatches[1], 10) === 2 &&
+      parseInt(analyticsVersionMatches[2], 10) >= 4);
 
   let analyticsVersion;
   let assuranceVersion;
@@ -71,7 +74,10 @@ import { ValidationPluginResult } from 'types/validationPlugin';
       : isAndroidCompatible;
     const extensions = versions.getExtensions(event);
     assuranceVersion = extensions['com.adobe.assurance']?.version || '';
-    analyticsVersion = extensions.Analytics?.version || extensions['com.adobe.module.analytics']?.version || '';
+    analyticsVersion =
+      extensions.Analytics?.version ||
+      extensions['com.adobe.module.analytics']?.version ||
+      '';
     const assuranceVersionMatches = assuranceVersion.match(versionRegex) || [];
     const analyticsVersionMatches = analyticsVersion.match(versionRegex) || [];
     return isCompatible(assuranceVersionMatches, analyticsVersionMatches);
