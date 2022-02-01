@@ -1,0 +1,10 @@
+{
+  "category": "AEP IAM",
+  "displayName": "Adobe IAM Response Payload Validation",
+  "description": "Validates that IAM Response payloads are valid",
+  "namespace": "adobe-iam-response-events",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}

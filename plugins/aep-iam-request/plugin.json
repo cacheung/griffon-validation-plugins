@@ -1,0 +1,10 @@
+{
+  "category": "AEP IAM",
+  "displayName": "Adobe IAM Request Scope Validation",
+  "description": "Validates that IAM Response payloads are returned for each requested scope",
+  "namespace": "adobe-iam-request",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}
