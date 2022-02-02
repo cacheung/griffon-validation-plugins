@@ -26,12 +26,12 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 
   return !pushIdEvents.length
     ? {
-        errors: [],
+        events: [],
         message: 'No push ID was registered in the app.',
         result: 'not matched'
       }
     : {
-        errors: [],
+        events: [],
         message: 'Messaging Extension was registered',
         result: 'matched'
       };

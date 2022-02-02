@@ -31,7 +31,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   if (!pushIdEvents.length) {
     return {
       message: 'No push ID was registered in the app.',
-      errors: [],
+      events: [],
       result: 'not matched'
     };
   }
@@ -53,19 +53,19 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   return hasAnnotation
     ? {
         message: 'Push token was saved in the Platform!',
-        errors: [],
+        events: [],
         result: 'matched'
       }
     : lastTS < Date.now() - TIMEOUT
     ? {
         message: 'Operation timed out. Could not find push token on platform',
-        errors: [],
+        events: [],
         result: 'not matched'
       }
     : {
         message:
           'Attempting to locate push token in the platform. This can take up to 15 minutes.',
-        errors: [],
+        events: [],
         status: 'loading'
       };
 });
