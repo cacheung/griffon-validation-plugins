@@ -39,14 +39,12 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     ? {
         events: [],
         message: 'Optimize Prerequisites are installed',
-        result: 'matched',
-        status: 'valid'
+        result: 'matched'
       }
     : {
         events: [],
         message:
           'Missing required extensions for optimize. Please ensure either target or offers extensions are installed',
-        result: 'not matched',
-        status: 'invalid'
+        result: 'not matched'
       };
 });
