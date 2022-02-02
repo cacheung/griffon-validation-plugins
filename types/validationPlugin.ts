@@ -6,6 +6,7 @@ export interface ValidationPluginResult {
   events?: string[];
   message: string;
   result?: 'matched' | 'not matched';
+  /** @deprecated Currently legacy supported, please use events instead */
   errors?: string[];
   status?: 'loading' | 'invalid auth' | 'prerequisite missing';
 }
