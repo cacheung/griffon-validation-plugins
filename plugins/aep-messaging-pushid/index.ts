@@ -28,11 +28,11 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     ? {
         errors: [],
         message: 'No push ID was registered in the app.',
-        status: 'invalid'
+        result: 'not matched'
       }
     : {
         errors: [],
         message: 'Messaging Extension was registered',
-        status: 'valid'
+        result: 'matched'
       };
 });

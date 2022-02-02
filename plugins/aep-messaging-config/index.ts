@@ -32,18 +32,18 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
         message:
           "No configuration info could be found. Either Griffon isn't registered or it did not pass in cached events upon activating.",
         errors: [],
-        status: 'help'
+        result: 'not matched'
       }
     : configEvents.some(hasAllConfig)
     ? {
         message: 'Messaging was configured correctly',
         errors: [],
-        status: 'valid'
+        result: 'matched'
       }
     : {
         message:
           'Did not detect the required configuration values. You may need to install the extension in launch and publish those settings.',
         errors: configEvents.map((event) => event.uuid),
-        status: 'invalid'
+        result: 'not matched'
       };
 });
