@@ -39,14 +39,12 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     ? {
         events: [],
         message: 'All Optimize Prerequisites are installed',
-        result: 'matched',
-        status: 'valid'
+        result: 'matched'
       }
     : {
         events: [],
         message:
           'Missing required extensions for optimize. Please ensure Optimize, Edge, and Edge Identity extensions are enabled',
-        result: 'not matched',
-        status: 'invalid'
+        result: 'not matched'
       };
 });

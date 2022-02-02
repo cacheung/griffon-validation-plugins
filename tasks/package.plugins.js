@@ -15,6 +15,7 @@ governing permissions and limitations under the License.
 const { execSync } = require('child_process');
 const minimist = require('minimist');
 const { resolve } = require('path');
+const fs = require('fs-extra');
 const plugins = require('./process.plugins');
 
 const { plugin } = minimist(process.argv.slice(2));
@@ -31,5 +32,9 @@ targetPlugins.forEach((targetPlugin) => {
 
   execSync(`rm -rf ${packageDir}/dist`);
   execSync('npx babel . -d dist --extensions ".ts"', cwdOptions);
+  const content = fs
+    .readFileSync(`${packageDir}/dist/index.js`, 'utf-8')
+    .replace(/export{};$/, '');
+  fs.writeFileSync(`${packageDir}/dist/index.js`, content);
   execSync('npx @adobe/griffon-packager', cwdOptions);
 });

@@ -14,11 +14,6 @@ import { PersonalizationEdgeRequest } from '@adobe/griffon-toolkit-aep-mobile';
 import { Event } from '@adobe/griffon-toolkit-common';
 import { ValidationPluginResult } from '../../types/validationPlugin';
 
-const validRequestTypes = [
-  'decisioning.propositionDisplay',
-  'decisioning.propositionInteract'
-];
-
 (function (events: Event[]): ValidationPluginResult {
   const {
     toolkit: { 'aep-mobile': aepMobile, match }
@@ -30,6 +25,11 @@ const validRequestTypes = [
   ) as PersonalizationEdgeRequest[];
 
   const invalidEvents: string[] = [];
+
+  const validRequestTypes = [
+    'decisioning.propositionDisplay',
+    'decisioning.propositionInteract'
+  ];
 
   personalizationEdgeRequests.forEach((request) => {
     if (
