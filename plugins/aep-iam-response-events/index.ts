@@ -96,11 +96,11 @@ type IAMPersonalizationResponse = PersonalizationEdgeResponse & {
           !!invalidContent.length &&
           `There are responses missing IAM rules in the payload.`
         }`,
-        result: 'invalid',
+        result: 'not matched',
         errors
       }
     : {
         message: 'Valid! All IAM Response Events are correct.',
-        result: 'valid'
+        result: 'matched'
       };
 });

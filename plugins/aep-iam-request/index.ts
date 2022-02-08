@@ -50,13 +50,13 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 
   return errors.length
     ? {
-        result: 'invalid',
+        result: 'not matched',
         message:
           'There are IAM request scopes that did not have a corresponding response',
         errors
       }
     : {
-        result: 'valid',
+        result: 'matched',
         message: 'Valid! All IAM Request scopes had a matching response'
       };
 });
