@@ -29,7 +29,6 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   const errors: string[] = [];
   let message =
     'All analytics.hit events have an associated analytics.mapping event.';
-  let result = 'matched';
 
   const getHitReceivedMatcher = (requestId: string) =>
     toolkit.combineAll([
@@ -56,7 +55,6 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
         : hit.uuid;
       message =
         'One or more analytics.hit events are missing an analytics.mapping event.';
-      result = 'not matched';
       errors.push(errorEventUuid);
     }
   });
@@ -64,6 +62,6 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   return {
     events: errors,
     message,
-    result
+    result: errors.length ? 'not matched' : 'matched'
   };
 });

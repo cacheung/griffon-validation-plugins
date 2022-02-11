@@ -15,10 +15,11 @@ import { Event } from '@adobe/griffon-toolkit-common';
 import { ValidationPluginResult } from '../../types/validationPlugin';
 
 (function (events: Event[]): ValidationPluginResult {
-  const configurationEvents = events.filter(
-    (event) =>
-      event.payload.ACPExtensionEventType ===
-      'com.adobe.eventtype.configuration'
+  const { toolkit: kit } = window.griffon;
+  const { configuration } = kit['aep-mobile'];
+  const configurationEvents = kit.match(
+    configuration.matcher,
+    events
   ) as Configuration[];
   const valid = configurationEvents.some((event) => {
     const endpoint = event.payload.ACPExtensionEventData['places.endpoint'];

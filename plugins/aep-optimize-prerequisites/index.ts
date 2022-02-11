@@ -38,13 +38,13 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   return isValid
     ? {
         events: [],
-        message: 'All Optimize Prerequisites are installed',
+        message: 'All Optimize SDK Prerequisites are installed',
         result: 'matched'
       }
     : {
         events: [],
         message:
-          'Missing required extensions for optimize. Please ensure Optimize, Edge, and Edge Identity extensions are enabled',
+          'Missing required SDK prerequisites for Optimize. Please ensure Optimize, Edge, and Edge Identity extensions are installed and registered',
         result: 'not matched'
       };
 });

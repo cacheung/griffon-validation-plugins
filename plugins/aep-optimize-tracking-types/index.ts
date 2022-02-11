@@ -27,6 +27,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   const invalidEvents: string[] = [];
 
   const validRequestTypes = [
+    'personalization.request',
     'decisioning.propositionDisplay',
     'decisioning.propositionInteract'
   ];
@@ -41,7 +42,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     }
   });
 
-  const valid = !!invalidEvents.length;
+  const valid = !invalidEvents.length;
 
   const message = valid
     ? 'Valid! All Personalization request have a valid request type'

@@ -11,7 +11,10 @@
 */
 
 import { Event } from '@adobe/griffon-toolkit-common';
-import { GenericTrack } from '@adobe/griffon-toolkit-aep-mobile';
+import {
+  GenericTrack,
+  LifecycleStart
+} from '@adobe/griffon-toolkit-aep-mobile';
 import { ValidationPluginResult } from '../../types/validationPlugin';
 
 (function (events: Event[]): ValidationPluginResult {
@@ -24,7 +27,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       aepMobile.lifecycleStart.matcher
     ]),
     events
-  ) as GenericTrack[];
+  ) as (GenericTrack & LifecycleStart)[];
   let valid = true;
   const invalidEvents: string[] = [];
   for (let i = 0; i < analyticsTrackEvents.length; i++) {

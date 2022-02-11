@@ -1,7 +1,7 @@
 {
   "category": "AEP IAM",
-  "displayName": "In App Messaging Configuration",
-  "description": "Validates IAM has been installed and configured correctly",
+  "displayName": "Adobe Journey Optimizer In App Messaging Configuration",
+  "description": "Validates Adobe Journey Optimizer In App Messaging has been configured correctly",
   "namespace": "aep-iam-configuration",
   "src": "dist/index.js",
   "type": "validation",

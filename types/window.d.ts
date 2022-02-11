@@ -3,6 +3,8 @@ declare module 'griffon-window' {
     interface Window {
       griffon: {
         toolkit: import('./toolkit').GriffonToolkit;
+        schema?: any;
+        expect?: any;
       };
     }
   }

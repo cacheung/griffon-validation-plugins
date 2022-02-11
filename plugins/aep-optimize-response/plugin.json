@@ -1,0 +1,10 @@
+{
+  "category": "AEP Optimize",
+  "displayName": "AEP Optimize Response Validation",
+  "description": "Verifies the AEP Optimize requested scopes have a matching response",
+  "namespace": "aep-optimize-response",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}
