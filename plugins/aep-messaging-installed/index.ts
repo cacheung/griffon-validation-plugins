@@ -26,18 +26,18 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     ? {
         message:
           "No version info could be found. Either Griffon isn't registered or it did not pass in cached events upon activating.",
-        errors: [],
-        status: 'help'
+        events: [],
+        result: 'not matched'
       }
     : versionEvents.some(versions.getExtensionsKey('"com.adobe.messaging"'))
     ? {
         message: 'Messaging Extension was registered',
-        errors: [],
-        status: 'valid'
+        events: [],
+        result: 'not matched'
       }
     : {
         message: 'Did not detect initialization of the Messaging Extension',
-        errors: versionEvents.map((event) => event.uuid),
-        status: 'invalid'
+        events: versionEvents.map((event) => event.uuid),
+        result: 'matched'
       };
 });

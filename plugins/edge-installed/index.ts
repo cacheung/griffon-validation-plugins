@@ -27,20 +27,17 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
         events: [],
         message:
           "No version info could be found. Either Griffon isn't registered or it did not pass in cached events upon activating.",
-        result: 'unknown',
-        status: 'help'
+        result: 'not matched'
       }
     : versionEvents.some(versions.getExtensionsKey('"com.adobe.edge"'))
     ? {
         events: [],
         message: 'Edge Extension was registered',
-        result: 'matched',
-        status: 'valid'
+        result: 'matched'
       }
     : {
         message: 'Did not detect initialization of the Edge Extension',
         events: versionEvents.map((event) => event.uuid),
-        result: 'not matched',
-        status: 'invalid'
+        result: 'not matched'
       };
 });

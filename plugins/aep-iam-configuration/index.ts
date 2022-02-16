@@ -1,5 +1,5 @@
 /*
-  Copyright 2021 Adobe. All rights reserved.
+  Copyright 2022 Adobe. All rights reserved.
   This file is licensed to you under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -22,25 +22,29 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     events
   ) as Configuration[];
 
-  const hasAllConfig = (event: Configuration) =>
-    configuration.getEventDataKey('"edge.configId"', event);
+  if (!configEvents.length) {
+    return {
+      message:
+        "No configuration info could be found. Either Griffon isn't registered or it did not pass in cached events upon activating.",
+      events: [],
+      result: 'not matched'
+    };
+  }
 
-  return !configEvents.length
+  const hasAllConfig = (event: Configuration) =>
+    configuration.getEventDataKey('"experienceCloud.org"', event) &&
+    configuration.getEventDataKey('"edge.configId"', event) &&
+    configuration.getEventDataKey('"messaging.eventDataset"', event);
+
+  return configEvents.some(hasAllConfig)
     ? {
+        message: 'IAM has been configured correctly',
         events: [],
-        message:
-          "No configuration info could be found. Either Griffon isn't registered or it did not pass in cached events upon activating.",
-        result: 'not matched'
-      }
-    : configEvents.some(hasAllConfig)
-    ? {
-        events: [],
-        message: 'Edge extension was configured correctly',
         result: 'matched'
       }
     : {
         message:
-          'Did not detect the required configuration values. You may need to install the extension in launch and publish those settings.',
+          'Did not detect the required configuration values. Please ensure the following values have been configured in launch: experienceCloud.org, edge.configId, and messaging.eventDataset.',
         events: configEvents.map((event) => event.uuid),
         result: 'not matched'
       };
