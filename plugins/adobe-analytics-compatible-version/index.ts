@@ -43,7 +43,7 @@ import { ValidationPluginResult } from 'types/validationPlugin';
     }
   }
 
-  const versionRegex = /^(\d)\.(\d)\.(\d)/;
+  const versionRegex = /^(\d+)\.(\d+)\.(\d+)/;
 
   const isAndroidCompatible = (
     assuranceVersionMatches: string[],
