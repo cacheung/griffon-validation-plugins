@@ -27,57 +27,63 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       message:
         "Unable to detect any version events. Either Griffon isn't registered or it did not pass in cached events upon activating.",
       events: [],
-      result: 'not matches'
+      result: 'not matched'
     };
   }
 
-  const isIAMInstalled = versionEvents.some(
-    versions.getExtensionsKey('"com.adobe.marketing.mobile"')
-  );
-
-  const isOptimizeInstalled = versionEvents.some(
-    versions.getExtensionsKey('"com.adobe.optimize"')
-  );
-
-  const isEdgeInstalled = versionEvents.some(
-    versions.getExtensionsKey('"com.adobe.edge"')
-  );
-
-  const isMessagingInstalled = versionEvents.some(
-    versions.getExtensionsKey('"com.adobe.messaging"')
-  );
-
   const isCoreInstalled = versionEvents.some(
-    versions.getExtensionsKey('"com.adobe.core"')
+    (version) => versions.getSdkVersion(version) >= '3.4.2'
   );
+
+  const isEdgeInstalled = versionEvents.some((version) => {
+    const installed = versions.getExtensionsKey('"com.adobe.edge"')(version);
+    return installed && installed >= '1.3.0';
+  });
+
+  const isEdgeConsentInstalled = versionEvents.some((version) => {
+    const installed = versions.getExtensionsKey('"com.adobe.edge.consent"')(
+      version
+    );
+    return installed && installed >= '1.0.0';
+  });
+
+  const isEdgeIdentityInstalled = versionEvents.some((version) => {
+    const installed = versions.getExtensionsKey('"com.adobe.edge.identity"')(
+      version
+    );
+    return installed && installed >= '1.0.1';
+  });
+
+  const isMessagingInstalled = versionEvents.some((version) => {
+    const installed = versions.getExtensionsKey('"com.adobe.messaging"')(
+      version
+    );
+    return installed && installed >= '1.1.0';
+  });
+
+  const isOptimizeInstalled = versionEvents.some((version) => {
+    const installed = versions.getExtensionsKey('"com.adobe.optimize"')(
+      version
+    );
+    return installed && installed >= '1.0.0';
+  });
 
   const isValid =
-    isIAMInstalled &&
-    isOptimizeInstalled &&
+    isCoreInstalled &&
     isEdgeInstalled &&
+    isEdgeConsentInstalled &&
+    isEdgeIdentityInstalled &&
     isMessagingInstalled &&
-    isCoreInstalled;
-
-  const generateInvalidMessage = () => {
-    const missingExtensions = [
-      { name: 'IAM', value: isIAMInstalled },
-      { name: 'Core', value: isCoreInstalled },
-      { name: 'Optimize', value: isOptimizeInstalled },
-      { name: 'Edge', value: isEdgeInstalled },
-      { name: 'Messaging', value: isMessagingInstalled }
-    ].filter((extension) => !extension.value);
-
-    return missingExtensions.map((extension) => extension.name).join(', ');
-  };
+    isOptimizeInstalled;
 
   return isValid
     ? {
-        message: 'All IAM dependencies have been installed',
+        message: 'All In App Messaging dependencies have been installed',
         events: [],
         result: 'matched'
       }
     : {
-        message: `Missing required extensions for IAM. Please ensure the following extensions are installed: ${generateInvalidMessage()}`,
+        message: `Missing required extensions for In App Messaging. Please ensure the following extensions are installed: AEP Core >= 3.4.2, AEP Edge >= 1.3.0, AEP Edge Consent >= 1.0.0, AEP Edge Identity >= 1.0.1, AEP Messaging >= 1.1.0, and AEP Optimize >= 1.0.0`,
         events: [],
         result: 'not matched'
       };

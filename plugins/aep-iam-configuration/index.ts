@@ -38,7 +38,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 
   return configEvents.some(hasAllConfig)
     ? {
-        message: 'IAM has been configured correctly',
+        message: 'In App Messaging has been configured correctly',
         events: [],
         result: 'matched'
       }

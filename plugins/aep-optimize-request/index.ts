@@ -22,6 +22,12 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     toolkit: { 'aep-mobile': aepMobile, match }
   } = window.griffon;
 
+  const validRequestTypes = [
+    'personalization.request',
+    'decisioning.propositionDisplay',
+    'decisioning.propositionInteract'
+  ];
+
   const personalizationEdgeRequests = match(
     aepMobile.personalizationEdgeRequest.matcher,
     events
@@ -34,30 +40,50 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 
   const invalidEvents: string[] = [];
 
-  personalizationEdgeRequests.forEach((request) => {
-    const response = personalizationEdgeResponses.find((edgeResponse) => {
-      const requestId =
-        edgeResponse.payload?.ACPExtensionEventData?.requestEventId;
-      return (
-        requestId ===
-        request.payload?.ACPExtensionEventData
-          ?.ACPExtensionEventUniqueIdentifier
-      );
-    });
+  const responseIds = personalizationEdgeResponses.map(
+    (response) => response.payload?.ACPExtensionEventData?.requestEventId
+  );
 
-    if (!response) {
+  personalizationEdgeRequests.forEach((request) => {
+    if (
+      !responseIds.includes(request.payload.ACPExtensionEventUniqueIdentifier)
+    ) {
       invalidEvents.push(request.uuid);
     }
   });
 
-  const valid = !!invalidEvents.length;
+  const invalidRequestTypes: string[] = [];
+
+  personalizationEdgeRequests.forEach((request) => {
+    if (
+      !validRequestTypes.includes(
+        request.payload.ACPExtensionEventData.xdm.eventType
+      )
+    ) {
+      invalidRequestTypes.push(request.uuid);
+    }
+  });
+
+  const valid = !invalidEvents.length && !invalidRequestTypes.length;
+
+  const messages: string[] = [];
+
+  if (invalidEvents.length) {
+    messages.push(
+      'There are events missing an Personalization response event.'
+    );
+  }
+
+  if (invalidRequestTypes.length) {
+    messages.push('There are events with an invalid request type.');
+  }
 
   const message = valid
-    ? 'Valid! All Personalization request events have a corresponding Personalization response event'
-    : 'Invalid! There are events missing an Personalization response event:';
+    ? 'Valid! All Personalization request events have a corresponding Personalization response event and valid request types.'
+    : messages.join(' ');
 
   return {
-    events: invalidEvents,
+    events: [...invalidEvents, ...invalidRequestTypes],
     message,
     result: valid ? 'matched' : 'not matched'
   };

@@ -57,14 +57,14 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     });
   });
 
-  const valid = !!invalidEvents.length;
+  const valid = !invalidEvents.length;
 
   const message = valid
     ? 'Valid! All Personalization request scopes have a matching response'
-    : 'Invalid! There are request scopes missing an Personalization response event';
+    : 'Invalid! There are request scopes missing a Personalization response event';
 
   return {
-    events: invalidEvents,
+    events: Array.from(new Set(invalidEvents)),
     message,
     result: valid ? 'matched' : 'not matched'
   };
