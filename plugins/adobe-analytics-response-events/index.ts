@@ -12,6 +12,7 @@
 
 import {
   AnalyticsResponse,
+  Configuration,
   GenericTrack,
   LifecycleStart
 } from '@adobe/griffon-toolkit-aep-mobile';
@@ -42,8 +43,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   const matchedMessage =
     'All Analytics events have a corresponding AnalyticsResponse event with the debug flag!';
   const notMatchedEvents = [];
-  const notMatchedMessage =
-    'Some events are missing an AnalyticsResponse event!';
+  let notMatchedMessage = 'Some events are missing an AnalyticsResponse event!';
   for (let i = 0; i < analyticsTrackEvents.length; i++) {
     const analyticsTrackEvent = analyticsTrackEvents[i];
     const requestEventIdentifier = analyticsTrackEvent.payload
@@ -53,6 +53,24 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       notMatchedEvents.push(analyticsTrackEvent.uuid);
     }
   }
+
+  if (notMatchedEvents.length) {
+    const configurationEvents: Configuration[] = match(
+      aepMobile.configuration.matcher,
+      events
+    );
+    const optedin = configurationEvents.some((event) => {
+      const eventData = aepMobile.configuration.getEventData(event);
+      const privacy = eventData['global.privacy'];
+      return privacy === 'optedin';
+    });
+
+    if (!optedin) {
+      notMatchedMessage +=
+        ' If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`';
+    }
+  }
+
   const message = !notMatchedEvents.length ? matchedMessage : notMatchedMessage;
   return {
     events: notMatchedEvents,
