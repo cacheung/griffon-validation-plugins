@@ -66,6 +66,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
         message:
           'Attempting to locate push token in the platform. This can take up to 15 minutes.',
         events: [],
+        result: 'unknown',
         status: 'loading'
       };
 });
