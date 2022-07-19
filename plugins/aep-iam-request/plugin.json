@@ -1,7 +1,7 @@
 {
   "category": "AEP IAM",
-  "displayName": "Adobe IAM Request Scope Validation",
-  "description": "Validates that IAM Response payloads are returned for each requested scope",
+  "displayName": "Adobe Journey Optimizer In App Messaging Request Scope Validation",
+  "description": "Validates that Adobe Journey Optimizer In App Messaging Response payloads are returned for each requested scope",
   "namespace": "adobe-iam-request",
   "src": "dist/index.js",
   "type": "validation",

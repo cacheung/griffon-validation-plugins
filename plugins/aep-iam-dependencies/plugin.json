@@ -1,7 +1,7 @@
 {
   "category": "AEP IAM",
-  "displayName": "In App Messaging Dependencies",
-  "description": "Validates IAM dependency extensions have been installed",
+  "displayName": "Adobe Journey Optimizer In App Messaging Dependencies",
+  "description": "Validates Adobe Journey Optimizer In App Messaging dependency extensions have been installed",
   "namespace": "aep-iam-dependencies",
   "src": "dist/index.js",
   "type": "validation",

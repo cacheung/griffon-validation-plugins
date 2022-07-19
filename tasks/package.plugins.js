@@ -31,7 +31,10 @@ targetPlugins.forEach((targetPlugin) => {
   };
 
   execSync(`rm -rf ${packageDir}/dist`);
-  execSync('npx babel . -d dist --extensions ".ts"', cwdOptions);
+  execSync(
+    'npx babel . -d dist --extensions ".ts" --ignore "*.test.ts"',
+    cwdOptions
+  );
   const content = fs
     .readFileSync(`${packageDir}/dist/index.js`, 'utf-8')
     .replace(/export{};$/, '');

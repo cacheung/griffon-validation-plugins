@@ -10,36 +10,9 @@
   governing permissions and limitations under the License.
 */
 
-import { PersonalizationEdgeResponse } from '@adobe/griffon-toolkit-aep-mobile';
 import { Event } from '@adobe/griffon-toolkit-common';
+import { IAMPersonalizationResponse } from 'types/iam';
 import { ValidationPluginResult } from '../../types/validationPlugin';
-
-interface DecodedScope {
-  activityId: string;
-  placementId: string;
-}
-
-interface IAMPersonalizationItem {
-  id: string;
-  data: {
-    id: string;
-    content: string;
-  };
-}
-
-type IAMPersonalizationResponse = PersonalizationEdgeResponse & {
-  payload: {
-    id: string;
-    scope: string;
-    activity: {
-      id: string;
-    };
-    placement: {
-      id: string;
-    };
-    items: IAMPersonalizationItem[];
-  };
-};
 
 (function (events: Event[]): ValidationPluginResult {
   const { toolkit: kit } = window.griffon;
@@ -49,27 +22,10 @@ type IAMPersonalizationResponse = PersonalizationEdgeResponse & {
     events
   ) as IAMPersonalizationResponse[];
 
-  const invalidScopes = personalizationResponses.reduce(
+  const errors = personalizationResponses.reduce(
     (result, { payload, uuid }) => {
-      const decodedScope = JSON.parse(
-        atob(payload?.scope as string)
-      ) as DecodedScope;
-
-      if (
-        decodedScope.activityId !== payload?.activity?.id ||
-        decodedScope.placementId !== payload?.placement?.id
-      ) {
-        result.push(uuid);
-      }
-      return result;
-    },
-    [] as string[]
-  );
-
-  const invalidContent = personalizationResponses.reduce(
-    (result, { payload, uuid }) => {
-      const hasInvalidContent = payload.items.some((item) => {
-        const content = JSON.parse(item?.data?.content);
+      const hasInvalidContent = payload.items?.some((item) => {
+        const content = JSON.parse(item?.data?.content || '{}');
         if (!content.rules?.length) {
           return true;
         }
@@ -85,22 +41,16 @@ type IAMPersonalizationResponse = PersonalizationEdgeResponse & {
     [] as string[]
   );
 
-  const errors = [...invalidScopes, ...invalidContent];
-
   return errors.length
     ? {
-        message: `There are issues with the IAM response events: ${
-          !!invalidScopes.length &&
-          `There are scopes that are incorrect in the payload.`
-        } ${
-          !!invalidContent.length &&
-          `There are responses missing IAM rules in the payload.`
-        }`,
+        message:
+          'There are responses missing In App Messaging rules in the payload.',
         result: 'not matched',
-        errors
+        events: errors
       }
     : {
-        message: 'Valid! All IAM Response Events are correct.',
-        result: 'matched'
+        message: 'Valid! All In App Messaging Response Events are correct.',
+        result: 'matched',
+        events: []
       };
 });

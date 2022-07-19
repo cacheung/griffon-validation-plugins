@@ -10,11 +10,9 @@
   governing permissions and limitations under the License.
 */
 
-import {
-  PersonalizationEdgeRequest,
-  PersonalizationEdgeResponse
-} from '@adobe/griffon-toolkit-aep-mobile';
+import { PersonalizationEdgeRequest } from '@adobe/griffon-toolkit-aep-mobile';
 import { Event } from '@adobe/griffon-toolkit-common';
+import { DecodedScope, IAMPersonalizationResponse } from 'types/iam';
 import { ValidationPluginResult } from '../../types/validationPlugin';
 
 (function (events: Event[]): ValidationPluginResult {
@@ -22,14 +20,17 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   const { personalizationEdgeRequest, personalizationEdgeResponse } =
     kit['aep-mobile'];
   const personalizationRequests = kit.match(
-    personalizationEdgeRequest.matcher,
+    kit.combineAll([
+      personalizationEdgeRequest.matcher,
+      'payload.ACPExtensionEventData.query.personalization.decisionScopes'
+    ]),
     events
   ) as PersonalizationEdgeRequest[];
 
   const personalizationResponses = kit.match(
     personalizationEdgeResponse.matcher,
     events
-  ) as PersonalizationEdgeResponse[];
+  ) as IAMPersonalizationResponse[];
 
   const requestScopes = personalizationRequests.map((request) => ({
     uuid: request.uuid,
@@ -37,26 +38,60 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       request.payload.ACPExtensionEventData.query.personalization.decisionScopes
   }));
 
-  const responseScopes = personalizationResponses.map(
-    (response) => response.payload.scope
+  const responseScopes = personalizationResponses.flatMap((response) =>
+    response.payload.ACPExtensionEventData?.payload?.map((p) => p?.scope)
   );
 
-  const errors = requestScopes.reduce((result, { uuid, scopes }) => {
+  const missingScopes = requestScopes.reduce((result, { uuid, scopes }) => {
     if (scopes.some((scope) => !responseScopes.includes(scope))) {
       result.push(uuid);
     }
     return result;
   }, [] as string[]);
 
-  return errors.length
+  const invalidScopes = requestScopes.reduce((result, { scopes, uuid }) => {
+    scopes?.forEach((scope) => {
+      try {
+        const decodedScope = JSON.parse(window.atob(scope)) as DecodedScope;
+        if (
+          !decodedScope?.['xdm:name'] ||
+          !/[A-Za-z0-9]*\.[A-Za-z0-9]*\.[A-Za-z0-9]*/.test(
+            decodedScope['xdm:name']
+          )
+        ) {
+          if (!result.includes(uuid)) {
+            result.push(uuid);
+          }
+        }
+      } catch {
+        if (!result.includes(uuid)) {
+          result.push(uuid);
+        }
+      }
+    });
+
+    return result;
+  }, [] as string[]);
+
+  const isInvalid = missingScopes.length || invalidScopes.length;
+
+  return isInvalid
     ? {
         result: 'not matched',
-        message:
-          'There are IAM request scopes that did not have a corresponding response',
-        errors
+        message: `${
+          missingScopes.length
+            ? 'There are request scopes that did not have a corresponding response'
+            : ''
+        } ${missingScopes.length && invalidScopes.length ? ' .' : ''} ${
+          invalidScopes.length
+            ? 'There are request scopes that do not have a name in the pattern of *.*.*'
+            : ''
+        }`,
+        events: [...missingScopes, ...invalidScopes]
       }
     : {
         result: 'matched',
-        message: 'Valid! All IAM Request scopes had a matching response'
+        message:
+          'Valid! All In App Messaging Request scopes had a matching response'
       };
 });

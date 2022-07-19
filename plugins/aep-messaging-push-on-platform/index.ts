@@ -20,7 +20,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   } = window.griffon;
 
   const getProfileAnnotation = (pushEvent: SetPushIdentifier) =>
-    (pushEvent.annotations || []).find((a) => a.type === 'dev');
+    pushEvent.annotations?.find((a) => a.type === 'dev');
 
   const pushIdEvents = match(
     aepMobile.setPushIdentifier.matcher,
@@ -45,7 +45,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       lastTS = event.timestamp;
     }
     const annotation = getProfileAnnotation(event);
-    if (annotation && annotation.payload.platformProfile) {
+    if (annotation && annotation.payload?.platformProfile) {
       hasAnnotation = true;
     }
   });

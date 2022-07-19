@@ -12,6 +12,7 @@
 
 import {
   AnalyticsResponse,
+  GenericTrack,
   LifecycleStart
 } from '@adobe/griffon-toolkit-aep-mobile';
 import { Event } from '@adobe/griffon-toolkit-common';
@@ -21,7 +22,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   const {
     toolkit: { 'aep-mobile': aepMobile, combineAny, match }
   } = window.griffon;
-  const analyticsTrackEvents: TrackEvent[] & LifecycleStart[] = match(
+  const analyticsTrackEvents: GenericTrack[] & LifecycleStart[] = match(
     combineAny([
       aepMobile.genericTrack.matcher,
       aepMobile.lifecycleStart.matcher
