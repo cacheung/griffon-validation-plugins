@@ -1,6 +1,7 @@
 import {
   analyticsResponse,
   AnalyticsResponse,
+  configuration,
   genericTrack,
   GenericTrack,
   lifecycleStart,
@@ -101,6 +102,15 @@ const analyticsResponseFour = analyticsResponse.mock({
   }
 }) as AnalyticsResponse;
 
+const configurationOptedOutEvent = configuration.mock({
+  uuid: '0',
+  payload: {
+    ACPExtensionEventData: {
+      'global.privacy': 'optedout'
+    }
+  }
+});
+
 describe('Adobe Analytics Response Events', () => {
   it('should return a valid response when all events has a matching response event', () => {
     const result = plugin([
@@ -132,5 +142,26 @@ describe('Adobe Analytics Response Events', () => {
       events: ['3', '4'],
       result: 'not matched'
     });
+  });
+
+  it('should return an error with link when any requests are missing a response and privacy is not optedin', () => {
+    const result = plugin([
+      configurationOptedOutEvent,
+      genericTrackEvent,
+      lifecycleStartEvent,
+      genericTrackTwo,
+      lifecycleStartTwo,
+      analyticsResponseEvent,
+      analyticsResponseTwo,
+      analyticsResponseThree,
+      analyticsResponseFour
+    ]);
+
+    expect(result).toMatchObject({
+      events: ['3', '4'],
+      result: 'not matched'
+    });
+
+    expect(result.links).toBeDefined();
   });
 });
