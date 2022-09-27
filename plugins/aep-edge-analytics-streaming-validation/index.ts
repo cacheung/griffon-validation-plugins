@@ -56,7 +56,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
         : hit.uuid;
       message =
         'One or more analytics.hit events are missing a successful streaming validation event.';
-      result = 'not matched';
+      result = 'unknown';
       errors.push(errorEventUuid);
     }
   });

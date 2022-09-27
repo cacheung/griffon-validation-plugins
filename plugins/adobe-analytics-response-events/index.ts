@@ -71,7 +71,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       notMatchedMessage +=
         ' If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`';
       links.push({
-        typed: 'doc',
+        type: 'doc',
         url: 'https://aep-sdks.gitbook.io/docs/resources/privacy-and-gdpr#using-adobe-experience-cloud-solution-extensions'
       });
     }
