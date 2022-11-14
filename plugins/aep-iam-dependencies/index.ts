@@ -61,20 +61,12 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     return installed && installed >= '1.1.0';
   });
 
-  const isOptimizeInstalled = versionEvents.some((version) => {
-    const installed = versions.getExtensionsKey('"com.adobe.optimize"')(
-      version
-    );
-    return installed && installed >= '1.0.0';
-  });
-
   const isValid =
     isCoreInstalled &&
     isEdgeInstalled &&
     isEdgeConsentInstalled &&
     isEdgeIdentityInstalled &&
-    isMessagingInstalled &&
-    isOptimizeInstalled;
+    isMessagingInstalled;
 
   return isValid
     ? {
