@@ -111,6 +111,17 @@ const configurationOptedOutEvent = configuration.mock({
   }
 });
 
+const configurationAlternateFormat = configuration.mock({
+  uuid: '0',
+  payload: {
+    metadata: {
+      'state.data': {
+        'global.privacy': 'optedout'
+      }
+    }
+  }
+});
+
 describe('Adobe Analytics Response Events', () => {
   it('should return a valid response when all events has a matching response event', () => {
     const result = plugin([
@@ -123,24 +134,6 @@ describe('Adobe Analytics Response Events', () => {
     expect(result).toMatchObject({
       events: [],
       result: 'matched'
-    });
-  });
-
-  it('should return an error when any requests are missing a response', () => {
-    const result = plugin([
-      genericTrackEvent,
-      lifecycleStartEvent,
-      genericTrackTwo,
-      lifecycleStartTwo,
-      analyticsResponseEvent,
-      analyticsResponseTwo,
-      analyticsResponseThree,
-      analyticsResponseFour
-    ]);
-
-    expect(result).toMatchObject({
-      events: ['3', '4'],
-      result: 'not matched'
     });
   });
 
@@ -162,6 +155,25 @@ describe('Adobe Analytics Response Events', () => {
       result: 'not matched'
     });
 
-    expect(result.links).toBeDefined();
+    expect(result.links.length).toBeGreaterThan(0);
+
+    const result2 = plugin([
+      configurationAlternateFormat,
+      genericTrackEvent,
+      lifecycleStartEvent,
+      genericTrackTwo,
+      lifecycleStartTwo,
+      analyticsResponseEvent,
+      analyticsResponseTwo,
+      analyticsResponseThree,
+      analyticsResponseFour
+    ]);
+
+    expect(result2).toMatchObject({
+      events: ['3', '4'],
+      result: 'not matched'
+    });
+
+    expect(result2.links.length).toBeGreaterThan(0);
   });
 });

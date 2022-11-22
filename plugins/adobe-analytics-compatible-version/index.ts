@@ -67,21 +67,29 @@ import { ValidationPluginResult } from 'types/validationPlugin';
 
   let analyticsVersion;
   let assuranceVersion;
-  const compatible = versionEvents.every((event) => {
-    const clientEvent = uniqueClients[event.clientId];
-    const isCompatible = clientInfoIos.isMatch(clientEvent)
-      ? isIOSCompatible
-      : isAndroidCompatible;
-    const extensions = versions.getExtensions(event);
-    assuranceVersion = extensions['com.adobe.assurance']?.version || '';
-    analyticsVersion =
-      extensions.Analytics?.version ||
-      extensions['com.adobe.module.analytics']?.version ||
-      '';
-    const assuranceVersionMatches = assuranceVersion.match(versionRegex) || [];
-    const analyticsVersionMatches = analyticsVersion.match(versionRegex) || [];
-    return isCompatible(assuranceVersionMatches, analyticsVersionMatches);
+  const edgeBridgeVersion = versionEvents.find((version) => {
+    const extensions = versions.getExtensions(version);
+    return extensions?.['com.adobe.edge.bridge'];
   });
+  const compatible = edgeBridgeVersion
+    ? true
+    : versionEvents.every((event) => {
+        const clientEvent = uniqueClients[event.clientId];
+        const isCompatible = clientInfoIos.isMatch(clientEvent)
+          ? isIOSCompatible
+          : isAndroidCompatible;
+        const extensions = versions.getExtensions(event);
+        assuranceVersion = extensions['com.adobe.assurance']?.version || '';
+        analyticsVersion =
+          extensions.Analytics?.version ||
+          extensions['com.adobe.module.analytics']?.version ||
+          '';
+        const assuranceVersionMatches =
+          assuranceVersion.match(versionRegex) || [];
+        const analyticsVersionMatches =
+          analyticsVersion.match(versionRegex) || [];
+        return isCompatible(assuranceVersionMatches, analyticsVersionMatches);
+      });
 
   return !versionEvents.length
     ? {
@@ -90,16 +98,23 @@ import { ValidationPluginResult } from 'types/validationPlugin';
           "No version info could be found. Either the Assurance SDK isn't registered or the SDK did not pass in cached events upon activating.",
         result: 'unknown'
       }
-    : compatible
+    : !compatible
     ? {
+        message: `Assurance SDK Version ${assuranceVersion} and Adobe Analytics Extension version ${analyticsVersion} are not compatible!`,
+        events: versionEvents.map((event) => event.uuid),
+        result: 'not matched'
+      }
+    : edgeBridgeVersion
+    ? {
+        events: [],
+        message:
+          'The installed Assurance SDK and Analytics Edge Bridge Extensions are compatible.',
+        result: 'matched'
+      }
+    : {
         events: [],
         message:
           'The installed Assurance SDK and Adobe Analytics Extensions are compatible.',
         result: 'matched'
-      }
-    : {
-        message: `Assurance SDK Version ${assuranceVersion} and Adobe Analytics Extension version ${analyticsVersion} are not compatible!`,
-        events: versionEvents.map((event) => event.uuid),
-        result: 'not matched'
       };
 });

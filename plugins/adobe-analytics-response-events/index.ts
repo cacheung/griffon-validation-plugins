@@ -63,7 +63,9 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     );
     const optedin = configurationEvents.some((event) => {
       const eventData = aepMobile.configuration.getEventData(event);
-      const privacy = eventData['global.privacy'];
+      const privacy =
+        eventData['global.privacy'] ||
+        event.payload.metadata?.['state.data']?.['global.privacy'];
       return privacy === 'optedin';
     });
 
