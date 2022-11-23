@@ -16,6 +16,20 @@ const validConfiguration = configuration.mock({
   }
 }) as Configuration;
 
+const alsoValidConfiguration = configuration.mock({
+  uuid: '4',
+  payload: {
+    metadata: {
+      'state.data': {
+        'analytics.rsids': 'rsids',
+        'global.privacy': 'optedin',
+        'analytics.launchHitDelay': 0,
+        'analytics.server': 'analytics.server'
+      }
+    }
+  }
+}) as Configuration;
+
 const invalidConfiguration = configuration.mock({
   uuid: '2',
   payload: {
@@ -42,6 +56,17 @@ describe('Adobe Analytics Configuration', () => {
     ]);
 
     expect(result).toMatchObject({
+      events: [],
+      result: 'matched'
+    });
+
+    const result2: ValidationPluginResult = plugin([
+      invalidConfiguration,
+      invalidConfigurationMissingEventData,
+      alsoValidConfiguration
+    ]);
+
+    expect(result2).toMatchObject({
       events: [],
       result: 'matched'
     });

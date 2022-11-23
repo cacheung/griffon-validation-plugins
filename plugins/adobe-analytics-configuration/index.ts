@@ -22,8 +22,12 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     events
   ) as Configuration[];
   const valid = configurationEvents.some((event) => {
-    const rsids = event.payload.ACPExtensionEventData['analytics.rsids'];
-    const server = event.payload.ACPExtensionEventData['analytics.server'];
+    const rsids =
+      event.payload.ACPExtensionEventData['analytics.rsids'] ||
+      event.payload.metadata?.['state.data']?.['analytics.rsids'];
+    const server =
+      event.payload.ACPExtensionEventData['analytics.server'] ||
+      event.payload.metadata?.['state.data']?.['analytics.server'];
     return rsids && server;
   });
 
