@@ -30,6 +30,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 
   const solution =
     extensions['com.adobe.module.analytics'] ||
+    extensions['com.adobe.module.media'] ||
     extensions['com.adobe.module.target'] ||
     extensions['com.adobe.module.places'] ||
     extensions['com.adobe.module.campaign'];
