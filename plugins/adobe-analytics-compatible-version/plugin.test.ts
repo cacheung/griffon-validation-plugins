@@ -34,6 +34,25 @@ const versionEvent = sharedStateVersions.mock({
   }
 }) as SharedStateVersions;
 
+const edgeBridgeVersionEvent = sharedStateVersions.mock({
+  uuid: '1',
+  payload: {
+    metadata: {
+      'state.data': {
+        extensions: {
+          'com.adobe.assurance': {
+            version: '3.0.0'
+          },
+          'com.adobe.edge.bridge': {
+            version: '1.0.0'
+          }
+        },
+        version: '3.0.0'
+      }
+    }
+  }
+}) as SharedStateVersions;
+
 const invalidVersionEvent = sharedStateVersions.mock({
   uuid: '1',
   payload: {
@@ -127,6 +146,15 @@ describe('Adobe Analytics Compatible Version', () => {
     expect(result).toMatchObject({
       events: [],
       result: 'unknown'
+    });
+  });
+
+  it('should return valid when edge bridge is being used', () => {
+    const result = plugin([edgeBridgeVersionEvent]);
+
+    expect(result).toMatchObject({
+      events: [],
+      result: 'matched'
     });
   });
 });

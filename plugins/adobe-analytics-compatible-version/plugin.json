@@ -1,10 +1,10 @@
 {
   "category": "Adobe Analytics",
   "displayName": "Adobe Analytics Compatible Version",
-  "description": "Verifies the Adobe Analytics Extension is compatible with the installed Assurance SDK.",
+  "description": "Verifies the Adobe Analytics Extension or Edge Bridge Extension is compatible with the installed Assurance SDK.",
   "namespace": "adobe-analytics-compatible-version",
   "src": "dist/index.js",
   "type": "validation",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "visibility": ["PUBLIC"]
 }

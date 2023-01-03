@@ -17,10 +17,6 @@ const versions = sharedStateVersions.mock({
             version: '1.0.1',
             friendlyName: 'Edge Identity'
           },
-          'com.adobe.optimize': {
-            version: '1.0.0',
-            friendlyName: 'Optimize'
-          },
           'com.adobe.module.lifecycle': {
             version: '3.4.2',
             friendlyName: 'Lifecycle'

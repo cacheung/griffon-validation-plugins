@@ -12,12 +12,12 @@ Each directory found in the `plugins` directory is packaged and uploaded to Proj
 
 This project leverages the [Project Griffon Plugin Tools](https://github.com/adobe/griffon-plugin-tools) to package and upload each directory.
 
-Alternatively, validations can be uploaded [Using the Validation Summary View](https://github.com/adobe/griffon-validation-plugins/wiki/Using-the-Validation-Summary-View) from the editor panel. 
+Alternatively, validations can be uploaded [Using the Validation Editor](https://github.com/adobe/griffon-validation-plugins/wiki/Using-the-Validation-Editor). 
 
 ### Manifest File
 Validations are required to contain a manifest file at the root level named `plugin.json`.
 
-In the Validation Summary view, this file is auto-generated.
+In the Validation Editor view, this file is auto-generated.
 
 A manifest file should contain the following metadata:
 
