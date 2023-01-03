@@ -58,7 +58,10 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 
   if (notMatchedEvents.length) {
     const configurationEvents: Configuration[] = match(
-      aepMobile.configuration.matcher,
+      combineAny([
+        aepMobile.configuration.matcher,
+        aepMobile.sharedState.matcher
+      ]),
       events
     );
     const optedin = configurationEvents.some((event) => {
