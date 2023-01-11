@@ -61,7 +61,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       aepMobile.configuration.matcher,
       events
     );
-    const optedin = configurationEvents.some((event) => {
+    const optedin = configurationEvents.every((event) => {
       const eventData = aepMobile.configuration.getEventData(event);
       const privacy =
         eventData['global.privacy'] ||
@@ -73,8 +73,8 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       notMatchedMessage +=
         ' If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`';
       links.push({
-        typed: 'doc',
-        url: 'https://aep-sdks.gitbook.io/docs/resources/privacy-and-gdpr#using-adobe-experience-cloud-solution-extensions'
+        type: 'doc',
+        url: 'https://developer.adobe.com/client-sdks/documentation/adobe-analytics/faq/#verify-current-privacy-status'
       });
     }
   }
