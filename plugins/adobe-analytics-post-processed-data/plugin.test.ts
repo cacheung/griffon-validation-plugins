@@ -15,7 +15,7 @@ const genericTrackEvent = genericTrack.mock({
       type: 'analytics',
       uuid: '1',
       payload: {
-        hitDebugMessage: 'Hello there!'
+        hitDebugMessages: 'Hello there!'
       }
     }
   ]
@@ -28,7 +28,7 @@ const lifecycleStartEvent = lifecycleStart.mock({
       type: 'analytics',
       uuid: '2',
       payload: {
-        hitDebugMessage: 'Hello there!'
+        hitDebugMessages: 'Hello there!'
       }
     }
   ]
