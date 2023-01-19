@@ -38,15 +38,23 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     if (
       !analyticsAnnotation ||
       !analyticsAnnotation.payload ||
-      !analyticsAnnotation.payload.hitDebugMessage
+      !analyticsAnnotation.payload.hitDebugMessages
     ) {
       valid = false;
       invalidEvents.push(analyticsTrackEvent.uuid);
     }
   }
   const message = valid
-    ? 'Valid! All Analytics events have post-processed data!'
-    : 'Invalid! These events are missing post-processed data:';
+    ? 'All Analytics events have post-processed data!'
+    : 'Analytics post processed debug information is unavailable for this hit.\n\n' +
+      'Please note that this does not indicate a problem with the processing of your data. ' +
+      'This specific data is an additional debug source to help you understand how Analytics ' +
+      'interpreted the data in near real time.\n\n' +
+      'The post processing rules debug information provided by Analytics has to be retrieved ' +
+      'within 24 hours from when the hit was sent to the Adobe Analytics collection service. ' +
+      'To capture this data, you need to open the Assurance Analytics plugin. This plugin is ' +
+      "responsible for gathering the debug data. If the plugin hasn't been accessed OR more " +
+      'than 24 hours passed since the hit was sent, this error will be present.';
   return {
     events: invalidEvents,
     message,

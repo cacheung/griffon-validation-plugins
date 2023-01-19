@@ -5,6 +5,6 @@
   "namespace": "adobe-analytics-post-processed",
   "src": "dist/index.js",
   "type": "validation",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "visibility": ["PUBLIC"]
 }

@@ -94,6 +94,12 @@ import { ValidationPluginResult } from 'types/validationPlugin';
   return !versionEvents.length
     ? {
         events: [],
+        links: [
+          {
+            type: 'doc',
+            url: 'https://developer.adobe.com/client-sdks/documentation/current-sdk-versions/'
+          }
+        ],
         message:
           "No version info could be found. Either the Assurance SDK isn't registered or the SDK did not pass in cached events upon activating.",
         result: 'unknown'
@@ -101,6 +107,12 @@ import { ValidationPluginResult } from 'types/validationPlugin';
     : !compatible
     ? {
         message: `Assurance SDK Version ${assuranceVersion} and Adobe Analytics Extension version ${analyticsVersion} are not compatible!`,
+        links: [
+          {
+            type: 'doc',
+            url: 'https://developer.adobe.com/client-sdks/documentation/current-sdk-versions/'
+          }
+        ],
         events: versionEvents.map((event) => event.uuid),
         result: 'not matched'
       }

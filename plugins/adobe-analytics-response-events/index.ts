@@ -43,7 +43,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   const matchedMessage =
     'All Analytics events have a corresponding AnalyticsResponse event with the debug flag!';
   const notMatchedEvents = [];
-  let notMatchedMessage = 'Some events are missing an AnalyticsResponse event!';
+  let notMatchedMessage = 'Missing an AnalyticsResponse event!';
   for (let i = 0; i < analyticsTrackEvents.length; i++) {
     const analyticsTrackEvent = analyticsTrackEvents[i];
     const requestEventIdentifier = analyticsTrackEvent.payload
