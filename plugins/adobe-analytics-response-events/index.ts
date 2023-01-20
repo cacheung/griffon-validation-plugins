@@ -43,7 +43,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   const matchedMessage =
     'All Analytics events have a corresponding AnalyticsResponse event with the debug flag!';
   const notMatchedEvents = [];
-  let notMatchedMessage = 'Some events are missing an AnalyticsResponse event!';
+  let notMatchedMessage = 'Missing an AnalyticsResponse event!';
   for (let i = 0; i < analyticsTrackEvents.length; i++) {
     const analyticsTrackEvent = analyticsTrackEvents[i];
     const requestEventIdentifier = analyticsTrackEvent.payload
@@ -64,7 +64,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       ]),
       events
     );
-    const optedin = configurationEvents.some((event) => {
+    const optedin = configurationEvents.every((event) => {
       const eventData = aepMobile.configuration.getEventData(event);
       const privacy =
         eventData['global.privacy'] ||
@@ -77,7 +77,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
         ' If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`';
       links.push({
         type: 'doc',
-        url: 'https://aep-sdks.gitbook.io/docs/resources/privacy-and-gdpr#using-adobe-experience-cloud-solution-extensions'
+        url: 'https://developer.adobe.com/client-sdks/documentation/adobe-analytics/faq/#verify-current-privacy-status'
       });
     }
   }

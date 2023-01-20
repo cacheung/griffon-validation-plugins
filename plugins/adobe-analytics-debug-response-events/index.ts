@@ -47,7 +47,7 @@ import { ValidationPluginResult } from 'types/validationPlugin';
   const matchedMessage = 'All Adobe Analytics events sent the debug flag!';
   const notMatchedEvents = [];
   const notMatchedMessage =
-    'Some Adobe Analytics events did not send the debug flag!';
+    'The Adobe Analytics extension did not send the debug flag!';
   for (let i = 0; i < analyticsTrackEvents.length; i++) {
     const analyticsTrackEvent = analyticsTrackEvents[i];
     const requestEventIdentifier = analyticsTrackEvent.payload
