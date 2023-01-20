@@ -1,0 +1,10 @@
+{
+  "category": "Identity",
+  "displayName": "Verifies if the Identity or Identity for Edge Network are required and registered.",
+  "description": "Verifies if both the Identity and Identity for Edge Network extensions are required. If the extension is required it verifies if it is registered.",
+  "namespace": "identity-installed",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}
