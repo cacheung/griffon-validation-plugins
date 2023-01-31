@@ -30,11 +30,9 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     const messages = toolkit.edge.streamingValidation.getMessages(val);
     let data;
     try {
-      data = messages
-        ? JSON.parse(messages[1])
-        : assuranceEvent.getPayload(val);
+      data = messages ? JSON.parse(messages[1]) : val.payload;
     } catch {
-      data = assuranceEvent.getPayload(val);
+      data = val.payload;
     }
 
     if (data._errors) {
