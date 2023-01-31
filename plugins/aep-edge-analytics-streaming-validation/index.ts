@@ -40,12 +40,20 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       events
     );
 
+  const findNewValidationEvent = (requestId: string) =>
+    toolkit.search(
+      "[?vendor == 'com.adobe.streaming.validation' " +
+        `&& payload.header.msgId == '${requestId}']`,
+      events
+    );
+
   hits.forEach((hit) => {
     const requestId: string = toolkit.edge.analyticsHit.get(
       toolkit.edge.analyticsHit.path.requestId,
       hit
     );
-    const validation = findValidationEvent(requestId);
+    const validation =
+      findValidationEvent(requestId) || findNewValidationEvent(requestId);
     if (!validation.length) {
       const hitReceived = toolkit.match(
         getHitReceivedMatcher(requestId),
