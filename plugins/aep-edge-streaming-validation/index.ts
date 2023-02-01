@@ -28,13 +28,17 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 
   vals.forEach((val) => {
     const messages = toolkit.edge.streamingValidation.getMessages(val);
-    const streamingValidationMessage = JSON.parse(messages[1]);
+    let data;
+    try {
+      data = messages ? JSON.parse(messages[1]) : val.payload;
+    } catch {
+      data = val.payload;
+    }
 
-    if (streamingValidationMessage._errors) {
+    if (data._errors) {
       errors.push(val.uuid);
 
-      const errorMessage =
-        streamingValidationMessage?._errors?._streamingValidation?.[0].message;
+      const errorMessage = data?._errors?._streamingValidation?.[0].message;
 
       if (errorMessages.indexOf(errorMessage) === -1) {
         errorMessages.push(errorMessage);

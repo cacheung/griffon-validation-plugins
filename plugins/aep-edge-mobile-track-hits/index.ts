@@ -36,9 +36,14 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     for (let j = 0; j < edgeHits.length; j++) {
       const edgeHit = edgeHits[j];
       const messages = toolkit.edge.edgeEvent.getMessages(edgeHit);
-      const message = (messages && messages[1]) || '';
+      let data;
+      try {
+        data = messages ? JSON.parse(messages[1]) : val.payload;
+      } catch {
+        data = val.payload;
+      }
 
-      if (message.indexOf(identifier) > -1) {
+      if (data.indexOf(identifier) > -1) {
         linked = true;
         break;
       }
