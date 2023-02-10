@@ -55,19 +55,19 @@ IMS Organization ID `export IMS_ORG=XXXXX`
 Then package the plugin as a zip folder.
 
 ```
-npm run build
+yarn build
 ```
 
 Next run the uploader. If you're updating the validation, be sure to update the version in your `plugin.json` manifest file.
 
 ```
-npm run upload
+yarn upload
 ```
 
 Optionally, a plugin argument can be provided to build or upload a single plugin.
 
 ```
-npm run upload -- --plugin=adobe-analytics-compatible-version  
+yarn upload -- --plugin=adobe-analytics-compatible-version  
 ```
 
 ## Contributing
