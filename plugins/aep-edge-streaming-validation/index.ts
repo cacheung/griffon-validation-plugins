@@ -17,8 +17,17 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 
 (function (events: Event[]): ValidationPluginResult {
   const { toolkit } = window.griffon;
+  const genericStreamingValidationMatcher = toolkit.combineAll([
+    'type==`generic`',
+    'vendor==`com.adobe.streaming.validation`',
+    'timestamp'
+  ]);
+
   const vals = toolkit.match(
-    toolkit.edge.streamingValidation.matcher,
+    toolkit.combineAny([
+      toolkit.edge.streamingValidation.matcher,
+      genericStreamingValidationMatcher
+    ]),
     events
   ) as StreamingValidation[];
 
