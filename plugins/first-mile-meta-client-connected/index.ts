@@ -27,7 +27,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
         result: 'not matched'
       }
     : {
-        message: 'Passed',
+        message: 'Passed!',
         events: clientConnectEvents.map((event) => event.uuid),
         result: 'matched'
       };
