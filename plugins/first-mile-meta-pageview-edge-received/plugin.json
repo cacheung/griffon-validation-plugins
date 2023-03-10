@@ -1,0 +1,10 @@
+{
+  "category": "Event Forwarding - Meta",
+  "displayName": "Meta PageView event received by the Adobe Experience Edge Network",
+  "description": "Verifies a Meta PageView event was received by the Adobe Experience Edge Network.",
+  "namespace": "first-mile-meta-pageview-edge-received",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}
