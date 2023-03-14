@@ -39,5 +39,8 @@ targetPlugins.forEach((targetPlugin) => {
     .readFileSync(`${packageDir}/dist/index.js`, 'utf-8')
     .replace(/export{};$/, '');
   fs.writeFileSync(`${packageDir}/dist/index.js`, content);
-  execSync('npx @adobe/griffon-packager', cwdOptions);
+  execSync(
+    'npx --package=@adobe/griffon-plugin-tools griffon-packager',
+    cwdOptions
+  );
 });

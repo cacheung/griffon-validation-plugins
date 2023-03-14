@@ -37,7 +37,10 @@ targetPlugins.forEach((targetPlugin) => {
   };
 
   if (packageZips.length === 1) {
-    execSync(`npx @adobe/griffon-uploader ${packageZips[0]}`, cwdOptions);
+    execSync(
+      `npx --package=@adobe/griffon-plugin-tools griffon-uploader ${packageZips[0]}`,
+      cwdOptions
+    );
   } else {
     const message =
       packageZips.length === 0

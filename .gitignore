@@ -8,3 +8,5 @@ TESTS.xml
 
 // package zips
 plugins/**/*.zip
+
+yarn-error.log
