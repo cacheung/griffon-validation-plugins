@@ -1,0 +1,10 @@
+{
+  "category": "Event Forwarding - Meta",
+  "displayName": "Event sent from web client",
+  "description": "Verifies a client event was sent from the web client with a connect type.",
+  "namespace": "first-mile-meta-client-connected",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}

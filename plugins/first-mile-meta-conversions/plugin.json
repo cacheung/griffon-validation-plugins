@@ -1,0 +1,10 @@
+{
+  "category": "Event Forwarding - Meta",
+  "displayName": "PageView event received by Meta Conversions API",
+  "description": "Validates a Meta PageView event was successfully received by the Meta Conversions API.",
+  "namespace": "first-mile-meta-conversions",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}
