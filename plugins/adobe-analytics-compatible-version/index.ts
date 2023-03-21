@@ -48,16 +48,13 @@ import { ValidationPluginResult } from 'types/validationPlugin';
   const isAndroidCompatible = (
     assuranceVersionMatches: string[],
     analyticsVersionMatches: string[]
-  ) => {
-    const assuranceVersionValid = parseInt(assuranceVersionMatches[1], 10) >= 1;
-    const analyticsVersionValid =
-      parseInt(analyticsVersionMatches[1], 10) > 1 ||
+  ) =>
+    parseInt(assuranceVersionMatches[1], 10) >= 1 &&
+    (parseInt(analyticsVersionMatches[1], 10) > 1 ||
       (parseInt(analyticsVersionMatches[1], 10) === 1 &&
         (parseInt(analyticsVersionMatches[2], 10) > 2 ||
           (parseInt(analyticsVersionMatches[2], 10) === 2 &&
-            parseInt(analyticsVersionMatches[3], 10) >= 6)));
-    return assuranceVersionValid && analyticsVersionValid;
-  };
+            parseInt(analyticsVersionMatches[3], 10) >= 6))));
 
   const isIOSCompatible = (
     assuranceVersionMatches: string[],
