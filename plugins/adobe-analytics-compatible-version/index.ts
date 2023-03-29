@@ -49,12 +49,12 @@ import { ValidationPluginResult } from 'types/validationPlugin';
     assuranceVersionMatches: string[],
     analyticsVersionMatches: string[]
   ) =>
-    (parseInt(assuranceVersionMatches[1], 10) >= 1 &&
-      parseInt(analyticsVersionMatches[1], 10) > 1) ||
-    (parseInt(analyticsVersionMatches[1], 10) === 1 &&
-      (parseInt(analyticsVersionMatches[2], 10) > 2 ||
-        (parseInt(analyticsVersionMatches[2], 10) === 2 &&
-          parseInt(analyticsVersionMatches[3], 10) >= 6)));
+    parseInt(assuranceVersionMatches[1], 10) >= 1 &&
+    (parseInt(analyticsVersionMatches[1], 10) > 1 ||
+      (parseInt(analyticsVersionMatches[1], 10) === 1 &&
+        (parseInt(analyticsVersionMatches[2], 10) > 2 ||
+          (parseInt(analyticsVersionMatches[2], 10) === 2 &&
+            parseInt(analyticsVersionMatches[3], 10) >= 6))));
 
   const isIOSCompatible = (
     assuranceVersionMatches: string[],
