@@ -55,7 +55,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   }
 
   const message = errors.length
-    ? 'One or more AEP Mobile Track events are missing an AEP Edge Hit event.'
+    ? 'One or more AEP Track events are missing an AEP Edge Hit event. The AEP Track Events are generated from the client(website or mobile app) and reported directly to assurance. The AEP Edge Hit event comes from Adobe services through the request channel separately to provide confirmation that the hit was received. This may indicate that the hit was not processed. If you think this is in error, please contact client care with information about your usage, an Assurance session id and any other details that can help investigate the issue.'
     : 'PASSED!';
 
   return {
