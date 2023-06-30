@@ -1,0 +1,10 @@
+{
+  "category": "AEP Edge Consent",
+  "displayName": "Consent extension was registered",
+  "description": "Verifies the Consent SDK Extension has been installed in the app.",
+  "namespace": "aep-consent-installed",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}

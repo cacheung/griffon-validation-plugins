@@ -1,0 +1,10 @@
+{
+  "category": "AEP Edge Consent",
+  "displayName": "Consent Latest Status",
+  "description": "Check the latest consent status in a session.",
+  "namespace": "aep-consent-update",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}

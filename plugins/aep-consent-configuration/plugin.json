@@ -1,0 +1,10 @@
+{
+  "category": "AEP Edge Consent",
+  "displayName": "Consent Default Status",
+  "description": "Validate default consent state status is y, n or p.",
+  "namespace": "aep-consent-configuration",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}
