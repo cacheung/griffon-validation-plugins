@@ -97,7 +97,7 @@ describe('Update Collect Consent', () => {
   it('should show no collect consent message', () => {
     const result = plugin([collectConsentNotExist]);
     expect(result).toMatchObject({
-      message: 'Collect consent is not set. Using default consent for the an Edge workflow',
+      message: 'Collect consent is not set. Default consent is being used for an Edge workflow',
       events: [],
       result: 'unknown'
     });

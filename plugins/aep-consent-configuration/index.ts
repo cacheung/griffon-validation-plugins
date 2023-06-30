@@ -11,7 +11,7 @@
 */
 
 import { Event } from '@adobe/griffon-toolkit-common';
-import { SharedStateConfig } = from '@adobe/griffon-toolkit-aep-mobile';
+import { SharedStateConfig } from '@adobe/griffon-toolkit-aep-mobile';
 import { ValidationPluginResult } from '../../types/validationPlugin';
 
 (function (events: Event[]): ValidationPluginResult {

@@ -1,6 +1,6 @@
 import {
   SharedStateConfig,
-  SharedStateConfig
+  sharedStateConfig
 } from '@adobe/griffon-toolkit-aep-mobile';
 // @ts-ignore
 import plugin from './index';
