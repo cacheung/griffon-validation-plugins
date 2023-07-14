@@ -1,3 +1,4 @@
+// @ts-ignore
 import plugin from './index';
 
 const collectConsentY = {
@@ -67,10 +68,10 @@ const collectConsentNotExist = {
 }
 
 describe('Update Collect Consent', () => {
-  it('collect consent is yes', () => {
+  it('collect consent is set to yes', () => {
     const result = plugin([collectConsentY]);
     expect(result).toMatchObject({
-      message:'Collect consent is set to yes',
+      message:'Collect consent level is set to yes. Events are sent to the Edge Network.',
       events: [],
       result: 'matched'
     });
@@ -79,7 +80,7 @@ describe('Update Collect Consent', () => {
   it('collect consent is no', () => {
     const result = plugin([collectConsentN]);
     expect(result).toMatchObject({
-      message: 'Collect consent is set to no, events are dropped and are not sent to Edge Network',
+      message: 'Collect consent level is set to no. Events are dropped until the status is updated to yes.',
       events: [],
       result: 'unknown'
     });
@@ -88,8 +89,14 @@ describe('Update Collect Consent', () => {
   it('collect consent is pending', () => {
     const result = plugin([collectConsentP]);
     expect(result).toMatchObject({
-      message: 'Collect consent is set to pending, events are queued and the state should change to yes for the queue to be unblocked',
+      message: 'Collect consent level is set to pending. Events are queued until the status is updated to yes (events are sent) or no (events are dropped). To update the consent status, use the update API from the Consent extension and pass in the preferred collect consent settings. Check the link for more details and code samples.',
       events: [],
+      links: [
+        {
+          type: 'doc',
+          url: 'https://developer.adobe.com/client-sdks/documentation/consent-for-edge-network/api-reference/'
+        }
+      ],
       result: 'unknown'
     });
   });
@@ -97,7 +104,7 @@ describe('Update Collect Consent', () => {
   it('should show no collect consent message', () => {
     const result = plugin([collectConsentNotExist]);
     expect(result).toMatchObject({
-      message: 'Collect consent is not set. Default consent is being used for an Edge workflow',
+      message: 'The collect consent settings are not set in the Consent extension. Please make sure that the Consent extension is registered and configured correctly.',
       events: [],
       result: 'unknown'
     });

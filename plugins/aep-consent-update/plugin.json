@@ -1,7 +1,7 @@
 {
   "category": "AEP Edge Consent",
-  "displayName": "Consent Latest Status",
-  "description": "Check the latest consent status in a session.",
+  "displayName": "Latest collect consent status",
+  "description": "Check the latest collect consent status for this session. These settings overwrite the default collect consent status.",
   "namespace": "aep-consent-update",
   "src": "dist/index.js",
   "type": "validation",

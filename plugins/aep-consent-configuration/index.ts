@@ -11,49 +11,70 @@
 */
 
 import { Event } from '@adobe/griffon-toolkit-common';
+import { SharedStateVersions } from '@adobe/griffon-toolkit-aep-mobile';
 import { SharedStateConfig } from '@adobe/griffon-toolkit-aep-mobile';
 import { ValidationPluginResult } from '../../types/validationPlugin';
 
 (function (events: Event[]): ValidationPluginResult {
   const { toolkit: kit } = window.griffon;
+  const { sharedStateVersions: versions } = kit['aep-mobile'];
   const { sharedStateConfig: config } = kit['aep-mobile'];
+  const versionEvents = kit.match(
+    versions.matcher,
+    events
+  ) as SharedStateVersions[]
   const configEvents = kit.match(
     config.matcher,
     events
   ) as SharedStateConfig[];
 
-  const found = kit.match('payload.metadata."state.data"."edge.configId"', configEvents);
+  const consentSDKRegistered= versionEvents.some(versions.getExtensionsKey('"com.adobe.edge.consent"'));
 
-  const validY = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , found[0]) == 'y';
+  const consentDefaultEvents = kit.match('payload.metadata."state.data"."consent.default"', configEvents);
 
-  const validN = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , found[0]) == 'n';
+  const consentTagInstalled = kit.search('payload.metadata."state.data"."consent.default"' , configEvents);
+
+  const valueY = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , consentDefaultEvents[0]) == 'y';
+
+  const valueN = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , consentDefaultEvents[0]) == 'n';
   
-  const validP = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , found[0]) == 'p';
+  const valueP = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , consentDefaultEvents[0]) == 'p';
 
 
 
-  return validY
+  return valueY
     ? {
-        message: 'Default collect consent level is set to yes',
+        message: 'Default collect consent level is set to yes. Events are sent to the Edge Network.',
         events: [],
         result: 'matched'
       }
-    : validN
+    : valueN
     ? {
-        message: 'Default collect consent level is set to no',
+        message: 'Default collect consent level is set to no. Events are dropped until the status is updated to yes or pending.',
         events: [],
         result: 'unknown'
       }
   
-    : validP
+    : valueP
     ? {
-        message: 'Default collect consent is set to pending; events are queued until the settings are changed to yes / no',
+        message: 'Default collect consent level is set to pending. Events are queued until the status is updated to yes or no.',
         events: [],
         result: 'unknown'
       }
-  
+    : !consentTagInstalled && consentSDKRegistered
+    ? {
+        message: 'Default collect consent level is not set, but the Consent SDK extension is registered. This is a required setting, and events may be blocked on the device by the Edge SDK extension until the collect consent level is specified.  Please follow the steps in the link to configure the Consent extension in Data Collection UI then reload this validator.',
+        events: [],
+        links: [
+          {
+            type: 'doc',
+            url: 'https://developer.adobe.com/client-sdks/documentation/consent-for-edge-network/'
+          }
+        ],
+        result: 'not matched'
+      }
     : {
-        message: 'Default collect consent settings are not found, check that you install and configure the Consent extension in data collection UI',
+        message: 'Default collect consent level is not set. By default the collect consent settings used for Edge Network events is yes. If you intended to use the Consent extension to control these settings, please follow the steps in the link then reload this validator.',
         events: [],
         links: [
           {

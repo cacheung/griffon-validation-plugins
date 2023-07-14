@@ -16,39 +16,50 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 (function (events: Event[]): ValidationPluginResult {
   const { toolkit: kit } = window.griffon;
 
-  const found = kit.match('payload.ACPExtensionEventSource==`com.adobe.eventsource.updateconsent` &&'
+  const updateEventfound = kit.match('payload.ACPExtensionEventSource==`com.adobe.eventsource.updateconsent` &&'
 	+ 'payload.ACPExtensionEventType==`com.adobe.eventtype.edgeconsent`', events);
   
  
-  const consentEvent = found[0];
-  const validY = kit.search('payload.ACPExtensionEventData.consents.collect.val', consentEvent) == 'y';
-  const validN = kit.search('payload.ACPExtensionEventData.consents.collect.val', consentEvent) == 'n';
-  const validP = kit.search('payload.ACPExtensionEventData.consents.collect.val', consentEvent) == 'p';
+  const consentEvent = updateEventfound[0];
+  const valueY = kit.search('payload.ACPExtensionEventData.consents.collect.val', consentEvent) == 'y';
+  const valueN = kit.search('payload.ACPExtensionEventData.consents.collect.val', consentEvent) == 'n';
+  const valueP = kit.search('payload.ACPExtensionEventData.consents.collect.val', consentEvent) == 'p';
 
-  return validY
+  return valueY
     ? {
-        message:'Collect consent is set to yes',
+        message:'Collect consent level is set to yes. Events are sent to the Edge Network.',
         events: [],
         result: 'matched'
       }
-    : validN
+    : valueN
     ? {
-        message: 'Collect consent is set to no, events are dropped and are not sent to Edge Network',
+        message: 'Collect consent level is set to no. Events are dropped until the status is updated to yes.',
         events: [],
         result: 'unknown'
       }
   
-    : validP
+    : valueP
     ? {
-        message: 'Collect consent is set to pending, events are queued and the state should change to yes for the queue to be unblocked',
+        message: 'Collect consent level is set to pending. Events are queued until the status is updated to yes (events are sent) or no (events are dropped). To update the consent status, use the update API from the Consent extension and pass in the preferred collect consent settings. Check the link for more details and code samples.',
         events: [],
+        links: [
+          {
+            type: 'doc',
+            url: 'https://developer.adobe.com/client-sdks/documentation/consent-for-edge-network/api-reference/'
+          }
+        ],
         result: 'unknown'
       }
-  
     : {
-        message:
-        'Collect consent is not set. Default consent is being used for an Edge workflow',
-        events: [],
-        result: 'unknown'
-      };
+      message:
+      'The collect consent settings are not set in the Consent extension. Please make sure that the Consent extension is registered and configured correctly.',
+      events: [],
+      links: [
+          {
+            type: 'doc',
+            url: 'https://developer.adobe.com/client-sdks/documentation/consent-for-edge-network/'
+          }
+        ],
+      result: 'unknown'
+  };
 });
