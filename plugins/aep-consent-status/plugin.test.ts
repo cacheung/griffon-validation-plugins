@@ -2,50 +2,74 @@
 import plugin from './index';
 
 const collectConsentY = {
-  "uuid": "b63f00ca-c884-42d1-8cfc-c1b7c353755a",
+  "uuid": "1b3e3e55-da1b-4af8-8289-ee2cfadf6c68",
+  "timestamp": 1688158409809,
+  "vendor": "com.adobe.griffon.mobile",
   "payload": {
+    "ACPExtensionEventName": "Consent State",
     "ACPExtensionEventData": {
-      "consents": {
-        "collect": {
-          "val": "y"
+      "stateowner": "com.adobe.edge.consent"
+    },
+    "ACPExtensionEventSource": "com.adobe.eventsource.sharedstate",
+    "metadata": {
+      "xdm.state.data": {
+        "consents": {
+          "collect": {
+            "val": "y"
+          },
         }
       }
     },
-    "ACPExtensionEventSource": "com.adobe.eventsource.updateconsent",
-    "ACPExtensionEventType": "com.adobe.eventtype.edgeconsent"
+    "ACPExtensionEventType": "com.adobe.eventtype.hub"
   },
   "annotations": []
 }
 
 const collectConsentN = {
-  "uuid": "b63f00ca-c884-42d1-8cfc-c1b7c353755a",
+  "uuid": "1b3e3e55-da1b-4af8-8289-ee2cfadf6c68",
+  "timestamp": 1688158409809,
+  "vendor": "com.adobe.griffon.mobile",
   "payload": {
+    "ACPExtensionEventName": "Shared state change",
     "ACPExtensionEventData": {
-      "consents": {
-        "collect": {
-          "val": "n"
+      "stateowner": "com.adobe.edge.consent"
+    },
+    "ACPExtensionEventSource": "com.adobe.eventsource.sharedstate",
+    "metadata": {
+      "xdm.state.data": {
+        "consents": {
+          "collect": {
+            "val": "n"
+          },
         }
       }
     },
-    "ACPExtensionEventSource": "com.adobe.eventsource.updateconsent",
-    "ACPExtensionEventType": "com.adobe.eventtype.edgeconsent"
+    "ACPExtensionEventType": "com.adobe.eventtype.hub"
   },
   "annotations": []
 }
 
 
 const collectConsentP = {
-  "uuid": "b63f00ca-c884-42d1-8cfc-c1b7c353755a",
+  "uuid": "1b3e3e55-da1b-4af8-8289-ee2cfadf6c68",
+  "timestamp": 1688158409809,
+  "vendor": "com.adobe.griffon.mobile",
   "payload": {
+    "ACPExtensionEventName": "Shared state change (XDM)",
     "ACPExtensionEventData": {
-      "consents": {
-        "collect": {
-          "val": "p"
+      "stateowner": "com.adobe.edge.consent"
+    },
+    "ACPExtensionEventSource": "com.adobe.eventsource.sharedstate",
+    "metadata": {
+      "xdm.state.data": {
+        "consents": {
+          "collect": {
+            "val": "p"
+          },
         }
       }
     },
-    "ACPExtensionEventSource": "com.adobe.eventsource.updateconsent",
-    "ACPExtensionEventType": "com.adobe.eventtype.edgeconsent"
+    "ACPExtensionEventType": "com.adobe.eventtype.hub"
   },
   "annotations": []
 }
@@ -59,10 +83,9 @@ const collectConsentNotExist = {
   "vendor": "com.adobe.griffon.mobile",
   "type": "generic",
   "payload": {
-    "ACPExtensionEventUniqueIdentifier": "3a28338d-9f75-4c75-93d0-232aecac88c3",
-    "ACPExtensionEventName": "Consent Update Request",
-    "ACPExtensionEventSource": "com.adobe.eventsource.updateconsent",
-    "ACPExtensionEventType": "com.adobe.eventtype.edgeconsent"
+    "ACPExtensionEventName": "Shared state change (XDM)",
+    "ACPExtensionEventSource": "com.adobe.eventsource.sharedstate",
+    "ACPExtensionEventType": "com.adobe.eventtype.hub"
   },
   "annotations": []
 }
@@ -89,7 +112,7 @@ describe('Update Collect Consent', () => {
   it('collect consent is pending', () => {
     const result = plugin([collectConsentP]);
     expect(result).toMatchObject({
-      message: 'Collect consent level is set to pending. Events are queued until the status is updated to yes (events are sent) or no (events are dropped). To update the consent status, use the update API from the Consent extension and pass in the preferred collect consent settings. Check the link for more details and code samples.',
+      message: 'Collect consent level is set to pending. Events are queued until the status is updated to yes (events are sent) or no (events are dropped). To update the consent status, check the default collect consent setting or use the update API from the Consent extension and pass in the preferred collect consent settings. Check the link for more details and code samples.',
       events: [],
       links: [
         {
