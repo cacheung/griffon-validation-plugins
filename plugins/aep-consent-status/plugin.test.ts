@@ -49,6 +49,30 @@ const collectConsentN = {
   "annotations": []
 }
 
+const collectConsentUnknownValue = {
+  "uuid": "1b3e3e55-da1b-4af8-8289-ee2cfadf6c68",
+  "timestamp": 1688158409809,
+  "vendor": "com.adobe.griffon.mobile",
+  "payload": {
+    "ACPExtensionEventName": "Shared state change",
+    "ACPExtensionEventData": {
+      "stateowner": "com.adobe.edge.consent"
+    },
+    "ACPExtensionEventSource": "com.adobe.eventsource.sharedstate",
+    "metadata": {
+      "xdm.state.data": {
+        "consents": {
+          "collect": {
+            "val": "someunknownvalue"
+          },
+        }
+      }
+    },
+    "ACPExtensionEventType": "com.adobe.eventtype.hub"
+  },
+  "annotations": []
+}
+
 
 const collectConsentP = {
   "uuid": "1b3e3e55-da1b-4af8-8289-ee2cfadf6c68",
@@ -112,7 +136,7 @@ describe('Update Collect Consent', () => {
   it('collect consent is pending', () => {
     const result = plugin([collectConsentP]);
     expect(result).toMatchObject({
-      message: 'Collect consent level is set to pending. Events are queued until the status is updated to yes (events are sent) or no (events are dropped). To update the consent status, check the default collect consent setting or use the update API from the Consent extension and pass in the preferred collect consent settings. Check the link for more details and code samples.',
+      message: 'Collect consent level is set to pending. Events are queued until the status is updated to yes (events are sent) or no (events are dropped). To update the consent status, check the default collect consent setting or use the update API from the Consent extension and pass in the preferred collect consent settings. Follow the link for more details and code samples.',
       events: [],
       links: [
         {
@@ -120,6 +144,15 @@ describe('Update Collect Consent', () => {
           url: 'https://developer.adobe.com/client-sdks/documentation/consent-for-edge-network/api-reference/'
         }
       ],
+      result: 'unknown'
+    });
+  });
+
+  it('collect consent is an unknown value', () => {
+    const result = plugin([collectConsentUnknownValue]);
+    expect(result).toMatchObject({
+      message: 'The collect consent settings are not set in the Consent extension. Please make sure that the Consent extension is registered and configured correctly.',
+      events: [],
       result: 'unknown'
     });
   });

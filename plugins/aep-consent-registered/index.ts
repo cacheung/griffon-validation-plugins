@@ -68,9 +68,22 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 
         result: 'unknown'
       }
+      : consentSDKRegistered && !consentTagInstalled?
+      {
+        events: [],
+        message: 'Consent Extension was registered. Make sure default consent is also set up in the Data Collection UI.',
+        links: [
+          {
+            type: 'doc',
+            url: 'https://developer.adobe.com/client-sdks/documentation/consent-for-edge-network/'
+          }
+        ],
+
+        result: 'not matched'
+      }
       : {
         events: [],
-        message: 'Consent Extension was registered. Make sure default consent is also setup in the Data Collection UI.',
+        message: 'Consent Extension was registered.',
         result: 'matched'
       };
 });

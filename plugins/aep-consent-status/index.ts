@@ -26,7 +26,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       if (sharedState.getStateOwner(found) === 'com.adobe.edge.consent') {
          consentEvent = stateEvents[i];
          //Got the latest consent event, stop searching 
-         stateEvents.length = 0;
+         break;
       }
     }
     
@@ -50,7 +50,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       }
     : valueP
     ? {
-        message: 'Collect consent level is set to pending. Events are queued until the status is updated to yes (events are sent) or no (events are dropped). To update the consent status, check the default collect consent setting or use the update API from the Consent extension and pass in the preferred collect consent settings. Check the link for more details and code samples.',
+        message: 'Collect consent level is set to pending. Events are queued until the status is updated to yes (events are sent) or no (events are dropped). To update the consent status, check the default collect consent setting or use the update API from the Consent extension and pass in the preferred collect consent settings. Follow the link for more details and code samples.',
         events: [],
         links: [
             {

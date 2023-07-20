@@ -1,5 +1,5 @@
 {
-  "category": "AEP Edge Consent",
+  "category": "Consent for Edge Network",
   "displayName": "Collect consent status (default settings)",
   "description": "Checks if the Consent extension is installed in Data Collection Tag UI and the default collect consent level is set to yes (y), no (n) or pending (p). These settings apply for the events sent to the Edge Network.",
   "namespace": "aep-consent-configuration",

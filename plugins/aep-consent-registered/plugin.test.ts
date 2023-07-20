@@ -59,11 +59,11 @@ const consentTagExist = sharedStateConfig.mock({
 
 describe('Edge Consent SDK Registered', () => {
   it('should validate when consent has been installed', () => {
-    const result = plugin([versionEvent]);
+    const result = plugin([versionEvent, consentTagExist]);
 
     expect(result).toMatchObject({
       events: [],
-      message: 'Consent Extension was registered. Make sure default consent is also setup in the Data Collection UI.',
+      message: 'Consent Extension was registered.',
       result: 'matched'
     });
   });
@@ -97,6 +97,22 @@ describe('Edge Consent SDK Registered', () => {
         }
       ],
       result: 'unknown'
+    });
+  });
+
+  it('should show consent extension is installed and default consent is not installed)', () => {
+    const result = plugin([versionEvent, !consentTagExist]);
+
+    expect(result).toMatchObject({
+      events: [],
+      message: 'Consent Extension was registered. Make sure default consent is also set up in the Data Collection UI.',
+      links: [
+        {
+          type: 'doc',
+          url: 'https://developer.adobe.com/client-sdks/documentation/consent-for-edge-network/'
+        }
+      ],
+      result: 'not matched'
     });
   });
 

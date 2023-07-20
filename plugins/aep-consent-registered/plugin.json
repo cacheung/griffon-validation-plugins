@@ -1,5 +1,5 @@
 {
-  "category": "AEP Edge Consent",
+  "category": "Consent for Edge Network",
   "displayName": "Consent SDK extension status",
   "description": "Verifies the Consent SDK extension was installed and registered in the client-side app.",
   "namespace": "aep-consent-registered",
