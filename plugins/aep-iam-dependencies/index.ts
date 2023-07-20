@@ -75,7 +75,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
         result: 'matched'
       }
     : {
-        message: `Missing required extensions for In App Messaging. Please ensure the following extensions are installed: AEP Core >= 3.4.2, AEP Edge >= 1.3.0, AEP Edge Consent >= 1.0.0, AEP Edge Identity >= 1.0.1, AEP Messaging >= 1.1.0, and AEP Optimize >= 1.0.0`,
+        message: `Missing required extensions for In App Messaging. Please ensure the following extensions are installed: AEP Core >= 3.4.2, AEP Edge >= 1.3.0, AEP Edge Consent >= 1.0.0, AEP Edge Identity >= 1.0.1, and AEP Messaging >= 1.1.0`,
         events: [],
         result: 'not matched'
       };
