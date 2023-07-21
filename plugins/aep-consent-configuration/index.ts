@@ -32,7 +32,9 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 
   const consentDefaultEvents = kit.match('payload.metadata."state.data"."consent.default"', configEvents);
 
-  const consentTagInstalled = kit.search('payload.metadata."state.data"."consent.default"' , configEvents);
+  const consentTagInstalled = configEvents.some((event) => {
+		return window.griffon.toolkit.search('payload.metadata."state.data"."consent.default"' , configEvents);
+});
 
   const valueY = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , consentDefaultEvents[0]) == 'y';
 
