@@ -112,7 +112,7 @@ describe('Edge Consent SDK Registered', () => {
           url: 'https://developer.adobe.com/client-sdks/documentation/consent-for-edge-network/'
         }
       ],
-      result: 'not matched'
+      result: 'matched'
     });
   });
 

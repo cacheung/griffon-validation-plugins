@@ -1,7 +1,7 @@
 {
   "category": "Consent for Edge Network",
   "displayName": "Latest collect consent status",
-  "description": "Check the latest collect consent status for this session. These settings overwrite the default collect consent status.",
+  "description": "Checks the latest collect consent status for this session. These settings overwrite the default collect consent status.",
   "namespace": "aep-consent-status",
   "src": "dist/index.js",
   "type": "validation",

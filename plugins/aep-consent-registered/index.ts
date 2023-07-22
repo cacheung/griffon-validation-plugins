@@ -79,7 +79,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
           }
         ],
 
-        result: 'not matched'
+        result: 'matched'
       }
       : {
         events: [],
