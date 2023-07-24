@@ -30,19 +30,17 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 
   const consentSDKRegistered= versionEvents.some(versions.getExtensionsKey('"com.adobe.edge.consent"'));
 
-  const consentDefaultEvents = kit.match('payload.metadata."state.data"."consent.default"', configEvents);
-
   const consentTagInstalled = configEvents.some((event) => {
-		return window.griffon.toolkit.search('payload.metadata."state.data"."consent.default"' , configEvents);
-});
+		return window.griffon.toolkit.search('payload.metadata."state.data"."consent.default"' , event);
+  });
+
+  const consentDefaultEvents = kit.match('payload.metadata."state.data"."consent.default"', configEvents);
 
   const valueY = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , consentDefaultEvents[0]) == 'y';
 
   const valueN = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , consentDefaultEvents[0]) == 'n';
   
   const valueP = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , consentDefaultEvents[0]) == 'p';
-
-
 
   return valueY
     ? {
