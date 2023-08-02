@@ -40,13 +40,6 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     return installed && installed >= '1.3.0';
   });
 
-  const isEdgeConsentInstalled = versionEvents.some((version) => {
-    const installed = versions.getExtensionsKey('"com.adobe.edge.consent"')(
-      version
-    );
-    return installed && installed >= '1.0.0';
-  });
-
   const isEdgeIdentityInstalled = versionEvents.some((version) => {
     const installed = versions.getExtensionsKey('"com.adobe.edge.identity"')(
       version
@@ -64,7 +57,6 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   const isValid =
     isCoreInstalled &&
     isEdgeInstalled &&
-    isEdgeConsentInstalled &&
     isEdgeIdentityInstalled &&
     isMessagingInstalled;
 
@@ -75,7 +67,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
         result: 'matched'
       }
     : {
-        message: `Missing required extensions for In App Messaging. Please ensure the following extensions are installed: AEP Core >= 3.4.2, AEP Edge >= 1.3.0, AEP Edge Consent >= 1.0.0, AEP Edge Identity >= 1.0.1, and AEP Messaging >= 1.1.0`,
+        message: `Missing required extensions for In App Messaging. Please ensure the following extensions are installed: AEP Core >= 3.4.2, AEP Edge >= 1.3.0, AEP Edge Identity >= 1.0.1, and AEP Messaging >= 1.1.0`,
         events: [],
         result: 'not matched'
       };
