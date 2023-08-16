@@ -151,7 +151,7 @@ describe('Update Collect Consent', () => {
   it('collect consent is an unknown value', () => {
     const result = plugin([collectConsentUnknownValue]);
     expect(result).toMatchObject({
-      message: 'The collect consent settings are not set in the Consent extension. Please make sure that the Consent extension is registered and configured correctly.',
+      message: 'The collect consent settings are not set. Please make sure that the Consent extension is registered and configured correctly.',
       events: [],
       result: 'unknown'
     });
@@ -160,7 +160,7 @@ describe('Update Collect Consent', () => {
   it('should show no collect consent message', () => {
     const result = plugin([collectConsentNotExist]);
     expect(result).toMatchObject({
-      message: 'The collect consent settings are not set in the Consent extension. Please make sure that the Consent extension is registered and configured correctly.',
+      message: 'The collect consent settings are not set. Please make sure that the Consent extension is registered and configured correctly.',
       events: [],
       result: 'unknown'
     });

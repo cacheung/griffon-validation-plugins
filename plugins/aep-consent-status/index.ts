@@ -62,7 +62,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
        }
     : {
         message:
-        'The collect consent settings are not set in the Consent extension. Please make sure that the Consent extension is registered and configured correctly.',
+        'The collect consent settings are not set. Please make sure that the Consent extension is registered and configured correctly.',
         events: [],
         links: [
             {

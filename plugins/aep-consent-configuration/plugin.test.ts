@@ -93,7 +93,7 @@ describe('Consent Default Config', () => {
   it('should show default consent value is yes', () => {
     const result = plugin([configEventValY]);
     expect(result).toMatchObject({
-      message: 'Default collect consent level is set to yes. Events are sent to the Edge Network.',
+      message: 'Default collect consent level is set to yes.',
       events: [],
       result: 'matched'
     });
@@ -135,7 +135,7 @@ describe('Consent Default Config', () => {
   it('should show no default collect consent message', () => {
     const result = plugin([configConsentEventNoVal]);
     expect(result).toMatchObject({
-      message: 'Default collect consent level is not set. By default the collect consent settings used for Edge Network events is yes. If you intended to use the Consent extension to control these settings, please follow the steps in the link then reload this validator.',
+      message: 'Default collect consent level is not set. By default the collect consent settings used for Edge Network events is yes, events are sent. If you intended to use the Consent extension to control these settings, please follow the steps in the link then reload this validator.',
       events: [],
       result: 'unknown'
     });
