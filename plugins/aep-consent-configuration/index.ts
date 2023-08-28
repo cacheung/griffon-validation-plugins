@@ -36,26 +36,22 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 
   const consentDefaultEvents = kit.match('payload.metadata."state.data"."consent.default"', configEvents);
 
-  const valueY = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , consentDefaultEvents[0]) == 'y';
+  const consentDefaultValue = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , consentDefaultEvents[0]);
 
-  const valueN = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , consentDefaultEvents[0]) == 'n';
-  
-  const valueP = kit.search('payload.metadata."state.data"."consent.default".consents.collect.val' , consentDefaultEvents[0]) == 'p';
-
-  return valueY
+  return consentDefaultValue === 'y' 
     ? {
         message: 'Default collect consent level is set to yes.',
         events: [],
         result: 'matched'
       }
-    : valueN
+    : consentDefaultValue === 'n' 
     ? {
         message: 'Default collect consent level is set to no. Events are dropped until the status is updated to yes or pending.',
         events: [],
         result: 'unknown'
       }
   
-    : valueP
+    : consentDefaultValue === 'p' 
     ? {
         message: 'Default collect consent level is set to pending. Events are queued until the status is updated to yes or no.',
         events: [],

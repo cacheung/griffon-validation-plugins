@@ -31,24 +31,22 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     }
     
     const consentUpdateState = sharedState.getXdm(consentEvent);
-     
-    const valueY = kit.search('consents.collect.val', consentUpdateState) == 'y';
-    const valueN = kit.search('consents.collect.val', consentUpdateState) == 'n';
-    const valueP = kit.search('consents.collect.val', consentUpdateState) == 'p';
     
-    return valueY
+    const consentValue = kit.search('consents.collect.val', consentUpdateState);
+    
+    return consentValue === 'y'
     ? {
         message:'Collect consent level is set to yes. Events are sent to the Edge Network.',
         events: [],
         result: 'matched'
     }
-    : valueN
+    : consentValue === 'n'
     ? {
         message: 'Collect consent level is set to no. Events are dropped until the status is updated to yes.',
         events: [],
         result: 'unknown'
       }
-    : valueP
+    : consentValue === 'p'
     ? {
         message: 'Collect consent level is set to pending. Events are queued until the status is updated to yes (events are sent) or no (events are dropped). To update the consent status, check the default collect consent setting or use the update API from the Consent extension and pass in the preferred collect consent settings. Follow the link for more details and code samples.',
         events: [],
