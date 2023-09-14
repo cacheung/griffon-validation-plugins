@@ -58,7 +58,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       : !consentSDKRegistered && !consentTagInstalled?
       {
         events: [],
-        message: 'Consent extension is not installed or registered with the Mobile Core. By default the collect consent settings used for Edge Network events is yes, events are sent. If you intended to use the Consent extension to control these settings, please follow the steps in the link then reload this validator.',
+        message: 'Consent extension is not installed or registered with the Mobile Core. By default the collect consent settings used for Edge Network events is yes, events will be sent. If you intended to use the Consent extension to control these settings, please follow the steps in the link then reload this validator.',
         links: [
           {
             type: 'doc',

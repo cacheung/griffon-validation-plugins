@@ -31,7 +31,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   const consentSDKRegistered= versionEvents.some(versions.getExtensionsKey('"com.adobe.edge.consent"'));
 
   const consentTagInstalled = configEvents.some((event) => {
-		return window.griffon.toolkit.search('payload.metadata."state.data"."consent.default"' , event);
+		return kit.search('payload.metadata."state.data"."consent.default"' , event);
   });
 
   const consentDefaultEvents = kit.match('payload.metadata."state.data"."consent.default"', configEvents);
@@ -46,14 +46,14 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       }
     : consentDefaultValue === 'n' 
     ? {
-        message: 'Default collect consent level is set to no. Events are dropped until the status is updated to yes or pending.',
+        message: 'Default collect consent level is set to no. Events will be dropped until the status is updated to yes or pending.',
         events: [],
         result: 'unknown'
       }
   
     : consentDefaultValue === 'p' 
     ? {
-        message: 'Default collect consent level is set to pending. Events are queued until the status is updated to yes or no.',
+        message: 'Default collect consent level is set to pending. Events will be queued until the status is updated to yes or no.',
         events: [],
         result: 'unknown'
       }
