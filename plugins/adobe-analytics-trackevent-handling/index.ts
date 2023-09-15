@@ -29,21 +29,33 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     events
   ) as GenericTrack[];
   
-  return analyticsTrackEvents.length > 0 && versionEvents.some(versions.getExtensionsKey('"com.adobe.edge.bridge"'))
+  return analyticsTrackEvents.length > 0 && versionEvents.some(versions.getExtensionsKey('"com.adobe.edge.bridge"')) && versionEvents.some(versions.getExtensionsKey('"com.adobe.module.analytics"'))
   ? {
-      message: 'Edge Bridge Extension is registered to handle Track events. Please make sure the Edge Extension validation passes as well.',
+      message: 'Both Analytics and Edge Bridge extensions are registered to handle Track events, please ensure this is the intended setup.',
+      events: [],
+      links: [
+        {
+          type: 'doc',
+          url: 'https://developer.adobe.com/client-sdks/documentation/adobe-analytics/migrate-to-edge-network/'
+        }
+      ],
+      result: 'not matched'
+    }
+  : analyticsTrackEvents.length > 0 && versionEvents.some(versions.getExtensionsKey('"com.adobe.edge.bridge"'))
+  ? {
+      message: 'Edge Bridge Extension is registered to handle Track events through Edge Network. Please make sure the Edge Network Extension validation passes as well.',
       events: [],
       result: 'matched'
     }
   : analyticsTrackEvents.length > 0 && versionEvents.some(versions.getExtensionsKey('"com.adobe.module.analytics"'))
   ? {
-      message: 'Analytics Extension is registered to handle Track events',
+      message: 'Analytics Extension is registered to handle Track events.',
       events: [],
       result: 'matched'
     }
   : analyticsTrackEvents.length > 0
   ? {
-      message: 'A track event has been detacted but none of the extensions registered handle it right now. Check the link for latest extensions supported for Adobe Analytics.',
+      message: 'A track event has been detected but none of the extensions registered handle it right now. Check the link for latest extensions supported for Adobe Analytics.',
       events: [],
       links: [
         {
@@ -54,7 +66,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       result: 'not matched'
     }
     :{
-      message: 'No track event is detacted in this session, nothing to validate.',
+      message: 'No track event is detected in this session, nothing to validate.',
       events: [],
       result: 'matched'
     };

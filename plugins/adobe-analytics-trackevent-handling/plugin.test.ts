@@ -55,7 +55,7 @@ describe('Analytics trackevent handling', () => {
 
     expect(result).toMatchObject({
       events: [],
-      message: 'Edge Bridge Extension is registered to handle Track events. Please make sure the Edge Extension validation passes as well.',
+      message: 'Edge Bridge Extension is registered to handle Track events through Edge Network. Please make sure the Edge Network Extension validation passes as well.',
       result: 'matched'
     });
   });
@@ -65,7 +65,7 @@ describe('Analytics trackevent handling', () => {
 
     expect(result).toMatchObject({
       events: [],
-      message: 'Analytics Extension is registered to handle Track events',
+      message: 'Analytics Extension is registered to handle Track events.',
       result: 'matched'
     });
   });
@@ -75,7 +75,7 @@ describe('Analytics trackevent handling', () => {
 
     expect(result).toMatchObject({
       events: [],
-      message: 'A track event has been detacted but none of the extensions registered handle it right now. Check the link for latest extensions supported for Adobe Analytics.',
+      message: 'A track event has been detected but none of the extensions registered handle it right now. Check the link for latest extensions supported for Adobe Analytics.',
       links: [
         {
           type: 'doc',
@@ -87,13 +87,30 @@ describe('Analytics trackevent handling', () => {
   });
 
   it('should return no track event is detected, nothing to validate', () => {
-    const result = plugin([analyticsVersionEvent]);
+    const result = plugin([analyticsVersionEvent, edgeBridgeVersionEvent]);
 
     expect(result).toMatchObject({
       events: [],
       message:
-          "No track event is detacted in this session, nothing to validate.",
+          "No track event is detected in this session, nothing to validate.",
       result: 'matched'
+    });
+  });
+
+  it('should return not matched message when both Analytics and Edge Bridge are installed', () => {
+    const result = plugin([genericTrackEvent, analyticsVersionEvent, edgeBridgeVersionEvent]);
+
+    expect(result).toMatchObject({
+      events: [],
+      links: [
+        {
+          type: 'doc',
+          url: 'https://developer.adobe.com/client-sdks/documentation/adobe-analytics/migrate-to-edge-network/'
+        } 
+      ],
+      message:
+          "Both Analytics and Edge Bridge extensions are registered to handle Track events, please ensure this is the intended setup.",
+      result: 'not matched'
     });
   });
 });

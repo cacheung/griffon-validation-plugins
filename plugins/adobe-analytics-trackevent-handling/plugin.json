@@ -1,7 +1,7 @@
 {
   "category": "Adobe Analytics",
   "displayName": "Adobe Analytics Track Event Handling",
-  "description": "Validate that the required extensions are registered for handling Track events.",
+  "description": "Validates that the required extensions are registered for handling Track events.",
   "namespace": "adobe-analytics-trackevent-handling",
   "src": "dist/index.js",
   "type": "validation",
