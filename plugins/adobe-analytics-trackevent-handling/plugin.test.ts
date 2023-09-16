@@ -55,7 +55,7 @@ describe('Analytics trackevent handling', () => {
 
     expect(result).toMatchObject({
       events: [],
-      message: 'Edge Bridge Extension is registered to handle Track events through Edge Network. Please make sure the Edge Network Extension validation passes as well.',
+      message: 'Edge Bridge extension is registered to handle Track events through Edge Network. Please make sure the Edge Network extension validation passes as well.',
       result: 'matched'
     });
   });
@@ -65,7 +65,7 @@ describe('Analytics trackevent handling', () => {
 
     expect(result).toMatchObject({
       events: [],
-      message: 'Analytics Extension is registered to handle Track events.',
+      message: 'Analytics extension is registered to handle Track events.',
       result: 'matched'
     });
   });

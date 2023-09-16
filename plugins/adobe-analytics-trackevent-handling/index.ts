@@ -43,13 +43,13 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     }
   : analyticsTrackEvents.length > 0 && versionEvents.some(versions.getExtensionsKey('"com.adobe.edge.bridge"'))
   ? {
-      message: 'Edge Bridge Extension is registered to handle Track events through Edge Network. Please make sure the Edge Network Extension validation passes as well.',
+      message: 'Edge Bridge extension is registered to handle Track events through Edge Network. Please make sure the Edge Network extension validation passes as well.',
       events: [],
       result: 'matched'
     }
   : analyticsTrackEvents.length > 0 && versionEvents.some(versions.getExtensionsKey('"com.adobe.module.analytics"'))
   ? {
-      message: 'Analytics Extension is registered to handle Track events.',
+      message: 'Analytics extension is registered to handle Track events.',
       events: [],
       result: 'matched'
     }
