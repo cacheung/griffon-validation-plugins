@@ -36,19 +36,19 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     
     return consentValue === 'y'
     ? {
-        message:'Collect consent level is set to yes. Events are sent to the Edge Network.',
+        message:'Collect consent level is set to yes. Events will be sent to the Edge Network.',
         events: [],
         result: 'matched'
     }
     : consentValue === 'n'
     ? {
-        message: 'Collect consent level is set to no. Events are dropped until the status is updated to yes.',
+        message: 'Collect consent level is set to no. Events will be dropped until the status is updated to yes.',
         events: [],
         result: 'unknown'
       }
     : consentValue === 'p'
     ? {
-        message: 'Collect consent level is set to pending. Events are queued until the status is updated to yes (events are sent) or no (events are dropped). To update the consent status, check the default collect consent setting or use the update API from the Consent extension and pass in the preferred collect consent settings. Follow the link for more details and code samples.',
+        message: 'Collect consent level is set to pending. Events will be queued until the status is updated to yes (events are sent) or no (events are dropped). To update the consent status, check the default collect consent setting or use the update API from the Consent extension and pass in the preferred collect consent settings. Follow the link for more details and code samples.',
         events: [],
         links: [
             {
