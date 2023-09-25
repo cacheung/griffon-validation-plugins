@@ -1,10 +1,10 @@
 {
-  "category": "AEP Edge",
-  "displayName": "Edge Extension was configured in Launch",
-  "description": "Verifies the the configuration has the needed values",
+  "category": "Edge Network",
+  "displayName": "Edge Extension Configuration",
+  "description": "Verifies the Edge extension configuration has the needed values in Data Collection",
   "namespace": "aep-edge-configured",
   "src": "dist/index.js",
   "type": "validation",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "visibility": ["PUBLIC"]
 }
