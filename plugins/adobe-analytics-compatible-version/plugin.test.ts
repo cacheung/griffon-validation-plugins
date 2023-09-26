@@ -53,6 +53,23 @@ const edgeBridgeVersionEvent = sharedStateVersions.mock({
   }
 }) as SharedStateVersions;
 
+
+const noAnalyticsVersionEvent = sharedStateVersions.mock({
+  uuid: '1',
+  payload: {
+    metadata: {
+      'state.data': {
+        extensions: {
+          'com.adobe.assurance': {
+            version: '3.0.0'
+          },
+        },
+        version: '3.0.0'
+      }
+    }
+  }
+}) as SharedStateVersions;
+
 const invalidVersionEvent = sharedStateVersions.mock({
   uuid: '1',
   payload: {
@@ -146,6 +163,16 @@ describe('Adobe Analytics Compatible Version', () => {
     expect(result).toMatchObject({
       events: [],
       result: 'unknown'
+    });
+  });
+
+  it('should return valid when no analytics version events are found', () => {
+    const result = plugin([noAnalyticsVersionEvent]);
+
+    expect(result).toMatchObject({
+      message: 'The Analytics extension or Edge Bridge extension are not installed, nothing to validate.',
+      events: [],
+      result: 'matched'
     });
   });
 
