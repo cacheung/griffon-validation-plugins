@@ -90,7 +90,7 @@ describe('Edge Config', () => {
 
     expect(result).toMatchObject({
       events: [],
-      message: 'Did not detect the required Edge Network domain configuration value. It should be configrued in the Data Collection UI.',
+      message: 'Edge extension is detected, but Edge Network domain value is not configured properly in the Data Collection UI. The domain name should be a valid domain with no protocol or slashes. For example company.data.adobedc.net would be valid where as https://company.data.adobedc.net/ would not.',
       result: 'not matched'
     });
   });
@@ -100,7 +100,7 @@ describe('Edge Config', () => {
 
     expect(result).toMatchObject({
       events: [],
-      message: 'Edge extension is detected, but Edge Network domain value is not configured properly. The domain name should in the right format and just the domain without any protocol or trailing slash.',
+      message: 'Edge extension is detected, but Edge Network domain value is not configured properly in the Data Collection UI. The domain name should be a valid domain with no protocol or slashes. For example company.data.adobedc.net would be valid where as https://company.data.adobedc.net/ would not.',
       result: 'not matched'
     });
   });
@@ -110,7 +110,7 @@ describe('Edge Config', () => {
 
     expect(result).toMatchObject({
       events: [],
-      message: 'Edge extension is detected, but Edge Network domain value is not configured properly. The domain name should in the right format and just the domain without any protocol or trailing slash.',
+      message: 'Edge extension is detected, but Edge Network domain value is not configured properly in the Data Collection UI. The domain name should be a valid domain with no protocol or slashes. For example company.data.adobedc.net would be valid where as https://company.data.adobedc.net/ would not.',
       result: 'not matched'
     });
   });
@@ -120,7 +120,7 @@ describe('Edge Config', () => {
 
     expect(result).toMatchObject({
       events: [],
-      message: 'Edge extension is detected, but Edge Network domain value is not configured properly. The domain name should in the right format and just the domain without any protocol or trailing slash.',
+      message: 'Edge extension is detected, but Edge Network domain value is not configured properly in the Data Collection UI. The domain name should be a valid domain with no protocol or slashes. For example company.data.adobedc.net would be valid where as https://company.data.adobedc.net/ would not.',
       result: 'not matched'
     });
   });

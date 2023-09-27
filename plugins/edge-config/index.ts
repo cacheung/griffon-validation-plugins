@@ -17,46 +17,26 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 (function (events: Event[]): ValidationPluginResult {
   const { toolkit: kit } = window.griffon;
   const { sharedStateConfig } = kit['aep-mobile'];
-  const configEvents = kit.match(
+  const configSharedStateEvents = kit.match(
     sharedStateConfig.matcher,
     events
   ) as SharedStateConfig[];
 
-  const hasEdgeConfigId = window.griffon.toolkit.search('payload.metadata."state.data"."edge.configId"' , configEvents[0]);
+  const hasEdgeConfigId = window.griffon.toolkit.search('payload.metadata."state.data"."edge.configId"' , configSharedStateEvents[0]);
 
-  const hasEdgeConfigDomain = window.griffon.toolkit.search('payload.metadata."state.data"."edge.domain"' , configEvents[0]);
+  const hasEdgeConfigDomain = window.griffon.toolkit.search('payload.metadata."state.data"."edge.domain"' , configSharedStateEvents[0]);
 
   const regex = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/gi;
 
-  var validEdgeConfigDomain = false;
-
   //If edge domain is existed, check if it is in the right format
-  if (hasEdgeConfigDomain) {
-    if (regex.test(hasEdgeConfigDomain) && !hasEdgeConfigDomain.includes("http" || "https")) {
-    validEdgeConfigDomain = true;
-    } else {
-      validEdgeConfigDomain = false;
-    }
-  }
+  const validEdgeConfigDomain = hasEdgeConfigDomain && regex.test(hasEdgeConfigDomain);
 
-  return !configEvents.length
+  return !configSharedStateEvents.length
   ? {
       events: [],
       message:
         "No configuration info could be found. Either Assurance isn't registered or it did not pass in cached events upon activating.",
       result: 'not matched'
-    }
-  : hasEdgeConfigId && !hasEdgeConfigDomain
-  ? {
-      events: [],
-      message: 'Did not detect the required Edge Network domain configuration value. It should be configrued in the Data Collection UI.',
-      result: 'not matched',
-      links: [
-        {
-          type: 'doc',
-          url: 'https://developer.adobe.com/client-sdks/documentation/edge-network/#domain-configuration'
-        }
-      ],
     }
   : hasEdgeConfigId && validEdgeConfigDomain
   ? {
@@ -67,24 +47,24 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   : hasEdgeConfigId && !validEdgeConfigDomain
   ? {
       events: [],
-      message: 'Edge extension is detected, but Edge Network domain value is not configured properly. The domain name should in the right format and just the domain without any protocol or trailing slash.',
+      message: 'Edge extension is detected, but Edge Network domain value is not configured properly in the Data Collection UI. The domain name should be a valid domain with no protocol or slashes. For example company.data.adobedc.net would be valid where as https://company.data.adobedc.net/ would not.',
       result: 'not matched',
       links: [
         {
           type: 'doc',
-          url: 'https://developer.adobe.com/client-sdks/documentation/edge-network/#domain-configuration'
+          url: 'https://developer.adobe.com/client-sdks/documentation/edge-network/'
         }
       ],
     }
   : {
       message:
         'Did not detect the required Edge Network configuration values. You may need to install the Edge Network extension in the Date Collection UI and publish the settings.',
-      events: configEvents.map((event) => event.uuid),
+      events: configSharedStateEvents.map((event) => event.uuid),
       result: 'not matched',
       links: [
         {
           type: 'doc',
-          url: 'https://developer.adobe.com/client-sdks/documentation/edge-network/#configure-the-edge-network-extension-in-data-collection-ui'
+          url: 'https://developer.adobe.com/client-sdks/documentation/edge-network/'
         }
       ],
     };
