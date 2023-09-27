@@ -121,12 +121,12 @@ import { ValidationPluginResult } from 'types/validationPlugin';
     ? {
         events: [],
         message:
-          'The installed Assurance SDK and Analytics Edge Bridge extensions are compatible.',
+          'The installed Assurance SDK and Edge Bridge extensions are compatible.',
         result: 'matched'
       }
     : !analyticsVersion
     ? {
-      message: 'The Analytics extension or Edge Bridge extension are not installed, nothing to validate.',
+      message: 'The Analytics and Edge Bridge extensions are not installed, nothing to validate.',
       events: [],
       result: 'matched'
     }  

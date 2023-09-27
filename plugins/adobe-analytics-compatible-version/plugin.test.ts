@@ -170,7 +170,7 @@ describe('Adobe Analytics Compatible Version', () => {
     const result = plugin([noAnalyticsVersionEvent]);
 
     expect(result).toMatchObject({
-      message: 'The Analytics extension or Edge Bridge extension are not installed, nothing to validate.',
+      message: 'The Analytics and Edge Bridge extensions are not installed, nothing to validate.',
       events: [],
       result: 'matched'
     });
