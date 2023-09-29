@@ -26,7 +26,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     ? {
         events: [],
         message:
-          "No version info could be found. Either Griffon isn't registered or it did not pass in cached events upon activating.",
+          "No version info could be found. Either Assurance isn't registered or it did not pass in cached events upon activating.",
         result: 'not matched'
       }
     : versionEvents.some(versions.getExtensionsKey('"com.adobe.edge"'))
