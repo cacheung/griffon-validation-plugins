@@ -170,9 +170,9 @@ describe('Adobe Analytics Compatible Version', () => {
     const result = plugin([noAnalyticsVersionEvent]);
 
     expect(result).toMatchObject({
-      message: 'The Analytics and Edge Bridge extensions are not installed, nothing to validate.',
+      message: 'The compatibility versions between Adobe Analytics and Assurance SDK cannot be determined as the Adobe Analytics extensions is not installed.',
       events: [],
-      result: 'matched'
+      result: 'unknown'
     });
   });
 
