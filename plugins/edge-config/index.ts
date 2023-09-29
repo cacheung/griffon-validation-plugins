@@ -10,38 +10,62 @@
   governing permissions and limitations under the License.
 */
 
-import { Configuration } from '@adobe/griffon-toolkit-aep-mobile';
+import { SharedStateConfig } from '@adobe/griffon-toolkit-aep-mobile';
 import { Event } from '@adobe/griffon-toolkit-common';
 import { ValidationPluginResult } from '../../types/validationPlugin';
 
 (function (events: Event[]): ValidationPluginResult {
   const { toolkit: kit } = window.griffon;
-  const { configuration } = kit['aep-mobile'];
-  const configEvents = kit.match(
-    configuration.matcher,
+  const { sharedStateConfig } = kit['aep-mobile'];
+  const configSharedStateEvents = kit.match(
+    sharedStateConfig.matcher,
     events
-  ) as Configuration[];
+  ) as SharedStateConfig[];
 
-  const hasAllConfig = (event: Configuration) =>
-    configuration.getEventDataKey('"edge.configId"', event);
+  const hasEdgeConfigId = window.griffon.toolkit.search('payload.metadata."state.data"."edge.configId"' , configSharedStateEvents[0]);
 
-  return !configEvents.length
-    ? {
-        events: [],
-        message:
-          "No configuration info could be found. Either Griffon isn't registered or it did not pass in cached events upon activating.",
-        result: 'not matched'
-      }
-    : configEvents.some(hasAllConfig)
-    ? {
-        events: [],
-        message: 'Edge extension was configured correctly',
-        result: 'matched'
-      }
-    : {
-        message:
-          'Did not detect the required configuration values. You may need to install the extension in launch and publish those settings.',
-        events: configEvents.map((event) => event.uuid),
-        result: 'not matched'
-      };
+  const hasEdgeConfigDomain = window.griffon.toolkit.search('payload.metadata."state.data"."edge.domain"' , configSharedStateEvents[0]);
+
+  const regex = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/gi;
+
+  //If edge domain is existed, check if it is in the right format
+  const validEdgeConfigDomain = hasEdgeConfigDomain && regex.test(hasEdgeConfigDomain);
+
+  return !configSharedStateEvents.length
+  ? {
+      events: [],
+      message:
+        "No configuration info could be found. Either Assurance isn't registered or it did not pass in cached events upon activating.",
+      result: 'not matched'
+    }
+  : hasEdgeConfigId && validEdgeConfigDomain
+  ? {
+      events: [],
+      message: 'Edge extension was configured correctly',
+      result: 'matched'
+    }
+  : hasEdgeConfigId && !validEdgeConfigDomain
+  ? {
+      events: [],
+      message: 'Edge extension is detected, but Edge Network domain value is not configured properly in the Data Collection UI. The domain name should be a valid domain with no protocol or slashes. For example company.data.adobedc.net would be valid where as https://company.data.adobedc.net/ would not.',
+      result: 'not matched',
+      links: [
+        {
+          type: 'doc',
+          url: 'https://developer.adobe.com/client-sdks/documentation/edge-network/'
+        }
+      ],
+    }
+  : {
+      message:
+        'Did not detect the required Edge Network configuration values. You may need to install the Edge Network extension in the Date Collection UI and publish the settings.',
+      events: configSharedStateEvents.map((event) => event.uuid),
+      result: 'not matched',
+      links: [
+        {
+          type: 'doc',
+          url: 'https://developer.adobe.com/client-sdks/documentation/edge-network/'
+        }
+      ],
+    };
 });

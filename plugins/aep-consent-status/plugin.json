@@ -5,6 +5,6 @@
   "namespace": "aep-consent-status",
   "src": "dist/index.js",
   "type": "validation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "visibility": ["PUBLIC"]
 }

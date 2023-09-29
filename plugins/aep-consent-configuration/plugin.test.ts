@@ -102,7 +102,7 @@ describe('Consent Default Config', () => {
   it('should show default consent value is no', () => {
     const result = plugin([configEventValN]);
     expect(result).toMatchObject({
-      message: 'Default collect consent level is set to no. Events are dropped until the status is updated to yes or pending.',
+      message: 'Default collect consent level is set to no. Events will be dropped until the status is updated to yes or pending.',
       events: [],
       result: 'unknown'
     });
@@ -111,7 +111,7 @@ describe('Consent Default Config', () => {
   it('should show default consent value is pending', () => {
     const result = plugin([configEventValP]);
     expect(result).toMatchObject({
-      message: 'Default collect consent level is set to pending. Events are queued until the status is updated to yes or no.',
+      message: 'Default collect consent level is set to pending. Events will be queued until the status is updated to yes or no.',
       events: [],
       result: 'unknown'
     });
