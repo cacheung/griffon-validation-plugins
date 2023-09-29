@@ -162,11 +162,12 @@ describe('Adobe Analytics Compatible Version', () => {
 
     expect(result).toMatchObject({
       events: [],
+      message:  "No version info could be found. Either the Assurance SDK isn't registered or the SDK did not pass in cached events upon activating.",
       result: 'unknown'
     });
   });
 
-  it('should return valid when no analytics version events are found', () => {
+  it('should return unknown when no analytics version events are found', () => {
     const result = plugin([noAnalyticsVersionEvent]);
 
     expect(result).toMatchObject({
