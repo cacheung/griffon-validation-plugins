@@ -69,7 +69,7 @@ describe('Edge Config', () => {
 
     expect(result).toMatchObject({
       events: [],
-      message: 'Edge extension was configured correctly',
+      message: 'Edge extension was configured correctly.',
       result: 'matched'
     });
   });

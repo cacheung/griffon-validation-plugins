@@ -1,7 +1,7 @@
 {
   "category": "Edge Network",
-  "displayName": "Edge Extension Configuration",
-  "description": "Verifies the Edge extension configuration has the needed values in Data Collection",
+  "displayName": "Edge extension configuration",
+  "description": "Verifies the Edge extension configuration has the needed values in Data Collection.",
   "namespace": "aep-edge-configured",
   "src": "dist/index.js",
   "type": "validation",

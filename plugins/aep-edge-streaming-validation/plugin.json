@@ -1,6 +1,6 @@
 {
   "category": "Edge Network",
-  "displayName": "Edge Streaming Validation",
+  "displayName": "Edge streaming validation",
   "description": "Validates each streaming validation hit is successful.",
   "namespace": "edge-streaming-validation",
   "src": "dist/index.js",

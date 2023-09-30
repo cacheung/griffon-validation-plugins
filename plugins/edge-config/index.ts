@@ -41,7 +41,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   : hasEdgeConfigId && validEdgeConfigDomain
   ? {
       events: [],
-      message: 'Edge extension was configured correctly',
+      message: 'Edge extension was configured correctly.',
       result: 'matched'
     }
   : hasEdgeConfigId && !validEdgeConfigDomain
