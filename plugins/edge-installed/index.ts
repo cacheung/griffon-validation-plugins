@@ -32,11 +32,11 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     : versionEvents.some(versions.getExtensionsKey('"com.adobe.edge"'))
     ? {
         events: [],
-        message: 'Edge Extension was registered',
+        message: 'Edge extension was registered.',
         result: 'matched'
       }
     : {
-        message: 'Did not detect initialization of the Edge Extension',
+        message: 'Did not detect initialization of the Edge extension.',
         events: versionEvents.map((event) => event.uuid),
         result: 'not matched'
       };
