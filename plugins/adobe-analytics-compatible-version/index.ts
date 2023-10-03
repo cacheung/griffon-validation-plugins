@@ -126,7 +126,7 @@ import { ValidationPluginResult } from 'types/validationPlugin';
       }
     : !analyticsVersion
     ? {
-      message: 'The compatibility versions between Adobe Analytics and Assurance SDK cannot be determined as the Adobe Analytics extensions is not installed.',
+      message: 'The compatibility versions between Adobe Analytics and Assurance SDK cannot be determined as the Adobe Analytics extension is not installed.',
       events: [],
       result: 'unknown'
     }  

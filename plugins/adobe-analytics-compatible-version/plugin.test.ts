@@ -54,7 +54,7 @@ const edgeBridgeVersionEvent = sharedStateVersions.mock({
 }) as SharedStateVersions;
 
 
-const noAnalyticsVersionEvent = sharedStateVersions.mock({
+const noAnalyticsVersion = sharedStateVersions.mock({
   uuid: '1',
   payload: {
     metadata: {
@@ -167,11 +167,11 @@ describe('Adobe Analytics Compatible Version', () => {
     });
   });
 
-  it('should return unknown when no analytics version events are found', () => {
-    const result = plugin([noAnalyticsVersionEvent]);
+  it('should return unknown when no analytics version is found in the shared state', () => {
+    const result = plugin([noAnalyticsVersion]);
 
     expect(result).toMatchObject({
-      message: 'The compatibility versions between Adobe Analytics and Assurance SDK cannot be determined as the Adobe Analytics extensions is not installed.',
+      message: 'The compatibility versions between Adobe Analytics and Assurance SDK cannot be determined as the Adobe Analytics extension is not installed.',
       events: [],
       result: 'unknown'
     });
