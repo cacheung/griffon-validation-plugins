@@ -71,6 +71,7 @@ import { ValidationPluginResult } from 'types/validationPlugin';
     const extensions = versions.getExtensions(version);
     return extensions?.['com.adobe.edge.bridge'];
   });
+
   const compatible = edgeBridgeVersion
     ? true
     : versionEvents.every((event) => {
@@ -104,9 +105,9 @@ import { ValidationPluginResult } from 'types/validationPlugin';
           "No version info could be found. Either the Assurance SDK isn't registered or the SDK did not pass in cached events upon activating.",
         result: 'unknown'
       }
-    : !compatible
+    : !compatible && analyticsVersion
     ? {
-        message: `Assurance SDK Version ${assuranceVersion} and Adobe Analytics Extension version ${analyticsVersion} are not compatible!`,
+        message: `Assurance SDK Version ${assuranceVersion} and Adobe Analytics extension version ${analyticsVersion} are not compatible. Check the link for latest versions available and upgrade to resolve this error.`,
         links: [
           {
             type: 'doc',
@@ -120,13 +121,19 @@ import { ValidationPluginResult } from 'types/validationPlugin';
     ? {
         events: [],
         message:
-          'The installed Assurance SDK and Analytics Edge Bridge Extensions are compatible.',
+          'The installed Assurance SDK and Edge Bridge extensions are compatible.',
         result: 'matched'
       }
+    : !analyticsVersion
+    ? {
+      message: 'The compatibility versions between Adobe Analytics and Assurance SDK cannot be determined as the Adobe Analytics extension is not installed.',
+      events: [],
+      result: 'unknown'
+    }  
     : {
         events: [],
         message:
-          'The installed Assurance SDK and Adobe Analytics Extensions are compatible.',
+          'The installed Assurance SDK and Adobe Analytics extensions are compatible.',
         result: 'matched'
       };
 });
