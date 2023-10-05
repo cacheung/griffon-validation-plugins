@@ -107,7 +107,7 @@ import { ValidationPluginResult } from 'types/validationPlugin';
       }
     : !compatible && analyticsVersion
     ? {
-        message: `Assurance SDK Version ${assuranceVersion} and Adobe Analytics extension version ${analyticsVersion} are not compatible!`,
+        message: `Assurance SDK Version ${assuranceVersion} and Adobe Analytics extension version ${analyticsVersion} are not compatible. Check the link for latest versions available and upgrade to resolve this error.`,
         links: [
           {
             type: 'doc',
