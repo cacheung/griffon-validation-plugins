@@ -1,10 +1,10 @@
 {
-    "category": "AEP Places Configuration",
+    "category": "Adobe Places Configuration",
     "displayName": "Adobe Places AEP SDK Extension Configuration",
     "description": "Verifies the Adobe Places AEP SDK Extension has been configured.",
     "namespace": "adobe-places-configuration",
     "src": "dist/index.js",
     "type": "validation",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "visibility": ["PUBLIC"]
 }

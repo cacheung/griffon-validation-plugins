@@ -30,7 +30,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   return !configEvents.length
     ? {
         message:
-          "No configuration info could be found. Either Griffon isn't registered or it did not pass in cached events upon activating.",
+          "No configuration info could be found. Either Assurance isn't registered or it did not pass in cached events upon activating.",
         events: [],
         result: 'not matched'
       }
@@ -42,7 +42,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       }
     : {
         message:
-          'Did not detect the required configuration values. You may need to install the extension in launch and publish those settings.',
+          'Did not detect the required configuration values. You may need to install the extension in Data Collection and publish those settings.',
         events: configEvents.map((event) => event.uuid),
         result: 'not matched'
       };

@@ -1,10 +1,10 @@
 {
-  "category": "Lifecycle",
+  "category": "Adobe Lifecycle",
   "displayName": "Lifecycle State",
   "description": "Validate a Lifecycle State Event fired.",
   "namespace": "lifecycle-state",
   "src": "dist/index.js",
   "type": "validation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "visibility": ["PUBLIC"]
 }
