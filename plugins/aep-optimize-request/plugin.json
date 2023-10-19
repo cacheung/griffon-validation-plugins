@@ -1,5 +1,5 @@
 {
-    "category": "Adobe Journey Optimizer",
+    "category": "Adobe Journey Optimizer - Decisioning",
     "displayName": "Adobe Journey Optimize Request Validation",
     "description": "Verifies the Adobe Journey Optimize Requests all have a corresponding response and valid tracking types are used.",
     "namespace": "aep-optimize-request",

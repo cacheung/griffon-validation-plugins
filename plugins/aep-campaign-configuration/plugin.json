@@ -1,7 +1,7 @@
 {
-    "category": "Adobe Campaign Configuration",
+    "category": "Adobe Campaign Standard Configuration",
     "displayName": "Adobe Campaign SDK Extension Configuration",
-    "description": "Verifies the Adobe Campaign SDK Extension has been configured.",
+    "description": "Verifies the Adobe Campaign Standard SDK Extension has been configured.",
     "namespace": "adobe-campaign-configuration",
     "src": "dist/index.js",
     "type": "validation",

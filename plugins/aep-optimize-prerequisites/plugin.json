@@ -1,5 +1,5 @@
 {
-  "category": "Adobe Journey Optimizer",
+  "category": "Adobe Journey Optimizer - Decisioning",
   "displayName": "Optimize SDK Prerequisites",
   "description": "Verifies the Optimize SDK Extension has required pre-requisites installed on app.",
   "namespace": "aep-optimize-prerequisites",
