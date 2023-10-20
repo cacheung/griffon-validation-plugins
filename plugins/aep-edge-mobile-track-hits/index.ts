@@ -27,36 +27,20 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     events
   ) as EdgeHitReceived[];
   const errors: string[] = [];
-
-  for (let i = 0; i < trackEvents.length; i++) {
-    let linked = false;
-    const trackEvent = trackEvents[i];
-    const identifier: string = aepMobile.mobileEvent.getEventId(trackEvent);
-
-    for (let j = 0; j < edgeHits.length; j++) {
-      const edgeHit = edgeHits[j];
-      const messages = toolkit.edge.edgeEvent.getMessages(edgeHit);
-      let data;
-      try {
-        data = messages ? JSON.parse(messages[1]) : val.payload;
-      } catch {
-        data = val.payload;
+  
+    for (let i = 0; i < trackEvents.length; i++) {
+      const trackEvent = trackEvents[i];
+      const identifier: string = aepMobile.mobileEvent.getEventId(trackEvent);
+      const linked = edgeHits.some(edgeHit => JSON.stringify(edgeHit).includes(identifier))
+  
+      if (!linked) {
+        errors.push(trackEvent.uuid);
       }
-
-      if (data.indexOf(identifier) > -1) {
-        linked = true;
-        break;
-      }
-    }
-
-    if (!linked) {
-      errors.push(trackEvent.uuid);
-    }
   }
 
   const message = errors.length
-    ? 'One or more AEP Track events are missing an AEP Edge Hit event. The AEP Track Events are generated from the client(website or mobile app) and reported directly to assurance. The AEP Edge Hit event comes from Adobe services through the request channel separately to provide confirmation that the hit was received. This may indicate that the hit was not processed. If you think this is in error, please contact client care with information about your usage, an Assurance session id and any other details that can help investigate the issue.'
-    : 'PASSED!';
+    ? 'One or more Track events are missing an Edge Network Hit event. The Track Events are generated from the client(website or mobile app) and reported directly to assurance. The Edge Network Hit event comes from Adobe services through the request channel separately to provide confirmation that the hit was received. This may indicate that the hit was not processed. If you think this is in error, please contact client care with information about your usage, an Assurance session id and any other details that can help investigate the issue.'
+    : 'All Mobile Track events have an associated Edge Network Hit event.';
 
   return {
     events: errors,
