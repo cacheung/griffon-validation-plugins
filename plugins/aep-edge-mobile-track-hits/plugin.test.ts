@@ -46,7 +46,7 @@ const edgeHitReceivedEventMatched1 = edgeHitReceived.mock({
     },
     messages: [
       'Request received by Experience Edge.',
-      '{\"_id\" : \"AE3469A9-DA63-466C-98A1-20222614106D\"...}'
+      '{"event":{"xdm":{"_id":"AE3469A9-DA63-466C-98A1-20222614106D"}}}'      
     ],
   },
 }) as EdgeHitReceived;
@@ -60,7 +60,7 @@ const edgeHitReceivedEventMatched2 = edgeHitReceived.mock({
     },
     messages: [
       'Request received by Experience Edge.',
-      '{\"_id\" : \"AE3469A9-DA63-466C-98A1-120933893029\"...}'
+      '{"event":{"xdm":{"_id":"AE3469A9-DA63-466C-98A1-120933893029"}}}'    
     ],
   },
 }) as EdgeHitReceived;

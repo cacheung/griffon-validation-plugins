@@ -27,15 +27,23 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     events
   ) as EdgeHitReceived[];
   const errors: string[] = [];
-  
-    for (let i = 0; i < trackEvents.length; i++) {
-      const trackEvent = trackEvents[i];
-      const identifier: string = aepMobile.mobileEvent.getEventId(trackEvent);
-      const linked = edgeHits.some(edgeHit => JSON.stringify(edgeHit).includes(identifier))
-  
-      if (!linked) {
-        errors.push(trackEvent.uuid);
-      }
+
+  const edgeHitMap = new Map();
+
+  for (const edgeHit of edgeHits) {
+    const edgeHitmessages = toolkit.edge.edgeEvent.getMessages(edgeHit);
+    const data = JSON.parse(edgeHitmessages[1]);
+    const identifier = data.event.xdm._id;
+    edgeHitMap.set(identifier, true);
+  }
+
+  for (let i = 0; i < trackEvents.length; i++) {
+    const trackEvent = trackEvents[i];
+    const identifier: string = aepMobile.mobileEvent.getEventId(trackEvent);
+    const linked = edgeHitMap.get(identifier)
+    if (!linked) {
+      errors.push(trackEvent.uuid);
+    }
   }
 
   const message = errors.length
@@ -48,3 +56,4 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     result: !errors.length ? 'matched' : 'not matched'
   };
 });
+
