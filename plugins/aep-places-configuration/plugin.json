@@ -1,5 +1,5 @@
 {
-    "category": "Adobe Places Configuration",
+    "category": "Adobe Experience Platform Location Service",
     "displayName": "Adobe Places AEP SDK Extension Configuration",
     "description": "Verifies the Adobe Places AEP SDK Extension has been configured.",
     "namespace": "adobe-places-configuration",

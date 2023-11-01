@@ -1,5 +1,5 @@
 {
-  "category": "Adobe Lifecycle",
+  "category": "Lifecycle",
   "displayName": "Lifecycle State",
   "description": "Validate a Lifecycle State Event fired.",
   "namespace": "lifecycle-state",

@@ -1,5 +1,5 @@
 {
-    "category": "Adobe Core Configuration",
+    "category": "Adobe Core",
     "displayName": "Adobe Core SDK Extension Configuration",
     "description": "Verifies the Adobe Core SDK Extension has been configured.",
     "namespace": "adobe-core-configuration",
