@@ -1,10 +1,10 @@
 {
-  "category": "AEP SDK Configuration",
-  "displayName": "Adobe Analytics AEP SDK Extension Configuration",
-  "description": "Verifies the Adobe Analytics AEP SDK Extension has been configured.",
+  "category": "Adobe Analytics",
+  "displayName": "Adobe Analytics Adobe Experience Platform SDK Extension Configuration",
+  "description": "Verifies the Adobe Analytics Adobe Experience Platform SDK Extension has been configured.",
   "namespace": "adobe-analytics-configuration",
   "src": "dist/index.js",
   "type": "validation",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "visibility": ["PUBLIC"]
 }
