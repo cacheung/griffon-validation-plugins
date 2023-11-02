@@ -1,10 +1,10 @@
 {
-  "category": "AEP Optimize",
-  "displayName": "AEP Optimize Request Type Validation",
-  "description": "Verifies the AEP Optimize Requests all have a valid Tracking type.",
+  "category": "Adobe Journey Optimizer - Decisioning",
+  "displayName": "Adobe Journey Optimize Request Type Validation",
+  "description": "Verifies the Adobe Journey Optimize Requests all have a valid Tracking type.",
   "namespace": "adobe-optimize-tracking-types",
   "src": "dist/index.js",
   "type": "validation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "visibility": ["PUBLIC"]
 }

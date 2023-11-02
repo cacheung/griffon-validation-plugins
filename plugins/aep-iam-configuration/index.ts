@@ -25,7 +25,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   if (!configEvents.length) {
     return {
       message:
-        "No configuration info could be found. Either Griffon isn't registered or it did not pass in cached events upon activating.",
+        "No configuration info could be found. Either Assurance isn't registered or it did not pass in cached events upon activating.",
       events: [],
       result: 'not matched'
     };
@@ -44,7 +44,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       }
     : {
         message:
-          'Did not detect the required configuration values. Please ensure the following values have been configured in launch: experienceCloud.org, edge.configId, and messaging.eventDataset.',
+          'Did not detect the required configuration values. Please ensure the following values have been configured in Data Collection: experienceCloud.org, edge.configId, and messaging.eventDataset.',
         events: configEvents.map((event) => event.uuid),
         result: 'not matched'
       };

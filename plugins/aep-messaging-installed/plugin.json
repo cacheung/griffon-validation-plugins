@@ -1,11 +1,11 @@
 {
-  "category": "AEP Messaging",
+  "category": "Adobe Journey Optimizer - Push",
   "displayName": "Messaging extension was registered",
-  "description": "Verifies the Adobe AEP Messaging SDK Extension has been installed.",
+  "description": "Verifies the Adobe Messaging SDK Extension has been installed.",
   "namespace": "aep-messaging-installed",
   "src": "dist/index.js",
   "type": "validation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "visibility": [
     "972C898555E9F7BC7F000101@AdobeOrg",
     "056F3DD059CB22060A494021@AdobeOrg",

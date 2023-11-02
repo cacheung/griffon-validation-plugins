@@ -1,10 +1,10 @@
 {
   "category": "Edge Analytics",
-  "displayName": "AEP Mobile Track Edge Hits",
-  "description": "Validates each AEP Mobile Track event fires an AEP Edge Hit event.",
+  "displayName": "Adobe Mobile Track Edge Hits",
+  "description": "Validates each Adobe Mobile Track event fires an Edge Network Hit event.",
   "namespace": "edge-analytics-mobile-track-hit",
   "src": "dist/index.js",
   "type": "validation",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "visibility": ["PUBLIC"]
 }

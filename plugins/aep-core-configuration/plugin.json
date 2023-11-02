@@ -1,10 +1,10 @@
 {
-    "category": "AEP Core Configuration",
-    "displayName": "Adobe Core AEP SDK Extension Configuration",
-    "description": "Verifies the Adobe Core AEP SDK Extension has been configured.",
+    "category": "Adobe Core",
+    "displayName": "Adobe Core SDK Extension Configuration",
+    "description": "Verifies the Adobe Core SDK Extension has been configured.",
     "namespace": "adobe-core-configuration",
     "src": "dist/index.js",
     "type": "validation",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "visibility": ["PUBLIC"]
 }
