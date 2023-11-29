@@ -1,10 +1,10 @@
 {
-  "category": "Adobe Lifecycle",
+  "category": "Lifecycle",
   "displayName": "Lifecycle Basic Implementation",
   "description": "Validator for Adobe Assurance. This validation script validates that lifecycle was implemented correctly. Assurance detects a lifecycle launch, close, and those events are ordered correctly (launch>close>launch>close).",
   "namespace": "lifecycle-basic-implementation",
   "src": "dist/index.js",
   "type": "validation",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "visibility": ["PUBLIC"]
 }
