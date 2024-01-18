@@ -14,7 +14,8 @@ import {
   AnalyticsResponse,
   Configuration,
   GenericTrack,
-  LifecycleStart
+  LifecycleStart,
+  SharedStateVersions
 } from '@adobe/griffon-toolkit-aep-mobile';
 import { Event } from '@adobe/griffon-toolkit-common';
 import { ValidationPluginResult } from '../../types/validationPlugin';
@@ -23,6 +24,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   const {
     toolkit: { 'aep-mobile': aepMobile, combineAny, match }
   } = window.griffon;
+
   const analyticsTrackEvents: GenericTrack[] & LifecycleStart[] = match(
     combineAny([
       aepMobile.genericTrack.matcher,
@@ -30,6 +32,12 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     ]),
     events
   );
+
+  const versionEvents: SharedStateVersions[] = match(
+    aepMobile.sharedStateVersions.matcher,
+    events
+  ) ;
+
   const analyticsResponseEvents: AnalyticsResponse[] = match(
     aepMobile.analyticsResponse.matcher,
     events
@@ -67,16 +75,21 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
         eventData['global.privacy'] ||
         event.payload.metadata?.['state.data']?.['global.privacy'];
       return privacy === 'optedin';
-    });
+    });    
 
     if (!optedin) {
       notMatchedMessage +=
-        ' If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`';
+        ' If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`.';
       links.push({
         type: 'doc',
         url: 'https://developer.adobe.com/client-sdks/documentation/adobe-analytics/faq/#verify-current-privacy-status'
       });
     }
+
+    if (!versionEvents.some(aepMobile.sharedStateVersions.getExtensionsKey('"com.adobe.module.analytics"'))) {
+      notMatchedMessage +=
+        ' If you are not using the Analytics Extension or if you follow an Edge Bridge workflow, you can disregard this validation error.';
+    }    
   }
 
   const message = !notMatchedEvents.length ? matchedMessage : notMatchedMessage;
