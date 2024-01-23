@@ -50,7 +50,7 @@ const invalidConfigurationEmpty = sharedStateConfig.mock({
   }
 }) as SharedStateConfig;
 
-const invalidConfiguration = sharedStateConfig.mock({
+const invalidConfigurationBlank = sharedStateConfig.mock({
   uuid: '2',
   payload: {
     ACPExtensionEventData: {
@@ -78,7 +78,7 @@ const analyticsVersionEvent = sharedStateVersions.mock({
 describe('Adobe Analytics Configuration', () => {
   it('should return success when analytics has been configured correctly in at least one event', () => {
     const result: ValidationPluginResult = plugin([
-      invalidConfiguration,
+      invalidConfigurationBlank,
       inValidConfigurationNoRsid,
       validConfiguration
     ]);
