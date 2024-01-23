@@ -9,18 +9,23 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
 */
-
+import { SharedStateVersions } from '@adobe/griffon-toolkit-aep-mobile';
 import { Event } from '@adobe/griffon-toolkit-common';
-import { Configuration } from '@adobe/griffon-toolkit-aep-mobile';
+import { SharedStateConfig } from '@adobe/griffon-toolkit-aep-mobile';
 import { ValidationPluginResult } from '../../types/validationPlugin';
 
 (function (events: Event[]): ValidationPluginResult {
   const { toolkit: kit } = window.griffon;
-  const { configuration } = kit['aep-mobile'];
+  const { sharedStateConfig, sharedStateVersions } = kit['aep-mobile'];
   const configurationEvents = kit.match(
-    configuration.matcher,
+    sharedStateConfig.matcher,
     events
-  ) as Configuration[];
+  ) as SharedStateConfig[];
+  const versionEvents = kit.match(
+    sharedStateVersions.matcher,
+    events
+  ) as SharedStateVersions[];
+
   const valid = configurationEvents.some((event) => {
     const rsids =
       event.payload.ACPExtensionEventData['analytics.rsids'] ||
@@ -31,13 +36,21 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     return rsids && server;
   });
 
-  const message = valid
-    ? 'Valid! Adobe Analytics Extension has been configured!'
-    : 'Missing required configuration for Adobe Analytics';
-  const errors = valid ? [] : configurationEvents.map((event) => event.uuid);
-  return {
-    events: errors,
-    message,
-    result: valid ? 'matched' : 'not matched'
-  };
+  return valid
+  ? {
+      message: 'Valid! Adobe Analytics Extension has been configured!',
+      events: [],
+      result: 'matched'
+    }
+  : !valid && versionEvents.some(sharedStateVersions.getExtensionsKey('"com.adobe.module.analytics"'))
+  ? {
+      message: 'Missing required configuration for Adobe Analytics.',
+      events: [],
+      result: 'not matched'
+    }
+    :{
+      message: 'no Analytics extension is detected, nothing to validate.',
+      events: [],
+      result: 'matched'
+    };
 });
