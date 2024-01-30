@@ -16,7 +16,9 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
 
 (function (events: Event[]): ValidationPluginResult {
   const { toolkit: kit } = window.griffon;
-  const { sharedStateVersions: versions } = kit['aep-mobile'];
+  const { clientInfoAndroid, sharedStateVersions: versions } =
+    kit['aep-mobile'];
+
   const versionEvents = kit.match(
     versions.matcher,
     events
@@ -31,27 +33,30 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     };
   }
 
+  const isAndroid = events.some((event) => clientInfoAndroid.isMatch(event));
+
   const isCoreInstalled = versionEvents.some(
-    (version) => versions.getSdkVersion(version) >= '3.4.2'
+    (version) =>
+      versions.getSdkVersion(version) >= (isAndroid ? '2.0.0' : '3.4.2')
   );
 
   const isEdgeInstalled = versionEvents.some((version) => {
     const installed = versions.getExtensionsKey('"com.adobe.edge"')(version);
-    return installed && installed >= '1.3.0';
+    return installed && installed >= (isAndroid ? '2.0.0' : '1.3.0');
   });
 
   const isEdgeIdentityInstalled = versionEvents.some((version) => {
     const installed = versions.getExtensionsKey('"com.adobe.edge.identity"')(
       version
     );
-    return installed && installed >= '1.0.1';
+    return installed && installed >= (isAndroid ? '2.0.0' : '1.0.1');
   });
 
   const isMessagingInstalled = versionEvents.some((version) => {
     const installed = versions.getExtensionsKey('"com.adobe.messaging"')(
       version
     );
-    return installed && installed >= '1.1.0';
+    return installed && installed >= (isAndroid ? '2.0.0' : '1.1.0');
   });
 
   const isValid =
