@@ -13,28 +13,28 @@
     semver "^7.3.2"
     yauzl "^2.10.0"
 
-"@adobe/griffon-toolkit-aep-mobile@^0.8.1":
-  version "0.8.1"
-  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/griffon-toolkit-aep-mobile/-/griffon-toolkit-aep-mobile-0.8.1.tgz#ef5c28038ee5936af229c5d2b3176650e2931cfa"
-  integrity sha512-u4okK/A0KSVWOahD8yWvf1JRE1o29TrCh8ldeBX+yrNYlhUs+kRsE8l4HIK0fDpn53IlWfNwF6jKZPAras6OoA==
+"@adobe/griffon-toolkit-aep-mobile@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@adobe/griffon-toolkit-aep-mobile/-/griffon-toolkit-aep-mobile-0.13.0.tgz#dfa6212cfdeebdc1b347b0f726399da9b50ea3cf"
+  integrity sha512-/1YpK0/wIYAo83M8j+C+PBX3esPuHnbdkOQNvWKEoMHchhD94Syo3yiVAp84GCj5a2KxcodbZOPVidlM6hd+wA==
   dependencies:
-    "@adobe/griffon-toolkit" "*"
+    "@adobe/griffon-toolkit" "1.3.0"
 
-"@adobe/griffon-toolkit-common@^0.3.1":
+"@adobe/griffon-toolkit-common@^0.3.3":
   version "0.3.3"
-  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/griffon-toolkit-common/-/griffon-toolkit-common-0.3.3.tgz#7e12443870585299a4fa8b1f78dcee1465ae15aa"
+  resolved "https://registry.yarnpkg.com/@adobe/griffon-toolkit-common/-/griffon-toolkit-common-0.3.3.tgz#7e12443870585299a4fa8b1f78dcee1465ae15aa"
   integrity sha512-XtZQS/jO0DTqnx8h2dTZjEHValgviuIy/D1wEGxlrFBaa1+vp7Hnrjmr/u/H9LTFn/eIjvY8c3hlCrQglzWoVA==
   dependencies:
     "@adobe/griffon-toolkit" "1.3.0"
 
-"@adobe/griffon-toolkit-edge@^0.2.0":
-  version "0.2.2"
-  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/griffon-toolkit-edge/-/griffon-toolkit-edge-0.2.2.tgz#aca233a51ff35d060a1522ea011cfa21f7a2229b"
-  integrity sha512-KJLr+Gx1f5W1KzezEd6fKZ7+c7HQG/Wbs6IgoXaz/auT5tgdqpf1XFm85Ow8pZPnoogjx4PF/MUbpZVZYS/hJw==
+"@adobe/griffon-toolkit-edge@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@adobe/griffon-toolkit-edge/-/griffon-toolkit-edge-0.2.3.tgz#fb20876ff6de01a0961a615bb5709b937185b7c7"
+  integrity sha512-nBgbYGu4x2ccR8wnz8xhhVEk4WR1zZLq91C/p2s2A843vcewYilxJH/ZgeVZU6X3RuF0IMsavnmiS/JtAYzMYw==
   dependencies:
     "@adobe/griffon-toolkit" "1.3.0"
 
-"@adobe/griffon-toolkit@*", "@adobe/griffon-toolkit@1.3.0", "@adobe/griffon-toolkit@^1.3.0":
+"@adobe/griffon-toolkit@1.3.0", "@adobe/griffon-toolkit@^1.3.0":
   version "1.3.0"
   resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/griffon-toolkit/-/griffon-toolkit-1.3.0.tgz#8105fd27c83e189dbaaca9110f31a38faa572387"
   integrity sha512-y5qDL/fmjyUJ580rV2O7Y0EzQySRBkHWMfsL9cJM4AStSZKpXc3jlIP+tNc61BWLyO4UUgXH/jnXg3anm+dd7A==

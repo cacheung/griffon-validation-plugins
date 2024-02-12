@@ -1,0 +1,10 @@
+{
+  "category": "Adobe Journey Optimizer - Code Based Experience Request Validation",
+  "displayName": "Adobe Journey Optimizer Code Based Experience Request Validation ",
+  "description": "Validates that Adobe Journey Optimizer Code Based Experience requests have a valid response",
+  "namespace": "adobe-cbe-request-events",
+  "src": "dist/index.js",
+  "type": "validation",
+  "version": "0.0.1",
+  "visibility": ["PUBLIC"]
+}
