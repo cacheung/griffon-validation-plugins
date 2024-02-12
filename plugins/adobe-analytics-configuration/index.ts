@@ -51,6 +51,6 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     :{
       message: 'no Analytics extension is detected, nothing to validate.',
       events: [],
-      result: 'matched'
+      result: 'unknown'
     };
 });

@@ -96,7 +96,7 @@ describe('Adobe Analytics Configuration', () => {
     expect(result).toMatchObject({
       events: [],
       message:'no Analytics extension is detected, nothing to validate.',
-      result: 'matched'
+      result: 'unknown'
     });
   });
 
