@@ -174,7 +174,7 @@ describe('Adobe Analytics Response Events', () => {
     expect(result).toMatchObject({
       events: ['3', '4'],
       "message": "Missing an AnalyticsResponse event! If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`. If you are not using the Analytics Extension or if you follow an Edge Bridge workflow, you can disregard this validation error.",
-      result: 'not matched'
+      result: 'unknown'
     });
 
     expect(result.links.length).toBeGreaterThan(0);
@@ -194,7 +194,7 @@ describe('Adobe Analytics Response Events', () => {
     expect(result2).toMatchObject({
       events: ['3', '4'],
       "message": "Missing an AnalyticsResponse event! If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`. If you are not using the Analytics Extension or if you follow an Edge Bridge workflow, you can disregard this validation error.",
-      result: 'not matched'
+      result: 'unknown'
     });
 
     expect(result2.links.length).toBeGreaterThan(0);
@@ -238,7 +238,7 @@ describe('Adobe Analytics Response Events', () => {
     expect(result).toMatchObject({
       events: ['3', '4'],
       "message": "Missing an AnalyticsResponse event! If you are not using the Analytics Extension or if you follow an Edge Bridge workflow, you can disregard this validation error.",
-      result: 'not matched'
+      result: 'unknown'
     });
   });
 });

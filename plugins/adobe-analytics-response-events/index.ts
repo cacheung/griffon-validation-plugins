@@ -48,6 +48,8 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       : map;
   }, {});
 
+  let status: "matched" | "not matched" | "unknown" = 'matched'; 
+
   const matchedMessage =
     'All Analytics events have a corresponding AnalyticsResponse event with the debug flag!';
   const notMatchedEvents = [];
@@ -78,6 +80,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     });    
 
     if (!optedin) {
+      status = 'not matched';
       notMatchedMessage +=
         ' If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`.';
       links.push({
@@ -87,16 +90,19 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     }
 
     if (!versionEvents.some(aepMobile.sharedStateVersions.getExtensionsKey('"com.adobe.module.analytics"'))) {
+      status = 'unknown'
       notMatchedMessage +=
         ' If you are not using the Analytics Extension or if you follow an Edge Bridge workflow, you can disregard this validation error.';
-    }    
-  }
-
+    }  
+  } else {
+    status = 'matched';
+  }  
+  
   const message = !notMatchedEvents.length ? matchedMessage : notMatchedMessage;
   return {
     events: notMatchedEvents,
     links,
     message,
-    result: !notMatchedEvents.length ? 'matched' : 'not matched'
+    result: status
   };
 });
