@@ -5,7 +5,9 @@ import {
   genericTrack,
   GenericTrack,
   lifecycleStart,
-  LifecycleStart
+  LifecycleStart,
+  sharedStateVersions,
+  SharedStateVersions
 } from '@adobe/griffon-toolkit-aep-mobile';
 // @ts-ignore
 import plugin from './index';
@@ -122,6 +124,23 @@ const configurationAlternateFormat = configuration.mock({
   }
 });
 
+const analyticsRegistered = sharedStateVersions.mock({
+  uuid: '1',
+  payload: {
+    metadata: {
+      'state.data': {
+        extensions: {
+          'com.adobe.module.analytics': {
+            version: '4.0.0'
+          }
+        },
+        version: '4.2.0'
+      }
+    }
+  }
+}) as SharedStateVersions;
+
+
 describe('Adobe Analytics Response Events', () => {
   it('should return a valid response when all events has a matching response event', () => {
     const result = plugin([
@@ -133,11 +152,13 @@ describe('Adobe Analytics Response Events', () => {
 
     expect(result).toMatchObject({
       events: [],
+      "message": "All Analytics events have a corresponding AnalyticsResponse event with the debug flag!",
       result: 'matched'
     });
   });
 
   it('should return an error with link when any requests are missing a response and privacy is not optedin', () => {
+    //case with no Analytics extension registered
     const result = plugin([
       configurationOptedOutEvent,
       genericTrackEvent,
@@ -152,7 +173,8 @@ describe('Adobe Analytics Response Events', () => {
 
     expect(result).toMatchObject({
       events: ['3', '4'],
-      result: 'not matched'
+      "message": "Missing an AnalyticsResponse event! If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`. If you are not using the Analytics Extension or if you follow an Edge Bridge workflow, you can disregard this validation error.",
+      result: 'unknown'
     });
 
     expect(result.links.length).toBeGreaterThan(0);
@@ -171,9 +193,52 @@ describe('Adobe Analytics Response Events', () => {
 
     expect(result2).toMatchObject({
       events: ['3', '4'],
-      result: 'not matched'
+      "message": "Missing an AnalyticsResponse event! If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`. If you are not using the Analytics Extension or if you follow an Edge Bridge workflow, you can disregard this validation error.",
+      result: 'unknown'
     });
 
     expect(result2.links.length).toBeGreaterThan(0);
+
+    //case with Analytics extension registered
+    const result3 = plugin([
+      configurationOptedOutEvent,
+      analyticsRegistered,
+      genericTrackEvent,
+      lifecycleStartEvent,
+      genericTrackTwo,
+      lifecycleStartTwo,
+      analyticsResponseEvent,
+      analyticsResponseTwo,
+      analyticsResponseThree,
+      analyticsResponseFour
+    ]);
+
+    expect(result3).toMatchObject({
+      events: ['3', '4'],
+      "message": "Missing an AnalyticsResponse event! If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`.",
+      result: 'not matched'
+    });
+
+    expect(result3.links.length).toBeGreaterThan(0);
+  });
+
+  it('should return a Missing Response error with explaination of disregard it if no Analyitcs extension or use Edge Bridge workflow', () => {
+    //case with no Analytics extension registered
+    const result = plugin([
+      genericTrackEvent,
+      lifecycleStartEvent,
+      genericTrackTwo,
+      lifecycleStartTwo,
+      analyticsResponseEvent,
+      analyticsResponseTwo,
+      analyticsResponseThree,
+      analyticsResponseFour
+    ]);
+
+    expect(result).toMatchObject({
+      events: ['3', '4'],
+      "message": "Missing an AnalyticsResponse event! If you are not using the Analytics Extension or if you follow an Edge Bridge workflow, you can disregard this validation error.",
+      result: 'unknown'
+    });
   });
 });

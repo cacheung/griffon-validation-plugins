@@ -14,7 +14,8 @@ import {
   AnalyticsResponse,
   Configuration,
   GenericTrack,
-  LifecycleStart
+  LifecycleStart,
+  SharedStateVersions
 } from '@adobe/griffon-toolkit-aep-mobile';
 import { Event } from '@adobe/griffon-toolkit-common';
 import { ValidationPluginResult } from '../../types/validationPlugin';
@@ -23,6 +24,7 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
   const {
     toolkit: { 'aep-mobile': aepMobile, combineAny, match }
   } = window.griffon;
+
   const analyticsTrackEvents: GenericTrack[] & LifecycleStart[] = match(
     combineAny([
       aepMobile.genericTrack.matcher,
@@ -30,6 +32,12 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
     ]),
     events
   );
+
+  const versionEvents: SharedStateVersions[] = match(
+    aepMobile.sharedStateVersions.matcher,
+    events
+  ) ;
+
   const analyticsResponseEvents: AnalyticsResponse[] = match(
     aepMobile.analyticsResponse.matcher,
     events
@@ -39,6 +47,8 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
       ? { [requestEventIdentifier]: event, ...map }
       : map;
   }, {});
+
+  let status: "matched" | "not matched" | "unknown" = 'matched'; 
 
   const matchedMessage =
     'All Analytics events have a corresponding AnalyticsResponse event with the debug flag!';
@@ -67,23 +77,32 @@ import { ValidationPluginResult } from '../../types/validationPlugin';
         eventData['global.privacy'] ||
         event.payload.metadata?.['state.data']?.['global.privacy'];
       return privacy === 'optedin';
-    });
+    });    
 
     if (!optedin) {
+      status = 'not matched';
       notMatchedMessage +=
-        ' If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`';
+        ' If your report suite is not timestamp enabled, hits are discarded until the privacy status changes to `optedin`.';
       links.push({
         type: 'doc',
         url: 'https://developer.adobe.com/client-sdks/documentation/adobe-analytics/faq/#verify-current-privacy-status'
       });
     }
-  }
 
+    if (!versionEvents.some(aepMobile.sharedStateVersions.getExtensionsKey('"com.adobe.module.analytics"'))) {
+      status = 'unknown'
+      notMatchedMessage +=
+        ' If you are not using the Analytics Extension or if you follow an Edge Bridge workflow, you can disregard this validation error.';
+    }  
+  } else {
+    status = 'matched';
+  }  
+  
   const message = !notMatchedEvents.length ? matchedMessage : notMatchedMessage;
   return {
     events: notMatchedEvents,
     links,
     message,
-    result: !notMatchedEvents.length ? 'matched' : 'not matched'
+    result: status
   };
 });
